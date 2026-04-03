@@ -14,7 +14,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
-from config import (
+from src.config import (
     ANALISIS_EXPLORATORIO_MD_PATH,
     AREAS_VERDES_BOTTOM10_FIGURE_PATH,
     BASE_DIR,
@@ -32,8 +32,8 @@ from config import (
     TABLAS_HALLAZGOS_FASE9_CSV_PATH,
     ensure_directories,
 )
-from load import prepare_final_dataset
-from validate import load_final_dataset, run_phase_7_validation
+from src.load import prepare_final_dataset
+from src.validate import load_final_dataset, run_phase_7_validation
 
 TOP_N = 5
 GRAPH_TOP_N = 10

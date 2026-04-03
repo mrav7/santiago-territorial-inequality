@@ -8,8 +8,9 @@ import unicodedata
 from xml.etree import ElementTree as ET
 
 import pandas as pd
+from openpyxl import load_workbook
 
-from config import (
+from src.config import (
     BASE_DIR,
     CONFLICTOS_FUENTES_PATH,
     DIM_COMUNA_BASE_PATH,
@@ -105,6 +106,68 @@ def _extract_indicator_code(value: object) -> str:
     text = _normalize_display_text(value)
     match = re.search(r"\b([A-Z]{2,}\d*)\b", text)
     return match.group(1).lower() if match else ""
+
+
+def _excel_cell_value(value: object) -> object:
+    if value is None or (isinstance(value, str) and value == "") or pd.isna(value):
+        return None
+    if hasattr(value, "item"):
+        return value.item()
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    return value
+
+
+def _dataframe_rows_for_excel(dataframe: pd.DataFrame) -> list[tuple[object, ...]]:
+    rows: list[tuple[object, ...]] = [tuple(map(str, dataframe.columns))]
+    rows.extend(
+        tuple(_excel_cell_value(value) for value in row)
+        for row in dataframe.itertuples(index=False, name=None)
+    )
+    return rows
+
+
+def _workbook_matches_dataframes(
+    path: Path,
+    worksheets: dict[str, pd.DataFrame],
+) -> bool:
+    if not path.exists():
+        return False
+
+    workbook = load_workbook(path, data_only=True)
+    try:
+        if tuple(workbook.sheetnames) != tuple(worksheets.keys()):
+            return False
+
+        for sheet_name, dataframe in worksheets.items():
+            worksheet = workbook[sheet_name]
+            if worksheet.max_column != len(dataframe.columns):
+                return False
+
+            existing_rows = list(
+                worksheet.iter_rows(
+                    min_row=1,
+                    max_row=worksheet.max_row,
+                    max_col=worksheet.max_column,
+                    values_only=True,
+                )
+            )
+            existing_rows = [
+                tuple(_excel_cell_value(value) for value in row)
+                for row in existing_rows
+            ]
+            while existing_rows and all(cell is None for cell in existing_rows[-1]):
+                existing_rows.pop()
+
+            expected_rows = _dataframe_rows_for_excel(dataframe)
+            if len(existing_rows) != len(expected_rows):
+                return False
+            if any(tuple(existing_row) != expected_row for existing_row, expected_row in zip(existing_rows, expected_rows)):
+                return False
+
+        return True
+    finally:
+        workbook.close()
 
 
 def _looks_like_year(value: object) -> bool:
@@ -532,6 +595,13 @@ def export_profiles(
 
     summary_df = pd.DataFrame(summary_rows)
     columns_df = pd.DataFrame(column_rows)
+    worksheets = {
+        "resumen": summary_df,
+        "columnas": columns_df,
+    }
+    if _workbook_matches_dataframes(output_path, worksheets):
+        return summary_df, columns_df
+
     with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
         summary_df.to_excel(writer, sheet_name="resumen", index=False)
         columns_df.to_excel(writer, sheet_name="columnas", index=False)

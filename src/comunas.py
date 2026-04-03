@@ -7,7 +7,7 @@ import unicodedata
 
 import pandas as pd
 
-from config import (
+from src.config import (
     COMUNA_HOMOLOGACION_MANUAL,
     DIM_COMUNA_BASE_PATH,
     EXPECTED_DIM_COMUNA_ROWS,
@@ -19,7 +19,7 @@ from config import (
     SOURCE_COMUNA_KEY_COLUMNS,
     ensure_directories,
 )
-from extract import SourceDataset, read_all_sources
+from src.extract import SourceDataset, read_all_sources
 
 MASTER_KEY_POLICY = (
     "La llave principal del proyecto es `codigo_comuna`. "

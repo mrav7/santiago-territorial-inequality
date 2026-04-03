@@ -4,7 +4,10 @@ import csv
 import sys
 from pathlib import Path
 
-from config import (
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from src.config import (
     ANALISIS_EXPLORATORIO_MD_PATH,
     AREAS_VERDES_BOTTOM10_FIGURE_PATH,
     BASE_DIR,
@@ -46,13 +49,13 @@ from config import (
     VALIDACION_STAGING_PATH,
     ensure_directories,
 )
-from analyze import run_phase_9_analysis
-from comunas import run_phase_3_master_key
-from extract import run_phase_2_profile
-from integrate import run_phase_6_integration
-from load import run_phase_8_load
-from transform import extract_all_to_staging
-from validate import run_phase_5_validation, run_phase_7_validation
+from src.analyze import run_phase_9_analysis
+from src.comunas import run_phase_3_master_key
+from src.extract import run_phase_2_profile
+from src.integrate import run_phase_6_integration
+from src.load import run_phase_8_load
+from src.transform import extract_all_to_staging
+from src.validate import run_phase_5_validation, run_phase_7_validation
 
 
 def relpath(path: Path) -> str:

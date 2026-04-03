@@ -2,90 +2,122 @@
 
 Repositorio del **Lab 1 - Proceso ETL** del curso **Inteligencia de Negocios**.
 
-## Tema y alcance
+## Objetivo
 
-- Tema: desigualdad territorial en Santiago: areas verdes, pobreza por ingresos y capacidad municipal por comuna.
-- Unidad de analisis final: una fila = una comuna.
-- Cobertura final: Provincia de Santiago.
-- Tipo de analisis: comparativo y descriptivo, no causal.
+Construir un pipeline ETL reproducible para analizar **desigualdad territorial en Santiago** combinando:
+
+- areas verdes comunales;
+- pobreza por ingresos;
+- capacidad municipal;
+- poblacion comunal.
+
+## Alcance analitico
+
+- Unidad de analisis final: **una fila = una comuna**
+- Cobertura final: **Provincia de Santiago**
+- Llave principal obligatoria: **`codigo_comuna`**
+- Tipo de analisis: **comparativo y descriptivo, no causal**
+
+`nombre_comuna` se usa solo como apoyo descriptivo y de validacion. La integracion del proyecto se resuelve por `codigo_comuna`, no por nombre crudo.
 
 ## Estado real del proyecto
 
-El repositorio esta en **Fase 5**. Actualmente `src/main.py` ejecuta de forma reproducible:
+El repositorio ya implementa tecnicamente las **Fases 1 a 9**:
 
-1. preflight de estructura y consistencia heredado de Fase 1;
-2. Fase 2: lectura real de las 4 fuentes y perfilado diagnostico;
-3. Fase 3: validacion de la base maestra comunal y homologacion de nombres por fuente.
-4. Fase 4: extraccion reproducible a `staging` por fuente.
-5. Fase 5: transformacion de tablas staging por fuente, filtradas al universo final de 32 comunas.
+1. verificacion estructural y de rutas clave;
+2. lectura y perfilado real de las 4 fuentes;
+3. validacion de la dimension maestra comunal y homologacion reproducible;
+4. extraccion a `staging`;
+5. transformacion y validacion de staging por fuente;
+6. integracion del dataset final comunal;
+7. validacion formal del dataset final;
+8. carga final a SQLite y validacion basica de consultas;
+9. analisis exploratorio reproducible y generacion de rankings/figuras.
 
-Todavia **no** se implementa el ETL completo. El proyecto no integra aun el dataset final ni genera SQLite.
+Las **Fases 10, 11 y 12** no forman parte del trabajo tecnico cerrado de este repositorio aun. `docs/informe/` y `docs/presentacion/` se mantienen reservados para esas etapas.
+
+## Fuentes versionadas
+
+| ID | Fuente | Archivo real | Referencia |
+| --- | --- | --- | --- |
+| A | SINIM - Areas Verdes | `data/raw/datos_municipales_20260402222841_Sin-Corrección-Monetaria.xls` | 2024 |
+| B | SINIM - Capacidad Municipal | `data/raw/datos_municipales_20260402223904_Sin-Corrección-Monetaria.xls` | 2024 |
+| C | Observatorio Social - Pobreza por Ingresos | `data/raw/estimaciones_tasa_pobreza_ingresos_comunas_2022.xlsx` | 2022 |
+| D | Censo 2024 - Poblacion Comunal | `data/raw/D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx` | 2024 |
+
+`data/raw/metadata_fuentes.csv` funciona como contrato operativo de lectura y `data/raw/dim_comuna_base.csv` define el universo maestro de 32 comunas.
+
+## Dataset final
+
+El dataset integrado versionado es:
+
+`data/processed/desigualdad_comunal_final.csv`
+
+Estado esperado y validado:
+
+- 32 filas
+- 12 columnas
+- una fila por comuna
+- sin duplicados por `codigo_comuna`
+
+Columnas:
+
+- `codigo_comuna`
+- `nombre_comuna`
+- `poblacion`
+- `anio_poblacion`
+- `pobreza_ingresos_pct`
+- `anio_pobreza`
+- `areas_verdes_m2`
+- `anio_areas_verdes`
+- `ipp_miles_pesos`
+- `anio_ingresos`
+- `areas_verdes_m2_hab`
+- `ipp_pesos_hab`
+
+## SQLite
+
+La carga final se materializa en:
+
+`db/lab1_desigualdad.sqlite`
+
+Tablas esperadas:
+
+- `dim_comuna`
+- `fact_desigualdad_comunal`
+- `metadata_fuentes`
+
+Conteos esperados:
+
+- `dim_comuna`: 32
+- `fact_desigualdad_comunal`: 32
+- `metadata_fuentes`: 4
+
+El diseno sigue una logica dimension-hecho: `nombre_comuna` vive en `dim_comuna`; la fact table no replica esa columna.
 
 ## Ejecucion
 
-Desde la raiz del repositorio:
+Instalacion de dependencias:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Ejecucion del pipeline completo desde la raiz del repositorio:
 
 ```bash
 python src/main.py
 ```
 
-Si todo pasa, el comando regenera estos outputs:
+Tambien soporta ejecucion como modulo:
 
-- `outputs/perfilado_fuentes.xlsx`
-- `outputs/conflictos_fuentes.md`
-- `outputs/homologacion_comunas.csv`
-- `outputs/resumen_homologacion.md`
-- `outputs/resumen_transformaciones.md`
-- `outputs/validacion_staging.csv`
+```bash
+python -m src.main
+```
 
-Y deja materializados estos archivos staging:
+Ambos comandos recorren Fases 1 a 9 y regeneran los artefactos del pipeline. La escritura de `outputs/perfilado_fuentes.xlsx` y `db/lab1_desigualdad.sqlite` evita reserializaciones innecesarias cuando el contenido ya coincide con el estado esperado.
 
-- `data/staging/areas_verdes_staging.csv`
-- `data/staging/ingresos_staging.csv`
-- `data/staging/pobreza_staging.csv`
-- `data/staging/poblacion_staging.csv`
-
-## Fuentes contempladas
-
-| ID | Fuente | Archivo real |
-| --- | --- | --- |
-| A | SINIM - Areas Verdes | `data/raw/datos_municipales_20260402222841_Sin-Corrección-Monetaria.xls` |
-| B | SINIM - Capacidad Municipal | `data/raw/datos_municipales_20260402223904_Sin-Corrección-Monetaria.xls` |
-| C | Observatorio Social - Pobreza por Ingresos | `data/raw/estimaciones_tasa_pobreza_ingresos_comunas_2022.xlsx` |
-| D | Censo 2024 - Poblacion Comunal | `data/raw/D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx` |
-
-`data/raw/metadata_fuentes.csv` es el contrato operativo de lectura.
-
-## Estrategia tecnica vigente
-
-### Fase 2
-
-- A y B se leen con parser propio para **SpreadsheetML/XML 2003**; no se tratan como Excel binario clasico.
-- C y D se leen con `pandas.read_excel()` respetando `hoja` y `skiprows` definidos en metadata.
-
-### Fase 3
-
-- `data/raw/dim_comuna_base.csv` es la dimension maestra del universo final de 32 comunas.
-- La llave principal del proyecto es `codigo_comuna`.
-- `nombre_comuna` se usa solo como apoyo descriptivo y de verificacion.
-- Los merges futuros no deben hacerse por nombre crudo.
-
-### Fase 4
-
-- Cada fuente se relee desde `data/raw/` usando el contrato de `metadata_fuentes.csv`.
-- La salida de Fase 4 se materializa en `data/staging/` con trazabilidad explicita entre archivo raw y archivo staging.
-
-### Fase 5
-
-- Cada fuente se transforma por separado y se filtra al universo final usando `codigo_comuna`.
-- Las tablas staging quedan listas para merge futuro, pero aun no se integran entre si.
-- Reglas clave:
-  - A: el total de areas verdes se construye como parques + plazas.
-  - B: el IPP se conserva en miles de pesos nominales 2024.
-  - C: la pobreza se convierte desde proporcion 0-1 a porcentaje 0-100.
-  - D: se excluyen filas agregadas/notas al filtrar por `codigo_comuna`.
-
-## Estructura relevante del repositorio
+## Estructura principal
 
 ```text
 lab1-bi-1s2026/
@@ -93,26 +125,57 @@ lab1-bi-1s2026/
 │   ├── raw/
 │   ├── staging/
 │   └── processed/
+├── db/
+├── docs/
+│   ├── informe/
+│   └── presentacion/
 ├── outputs/
+│   └── figures/
 ├── src/
+│   ├── __init__.py
+│   ├── analyze.py
 │   ├── comunas.py
 │   ├── config.py
 │   ├── extract.py
-│   └── main.py
+│   ├── integrate.py
+│   ├── load.py
+│   ├── main.py
+│   ├── transform.py
+│   └── validate.py
 ├── README.md
 └── requirements.txt
 ```
 
-## Archivos clave
+## Artefactos relevantes
 
-- `data/raw/metadata_fuentes.csv`: contrato operativo de lectura de las fuentes A-D.
-- `data/raw/dim_comuna_base.csv`: universo final maestro de comunas.
-- `src/extract.py`: lectura y perfilado de Fase 2.
-- `src/comunas.py`: normalizacion comunal, validacion maestra y homologacion de Fase 3.
-- `src/transform.py`: exportacion a `staging` y transformaciones por fuente.
-- `src/validate.py`: validaciones de staging y documentacion de transformaciones.
-- `src/main.py`: orquestacion reproducible del estado actual del proyecto.
+Outputs operativos y de validacion:
 
-## Proximo paso tecnico
+- `outputs/perfilado_fuentes.xlsx`
+- `outputs/conflictos_fuentes.md`
+- `outputs/homologacion_comunas.csv`
+- `outputs/resumen_homologacion.md`
+- `outputs/resumen_transformaciones.md`
+- `outputs/validacion_staging.csv`
+- `outputs/log_integracion.md`
+- `outputs/resumen_dataset_final.md`
+- `outputs/reporte_validacion_final.csv`
+- `outputs/reporte_validacion_final.md`
+- `outputs/reporte_carga_sqlite.md`
+- `outputs/reporte_consultas_sqlite.csv`
 
-Integrar las cuatro tablas limpias en un dataset comunal final y cargarlo a SQLite, manteniendo `codigo_comuna` como llave maestra estable.
+Outputs analiticos de Fase 9:
+
+- `outputs/analisis_exploratorio.md`
+- `outputs/tablas_hallazgos_fase9.csv`
+- `outputs/ranking_areas_verdes.csv`
+- `outputs/ranking_pobreza.csv`
+- `outputs/ranking_ipp.csv`
+- `outputs/indice_rezago_territorial.csv`
+- figuras en `outputs/figures/`
+
+## Limitaciones metodologicas minimas
+
+- El analisis se restringe a la Provincia de Santiago.
+- Las fuentes combinan anos de referencia distintos: pobreza 2022 y las demas variables 2024.
+- El objetivo es comparativo y descriptivo; no se infieren relaciones causales.
+- Los archivos `data/raw/` son insumos versionados y no deben alterarse manualmente.

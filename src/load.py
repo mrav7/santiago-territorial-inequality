@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from config import (
+from src.config import (
     BASE_DIR,
     DIM_COMUNA_BASE_PATH,
     EXPECTED_DIM_COMUNA_ROWS,
@@ -18,7 +18,7 @@ from config import (
     SQLITE_PATH,
     ensure_directories,
 )
-from validate import load_final_dataset, run_phase_7_validation
+from src.validate import load_final_dataset, run_phase_7_validation
 
 DIM_COMUNA_COLUMNS = (
     "codigo_comuna",
@@ -135,11 +135,27 @@ def load_metadata_fuentes(
         return empty, {"loaded": False, "row_count": 0, "reason": "archivo ausente"}
 
     dataframe = pd.read_csv(path, dtype="string")
-    actual_columns = tuple(map(str, dataframe.columns))
-    if actual_columns != METADATA_REQUIRED_COLUMNS:
+    dataframe = prepare_metadata_table(dataframe)
+    expected_ids = tuple(RAW_SOURCES.keys())
+    observed_ids = tuple(dataframe["id_fuente"].astype(str))
+    if observed_ids != expected_ids:
         raise ValueError(
-            "metadata_fuentes.csv no coincide con el contrato esperado. "
-            f"Esperado={METADATA_REQUIRED_COLUMNS}; observado={actual_columns}."
+            "metadata_fuentes.csv debe documentar exactamente las fuentes A-D en orden. "
+            f"Observado={observed_ids}."
+        )
+
+    return dataframe, {"loaded": True, "row_count": len(dataframe), "reason": "ok"}
+
+
+def prepare_metadata_table(dataframe: pd.DataFrame) -> pd.DataFrame:
+    actual_columns = tuple(map(str, dataframe.columns))
+    missing_columns = [
+        column for column in METADATA_REQUIRED_COLUMNS if column not in actual_columns
+    ]
+    if missing_columns:
+        raise ValueError(
+            "La tabla metadata_fuentes no contiene todas las columnas requeridas. "
+            f"Faltantes={missing_columns}; observado={actual_columns}."
         )
 
     dataframe = dataframe[list(METADATA_REQUIRED_COLUMNS)].copy()
@@ -154,19 +170,11 @@ def load_metadata_fuentes(
     ).astype("Int64")
 
     if int(dataframe["id_fuente"].isna().sum()) != 0:
-        raise ValueError("metadata_fuentes.csv tiene `id_fuente` nulo.")
+        raise ValueError("La tabla metadata_fuentes tiene `id_fuente` nulo.")
     if int(dataframe["id_fuente"].duplicated().sum()) != 0:
-        raise ValueError("metadata_fuentes.csv tiene duplicados por `id_fuente`.")
+        raise ValueError("La tabla metadata_fuentes tiene duplicados por `id_fuente`.")
 
-    expected_ids = tuple(RAW_SOURCES.keys())
-    observed_ids = tuple(dataframe["id_fuente"].astype(str))
-    if observed_ids != expected_ids:
-        raise ValueError(
-            "metadata_fuentes.csv debe documentar exactamente las fuentes A-D en orden. "
-            f"Observado={observed_ids}."
-        )
-
-    return dataframe, {"loaded": True, "row_count": len(dataframe), "reason": "ok"}
+    return dataframe
 
 
 def prepare_final_dataset(final_df: pd.DataFrame) -> pd.DataFrame:
@@ -199,6 +207,31 @@ def prepare_final_dataset(final_df: pd.DataFrame) -> pd.DataFrame:
     return dataframe[list(FINAL_DATASET_COLUMNS)]
 
 
+def prepare_fact_table(dataframe: pd.DataFrame) -> pd.DataFrame:
+    actual_columns = tuple(map(str, dataframe.columns))
+    missing_columns = [column for column in FACT_TABLE_COLUMNS if column not in actual_columns]
+    if missing_columns:
+        raise ValueError(
+            "La tabla de hechos no contiene todas las columnas requeridas para Fase 8. "
+            f"Faltantes={missing_columns}; observado={actual_columns}."
+        )
+
+    dataframe = dataframe[list(FACT_TABLE_COLUMNS)].copy()
+    dataframe["codigo_comuna"] = _format_codigo_comuna(dataframe["codigo_comuna"])
+
+    for column in INTEGER_FACT_COLUMNS:
+        dataframe[column] = pd.to_numeric(dataframe[column], errors="coerce").astype("Int64")
+    for column in FLOAT_FACT_COLUMNS:
+        dataframe[column] = pd.to_numeric(dataframe[column], errors="coerce").astype("Float64")
+
+    if int(dataframe["codigo_comuna"].isna().sum()) != 0:
+        raise ValueError("La tabla de hechos tiene `codigo_comuna` nulo.")
+    if int(dataframe["codigo_comuna"].duplicated().sum()) != 0:
+        raise ValueError("La tabla de hechos tiene duplicados por `codigo_comuna`.")
+
+    return dataframe
+
+
 def _to_python_value(value: object) -> object:
     if pd.isna(value):
         return None
@@ -215,6 +248,77 @@ def _records_from_dataframe(
     for _, row in dataframe.loc[:, columns].iterrows():
         records.append(tuple(_to_python_value(row[column]) for column in columns))
     return records
+
+
+def _sorted_records(
+    dataframe: pd.DataFrame,
+    columns: tuple[str, ...],
+    sort_by: tuple[str, ...],
+) -> list[tuple[object, ...]]:
+    ordered = dataframe.loc[:, list(columns)].sort_values(
+        list(sort_by),
+        kind="stable",
+        na_position="last",
+    )
+    ordered = ordered.reset_index(drop=True)
+    return _records_from_dataframe(ordered, columns)
+
+
+def _sqlite_has_expected_content(
+    connection: sqlite3.Connection,
+    dim_comuna_df: pd.DataFrame,
+    fact_df: pd.DataFrame,
+    metadata_df: pd.DataFrame,
+) -> bool:
+    expected_tables = ("dim_comuna", "fact_desigualdad_comunal", "metadata_fuentes")
+    if _fetch_table_names(connection) != expected_tables:
+        return False
+    if str(connection.execute("PRAGMA quick_check").fetchone()[0]) != "ok":
+        return False
+
+    try:
+        current_dim_df = prepare_dim_comuna(
+            pd.read_sql_query(
+                """
+                SELECT codigo_comuna, nombre_comuna, provincia, region, fuente_referencia
+                FROM dim_comuna
+                """,
+                connection,
+            )
+        )
+        current_fact_df = prepare_fact_table(
+            pd.read_sql_query(
+                """
+                SELECT codigo_comuna, poblacion, anio_poblacion, pobreza_ingresos_pct,
+                       anio_pobreza, areas_verdes_m2, anio_areas_verdes, ipp_miles_pesos,
+                       anio_ingresos, areas_verdes_m2_hab, ipp_pesos_hab
+                FROM fact_desigualdad_comunal
+                """,
+                connection,
+            )
+        )
+        current_metadata_df = prepare_metadata_table(
+            pd.read_sql_query(
+                """
+                SELECT id_fuente, nombre_fuente, institucion, url, fecha_descarga, formato,
+                       anio_referencia, variable_principal, archivo_origen, archivo_logico,
+                       hoja, skiprows, observaciones
+                FROM metadata_fuentes
+                """,
+                connection,
+            )
+        )
+    except (ValueError, pd.errors.DatabaseError, sqlite3.Error):
+        return False
+
+    return (
+        _sorted_records(current_dim_df, DIM_COMUNA_COLUMNS, ("codigo_comuna",))
+        == _sorted_records(dim_comuna_df, DIM_COMUNA_COLUMNS, ("codigo_comuna",))
+        and _sorted_records(current_fact_df, FACT_TABLE_COLUMNS, ("codigo_comuna",))
+        == _sorted_records(fact_df, FACT_TABLE_COLUMNS, ("codigo_comuna",))
+        and _sorted_records(current_metadata_df, METADATA_REQUIRED_COLUMNS, ("id_fuente",))
+        == _sorted_records(metadata_df, METADATA_REQUIRED_COLUMNS, ("id_fuente",))
+    )
 
 
 def _reset_sqlite_schema(connection: sqlite3.Connection) -> None:
@@ -760,18 +864,29 @@ def run_phase_8_load(
         )
 
     metadata_df, metadata_info = load_metadata_fuentes()
+    fact_table_df = prepare_fact_table(final_dataset_df)
 
     sqlite_path.parent.mkdir(parents=True, exist_ok=True)
+    sqlite_exists = sqlite_path.exists()
     with sqlite3.connect(sqlite_path) as connection:
         connection.execute("PRAGMA foreign_keys = ON")
-        _reset_sqlite_schema(connection)
-        _load_tables_into_sqlite(
+        sqlite_reused = sqlite_exists and _sqlite_has_expected_content(
             connection=connection,
             dim_comuna_df=dim_comuna_df,
-            fact_df=final_dataset_df,
+            fact_df=fact_table_df,
             metadata_df=metadata_df,
         )
-        connection.commit()
+
+        # Evita reserializar SQLite cuando el contenido tabular ya coincide.
+        if not sqlite_reused:
+            _reset_sqlite_schema(connection)
+            _load_tables_into_sqlite(
+                connection=connection,
+                dim_comuna_df=dim_comuna_df,
+                fact_df=final_dataset_df,
+                metadata_df=metadata_df,
+            )
+            connection.commit()
 
         quick_check = str(connection.execute("PRAGMA quick_check").fetchone()[0])
         table_names = _fetch_table_names(connection)
@@ -931,6 +1046,7 @@ def run_phase_8_load(
         "query_results_df": query_results_df,
         "metadata_info": metadata_info,
         "phase_7_result": phase_7_result,
+        "sqlite_reused": sqlite_reused,
     }
 
 

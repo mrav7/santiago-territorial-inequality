@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from config import (
+from src.config import (
     BASE_DIR,
     DIM_COMUNA_BASE_PATH,
     EXPECTED_DIM_COMUNA_ROWS,

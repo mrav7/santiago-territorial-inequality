@@ -5,14 +5,14 @@ from pathlib import Path
 
 import pandas as pd
 
-from comunas import apply_comuna_standardization, load_master_comuna_dimension
-from config import (
+from src.comunas import apply_comuna_standardization, load_master_comuna_dimension
+from src.config import (
     SOURCE_COMUNA_KEY_COLUMNS,
     STAGING_DIR,
     STAGING_SOURCE_PATHS,
     ensure_directories,
 )
-from extract import SourceDataset, read_all_sources
+from src.extract import SourceDataset, read_all_sources
 
 
 @dataclass(frozen=True)

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from config import (
+from src.config import (
     BASE_DIR,
     FINAL_DATASET_PATH,
     EXPECTED_DIM_COMUNA_ROWS,
@@ -16,7 +16,7 @@ from config import (
     VALIDACION_STAGING_PATH,
     ensure_directories,
 )
-from transform import StagingArtifact, TransformationEvidence
+from src.transform import StagingArtifact, TransformationEvidence
 
 EXPECTED_STAGING_COLUMNS = {
     "A": (
