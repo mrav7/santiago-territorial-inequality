@@ -1,0 +1,797 @@
+fuente,codigo_comuna,nombre_comuna_base,nombre_fuente,nombre_normalizado,tipo_diferencia,requiere_homologacion_manual,observacion,llave_principal_proyecto
+A,13101,SANTIAGO,SANTIAGO,SANTIAGO,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13102,CERRILLOS,CERRILLOS,CERRILLOS,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13103,CERRO NAVIA,CERRO NAVIA,CERRO NAVIA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13104,CONCHALI,CONCHALÍ,CONCHALI,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+A,13105,EL BOSQUE,EL BOSQUE,EL BOSQUE,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13106,ESTACION CENTRAL,ESTACIÓN CENTRAL,ESTACION CENTRAL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+A,13107,HUECHURABA,HUECHURABA,HUECHURABA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13108,INDEPENDENCIA,INDEPENDENCIA,INDEPENDENCIA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13109,LA CISTERNA,LA CISTERNA,LA CISTERNA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13110,LA FLORIDA,LA FLORIDA,LA FLORIDA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13111,LA GRANJA,LA GRANJA,LA GRANJA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13112,LA PINTANA,LA PINTANA,LA PINTANA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13113,LA REINA,LA REINA,LA REINA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13114,LAS CONDES,LAS CONDES,LAS CONDES,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13115,LO BARNECHEA,LO BARNECHEA,LO BARNECHEA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13116,LO ESPEJO,LO ESPEJO,LO ESPEJO,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13117,LO PRADO,LO PRADO,LO PRADO,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13118,MACUL,MACUL,MACUL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13119,MAIPU,MAIPÚ,MAIPU,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+A,13120,ÑUÑOA,ÑUÑOA,NUNOA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13121,PEDRO AGUIRRE CERDA,PEDRO AGUIRRE CERDA,PEDRO AGUIRRE CERDA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13122,PEÑALOLEN,PEÑALOLÉN,PENALOLEN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+A,13123,PROVIDENCIA,PROVIDENCIA,PROVIDENCIA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13124,PUDAHUEL,PUDAHUEL,PUDAHUEL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13125,QUILICURA,QUILICURA,QUILICURA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13126,QUINTA NORMAL,QUINTA NORMAL,QUINTA NORMAL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13127,RECOLETA,RECOLETA,RECOLETA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13128,RENCA,RENCA,RENCA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13129,SAN JOAQUIN,SAN JOAQUÍN,SAN JOAQUIN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+A,13130,SAN MIGUEL,SAN MIGUEL,SAN MIGUEL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13131,SAN RAMON,SAN RAMÓN,SAN RAMON,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+A,13132,VITACURA,VITACURA,VITACURA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+A,13201,,PUENTE ALTO,PUENTE ALTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13202,,PIRQUE,PIRQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13203,,SAN JOSÉ DE MAIPO,SAN JOSE DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13301,,COLINA,COLINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13302,,LAMPA,LAMPA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13303,,TILTIL,TILTIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13401,,SAN BERNARDO,SAN BERNARDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13402,,BUIN,BUIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13403,,CALERA DE TANGO,CALERA DE TANGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13404,,PAINE,PAINE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13501,,MELIPILLA,MELIPILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13502,,ALHUÉ,ALHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13503,,CURACAVÍ,CURACAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13504,,MARÍA PINTO,MARIA PINTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13505,,SAN PEDRO,SAN PEDRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13601,,TALAGANTE,TALAGANTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13602,,EL MONTE,EL MONTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13603,,ISLA DE MAIPO,ISLA DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13604,,PADRE HURTADO,PADRE HURTADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+A,13605,,PEÑAFLOR,PENAFLOR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13101,SANTIAGO,SANTIAGO,SANTIAGO,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13102,CERRILLOS,CERRILLOS,CERRILLOS,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13103,CERRO NAVIA,CERRO NAVIA,CERRO NAVIA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13104,CONCHALI,CONCHALÍ,CONCHALI,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+B,13105,EL BOSQUE,EL BOSQUE,EL BOSQUE,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13106,ESTACION CENTRAL,ESTACIÓN CENTRAL,ESTACION CENTRAL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+B,13107,HUECHURABA,HUECHURABA,HUECHURABA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13108,INDEPENDENCIA,INDEPENDENCIA,INDEPENDENCIA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13109,LA CISTERNA,LA CISTERNA,LA CISTERNA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13110,LA FLORIDA,LA FLORIDA,LA FLORIDA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13111,LA GRANJA,LA GRANJA,LA GRANJA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13112,LA PINTANA,LA PINTANA,LA PINTANA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13113,LA REINA,LA REINA,LA REINA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13114,LAS CONDES,LAS CONDES,LAS CONDES,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13115,LO BARNECHEA,LO BARNECHEA,LO BARNECHEA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13116,LO ESPEJO,LO ESPEJO,LO ESPEJO,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13117,LO PRADO,LO PRADO,LO PRADO,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13118,MACUL,MACUL,MACUL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13119,MAIPU,MAIPÚ,MAIPU,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+B,13120,ÑUÑOA,ÑUÑOA,NUNOA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13121,PEDRO AGUIRRE CERDA,PEDRO AGUIRRE CERDA,PEDRO AGUIRRE CERDA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13122,PEÑALOLEN,PEÑALOLÉN,PENALOLEN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+B,13123,PROVIDENCIA,PROVIDENCIA,PROVIDENCIA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13124,PUDAHUEL,PUDAHUEL,PUDAHUEL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13125,QUILICURA,QUILICURA,QUILICURA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13126,QUINTA NORMAL,QUINTA NORMAL,QUINTA NORMAL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13127,RECOLETA,RECOLETA,RECOLETA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13128,RENCA,RENCA,RENCA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13129,SAN JOAQUIN,SAN JOAQUÍN,SAN JOAQUIN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+B,13130,SAN MIGUEL,SAN MIGUEL,SAN MIGUEL,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13131,SAN RAMON,SAN RAMÓN,SAN RAMON,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+B,13132,VITACURA,VITACURA,VITACURA,coincidencia_exacta,False,La fuente coincide exactamente con la base maestra por codigo y nombre.,codigo_comuna
+B,13201,,PUENTE ALTO,PUENTE ALTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13202,,PIRQUE,PIRQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13203,,SAN JOSÉ DE MAIPO,SAN JOSE DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13301,,COLINA,COLINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13302,,LAMPA,LAMPA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13303,,TILTIL,TILTIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13401,,SAN BERNARDO,SAN BERNARDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13402,,BUIN,BUIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13403,,CALERA DE TANGO,CALERA DE TANGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13404,,PAINE,PAINE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13501,,MELIPILLA,MELIPILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13502,,ALHUÉ,ALHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13503,,CURACAVÍ,CURACAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13504,,MARÍA PINTO,MARIA PINTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13505,,SAN PEDRO,SAN PEDRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13601,,TALAGANTE,TALAGANTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13602,,EL MONTE,EL MONTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13603,,ISLA DE MAIPO,ISLA DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13604,,PADRE HURTADO,PADRE HURTADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+B,13605,,PEÑAFLOR,PENAFLOR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,1101,,Iquique,IQUIQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,1107,,Alto Hospicio,ALTO HOSPICIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,1401,,Pozo Almonte,POZO ALMONTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,1402,,Camiña,CAMINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,1403,,Colchane,COLCHANE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,1404,,Huara,HUARA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,1405,,Pica,PICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2101,,Antofagasta,ANTOFAGASTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2102,,Mejillones,MEJILLONES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2103,,Sierra Gorda,SIERRA GORDA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2104,,Taltal,TALTAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2201,,Calama,CALAMA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2202,,Ollagüe,OLLAGUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2203,,San Pedro De Atacama,SAN PEDRO DE ATACAMA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2301,,Tocopilla,TOCOPILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,2302,,María Elena,MARIA ELENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3101,,Copiapó,COPIAPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3102,,Caldera,CALDERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3103,,Tierra Amarilla,TIERRA AMARILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3201,,Chañaral,CHANARAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3202,,Diego De Almagro,DIEGO DE ALMAGRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3301,,Vallenar,VALLENAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3302,,Alto Del Carmen,ALTO DEL CARMEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3303,,Freirina,FREIRINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,3304,,Huasco,HUASCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4101,,La Serena,LA SERENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4102,,Coquimbo,COQUIMBO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4103,,Andacollo,ANDACOLLO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4104,,La Higuera,LA HIGUERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4105,,Paiguano,PAIGUANO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4106,,Vicuña,VICUNA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4201,,Illapel,ILLAPEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4202,,Canela,CANELA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4203,,Los Vilos,LOS VILOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4204,,Salamanca,SALAMANCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4301,,Ovalle,OVALLE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4302,,Combarbalá,COMBARBALA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4303,,Monte Patria,MONTE PATRIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4304,,Punitaqui,PUNITAQUI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,4305,,Río Hurtado,RIO HURTADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5101,,Valparaíso,VALPARAISO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5102,,Casablanca,CASABLANCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5103,,Concón,CONCON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5104,,Juan Fernández,JUAN FERNANDEZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5105,,Puchuncaví,PUCHUNCAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5107,,Quintero,QUINTERO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5109,,Viña Del Mar,VINA DEL MAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5201,,Isla De Pascua,ISLA DE PASCUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5301,,Los Andes,LOS ANDES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5302,,Calle Larga,CALLE LARGA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5303,,Rinconada,RINCONADA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5304,,San Esteban,SAN ESTEBAN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5401,,La Ligua,LA LIGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5402,,Cabildo,CABILDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5403,,Papudo,PAPUDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5404,,Petorca,PETORCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5405,,Zapallar,ZAPALLAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5501,,Quillota,QUILLOTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5502,,Calera,CALERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5503,,Hijuelas,HIJUELAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5504,,La Cruz,LA CRUZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5506,,Nogales,NOGALES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5601,,San Antonio,SAN ANTONIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5602,,Algarrobo,ALGARROBO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5603,,Cartagena,CARTAGENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5604,,El Quisco,EL QUISCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5605,,El Tabo,EL TABO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5606,,Santo Domingo,SANTO DOMINGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5701,,San Felipe,SAN FELIPE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5702,,Catemu,CATEMU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5703,,Llaillay,LLAILLAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5704,,Panquehue,PANQUEHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5705,,Putaendo,PUTAENDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5706,,Santa María,SANTA MARIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5801,,Quilpué,QUILPUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5802,,Limache,LIMACHE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5803,,Olmué,OLMUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,5804,,Villa Alemana,VILLA ALEMANA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6101,,Rancagua,RANCAGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6102,,Codegua,CODEGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6103,,Coinco,COINCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6104,,Coltauco,COLTAUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6105,,Doñihue,DONIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6106,,Graneros,GRANEROS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6107,,Las Cabras,LAS CABRAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6108,,Machalí,MACHALI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6109,,Malloa,MALLOA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6110,,Mostazal,MOSTAZAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6111,,Olivar,OLIVAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6112,,Peumo,PEUMO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6113,,Pichidegua,PICHIDEGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6114,,Quinta De Tilcoco,QUINTA DE TILCOCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6115,,Rengo,RENGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6116,,Requínoa,REQUINOA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6117,,San Vicente,SAN VICENTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6201,,Pichilemu,PICHILEMU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6202,,La Estrella,LA ESTRELLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6203,,Litueche,LITUECHE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6204,,Marchihue,MARCHIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6205,,Navidad,NAVIDAD,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6206,,Paredones,PAREDONES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6301,,San Fernando,SAN FERNANDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6302,,Chépica,CHEPICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6303,,Chimbarongo,CHIMBARONGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6304,,Lolol,LOLOL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6305,,Nancagua,NANCAGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6306,,Palmilla,PALMILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6307,,Peralillo,PERALILLO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6308,,Placilla,PLACILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6309,,Pumanque,PUMANQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,6310,,Santa Cruz,SANTA CRUZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7101,,Talca,TALCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7102,,Constitución,CONSTITUCION,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7103,,Curepto,CUREPTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7104,,Empedrado,EMPEDRADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7105,,Maule,MAULE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7106,,Pelarco,PELARCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7107,,Pencahue,PENCAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7108,,Río Claro,RIO CLARO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7109,,San Clemente,SAN CLEMENTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7110,,San Rafael,SAN RAFAEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7201,,Cauquenes,CAUQUENES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7202,,Chanco,CHANCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7203,,Pelluhue,PELLUHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7301,,Curicó,CURICO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7302,,Hualañé,HUALANE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7303,,Licantén,LICANTEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7304,,Molina,MOLINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7305,,Rauco,RAUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7306,,Romeral,ROMERAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7307,,Sagrada Familia,SAGRADA FAMILIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7308,,Teno,TENO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7309,,Vichuquén,VICHUQUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7401,,Linares,LINARES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7402,,Colbún,COLBUN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7403,,Longaví,LONGAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7404,,Parral,PARRAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7405,,Retiro,RETIRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7406,,San Javier,SAN JAVIER,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7407,,Villa Alegre,VILLA ALEGRE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,7408,,Yerbas Buenas,YERBAS BUENAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8101,,Concepción,CONCEPCION,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8102,,Coronel,CORONEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8103,,Chiguayante,CHIGUAYANTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8104,,Florida,FLORIDA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8105,,Hualqui,HUALQUI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8106,,Lota,LOTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8107,,Penco,PENCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8108,,San Pedro De La Paz,SAN PEDRO DE LA PAZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8109,,Santa Juana,SANTA JUANA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8110,,Talcahuano,TALCAHUANO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8111,,Tomé,TOME,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8112,,Hualpén,HUALPEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8201,,Lebu,LEBU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8202,,Arauco,ARAUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8203,,Cañete,CANETE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8204,,Contulmo,CONTULMO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8205,,Curanilahue,CURANILAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8206,,Los Álamos,LOS ALAMOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8207,,Tirúa,TIRUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8301,,Los Ángeles,LOS ANGELES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8302,,Antuco,ANTUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8303,,Cabrero,CABRERO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8304,,Laja,LAJA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8305,,Mulchén,MULCHEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8306,,Nacimiento,NACIMIENTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8307,,Negrete,NEGRETE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8308,,Quilaco,QUILACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8309,,Quilleco,QUILLECO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8310,,San Rosendo,SAN ROSENDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8311,,Santa Bárbara,SANTA BARBARA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8312,,Tucapel,TUCAPEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8313,,Yumbel,YUMBEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,8314,,Alto Biobío,ALTO BIOBIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9101,,Temuco,TEMUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9102,,Carahue,CARAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9103,,Cunco,CUNCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9104,,Curarrehue,CURARREHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9105,,Freire,FREIRE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9106,,Galvarino,GALVARINO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9107,,Gorbea,GORBEA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9108,,Lautaro,LAUTARO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9109,,Loncoche,LONCOCHE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9110,,Melipeuco,MELIPEUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9111,,Nueva Imperial,NUEVA IMPERIAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9112,,Padre Las Casas,PADRE LAS CASAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9113,,Perquenco,PERQUENCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9114,,Pitrufquén,PITRUFQUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9115,,Pucón,PUCON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9116,,Saavedra,SAAVEDRA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9117,,Teodoro Schmidt,TEODORO SCHMIDT,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9118,,Toltén,TOLTEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9119,,Vilcún,VILCUN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9120,,Villarrica,VILLARRICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9121,,Cholchol,CHOLCHOL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9201,,Angol,ANGOL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9202,,Collipulli,COLLIPULLI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9203,,Curacautín,CURACAUTIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9204,,Ercilla,ERCILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9205,,Lonquimay,LONQUIMAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9206,,Los Sauces,LOS SAUCES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9207,,Lumaco,LUMACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9208,,Purén,PUREN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9209,,Renaico,RENAICO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9210,,Traiguén,TRAIGUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,9211,,Victoria,VICTORIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10101,,Puerto Montt,PUERTO MONTT,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10102,,Calbuco,CALBUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10103,,Cochamó,COCHAMO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10104,,Fresia,FRESIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10105,,Frutillar,FRUTILLAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10106,,Los Muermos,LOS MUERMOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10107,,Llanquihue,LLANQUIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10108,,Maullín,MAULLIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10109,,Puerto Varas,PUERTO VARAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10201,,Castro,CASTRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10202,,Ancud,ANCUD,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10203,,Chonchi,CHONCHI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10204,,Curaco De Vélez,CURACO DE VELEZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10205,,Dalcahue,DALCAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10206,,Puqueldón,PUQUELDON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10207,,Queilén,QUEILEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10208,,Quellón,QUELLON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10209,,Quemchi,QUEMCHI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10210,,Quinchao,QUINCHAO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10301,,Osorno,OSORNO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10302,,Puerto Octay,PUERTO OCTAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10303,,Purranque,PURRANQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10304,,Puyehue,PUYEHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10305,,Río Negro,RIO NEGRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10306,,San Juan De La Costa,SAN JUAN DE LA COSTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10307,,San Pablo,SAN PABLO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10401,,Chaitén,CHAITEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10402,,Futaleufú,FUTALEUFU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10403,,Hualaihué,HUALAIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,10404,,Palena,PALENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11101,,Coyhaique,COYHAIQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11102,,Lago Verde,LAGO VERDE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11201,,Aysén,AYSEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11202,,Cisnes,CISNES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11203,,Guaitecas,GUAITECAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11301,,Cochrane,COCHRANE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11302,,O’higgins,OHIGGINS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11303,,Tortel,TORTEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11401,,Chile Chico,CHILE CHICO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,11402,,Río Ibáñez,RIO IBANEZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12101,,Punta Arenas,PUNTA ARENAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12102,,Laguna Blanca,LAGUNA BLANCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12103,,Río Verde,RIO VERDE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12104,,San Gregorio,SAN GREGORIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12201,,Cabo De Hornos,CABO DE HORNOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12301,,Porvenir,PORVENIR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12302,,Primavera,PRIMAVERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12303,,Timaukel,TIMAUKEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12401,,Natales,NATALES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,12402,,Torres Del Paine,TORRES DEL PAINE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13101,SANTIAGO,Santiago,SANTIAGO,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13102,CERRILLOS,Cerrillos,CERRILLOS,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13103,CERRO NAVIA,Cerro Navia,CERRO NAVIA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13104,CONCHALI,Conchalí,CONCHALI,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13105,EL BOSQUE,El Bosque,EL BOSQUE,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13106,ESTACION CENTRAL,Estación Central,ESTACION CENTRAL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13107,HUECHURABA,Huechuraba,HUECHURABA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13108,INDEPENDENCIA,Independencia,INDEPENDENCIA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13109,LA CISTERNA,La Cisterna,LA CISTERNA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13110,LA FLORIDA,La Florida,LA FLORIDA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13111,LA GRANJA,La Granja,LA GRANJA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13112,LA PINTANA,La Pintana,LA PINTANA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13113,LA REINA,La Reina,LA REINA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13114,LAS CONDES,Las Condes,LAS CONDES,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13115,LO BARNECHEA,Lo Barnechea,LO BARNECHEA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13116,LO ESPEJO,Lo Espejo,LO ESPEJO,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13117,LO PRADO,Lo Prado,LO PRADO,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13118,MACUL,Macul,MACUL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13119,MAIPU,Maipú,MAIPU,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13120,ÑUÑOA,Ñuñoa,NUNOA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13121,PEDRO AGUIRRE CERDA,Pedro Aguirre Cerda,PEDRO AGUIRRE CERDA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13122,PEÑALOLEN,Peñalolén,PENALOLEN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13123,PROVIDENCIA,Providencia,PROVIDENCIA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13124,PUDAHUEL,Pudahuel,PUDAHUEL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13125,QUILICURA,Quilicura,QUILICURA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13126,QUINTA NORMAL,Quinta Normal,QUINTA NORMAL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13127,RECOLETA,Recoleta,RECOLETA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13128,RENCA,Renca,RENCA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13129,SAN JOAQUIN,San Joaquín,SAN JOAQUIN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13130,SAN MIGUEL,San Miguel,SAN MIGUEL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13131,SAN RAMON,San Ramón,SAN RAMON,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13132,VITACURA,Vitacura,VITACURA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+C,13201,,Puente Alto,PUENTE ALTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13202,,Pirque,PIRQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13203,,San José De Maipo,SAN JOSE DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13301,,Colina,COLINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13302,,Lampa,LAMPA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13303,,Tiltil,TILTIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13401,,San Bernardo,SAN BERNARDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13402,,Buin,BUIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13403,,Calera De Tango,CALERA DE TANGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13404,,Paine,PAINE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13501,,Melipilla,MELIPILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13502,,Alhué,ALHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13503,,Curacaví,CURACAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13504,,María Pinto,MARIA PINTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13505,,San Pedro,SAN PEDRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13601,,Talagante,TALAGANTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13602,,El Monte,EL MONTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13603,,Isla De Maipo,ISLA DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13604,,Padre Hurtado,PADRE HURTADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,13605,,Peñaflor,PENAFLOR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14101,,Valdivia,VALDIVIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14102,,Corral,CORRAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14103,,Lanco,LANCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14104,,Los Lagos,LOS LAGOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14105,,Máfil,MAFIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14106,,Mariquina,MARIQUINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14107,,Paillaco,PAILLACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14108,,Panguipulli,PANGUIPULLI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14201,,La Unión,LA UNION,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14202,,Futrono,FUTRONO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14203,,Lago Ranco,LAGO RANCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,14204,,Río Bueno,RIO BUENO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,15101,,Arica,ARICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,15102,,Camarones,CAMARONES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,15201,,Putre,PUTRE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,15202,,General Lagos,GENERAL LAGOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16101,,Chillán,CHILLAN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16102,,Bulnes,BULNES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16103,,Chillán Viejo,CHILLAN VIEJO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16104,,El Carmen,EL CARMEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16105,,Pemuco,PEMUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16106,,Pinto,PINTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16107,,Quillón,QUILLON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16108,,San Ignacio,SAN IGNACIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16109,,Yungay,YUNGAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16201,,Quirihue,QUIRIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16202,,Cobquecura,COBQUECURA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16203,,Coelemu,COELEMU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16204,,Ninhue,NINHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16205,,Portezuelo,PORTEZUELO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16206,,Ránquil,RANQUIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16207,,Treguaco,TREGUACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16301,,San Carlos,SAN CARLOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16302,,Coihueco,COIHUECO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16303,,Ñiquén,NIQUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16304,,San Fabián,SAN FABIAN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+C,16305,,San Nicolás,SAN NICOLAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,0,,País,PAIS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,1101,,Iquique,IQUIQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,1107,,Alto Hospicio,ALTO HOSPICIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,1401,,Pozo Almonte,POZO ALMONTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,1402,,Camiña,CAMINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,1403,,Colchane,COLCHANE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,1404,,Huara,HUARA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,1405,,Pica,PICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2101,,Antofagasta,ANTOFAGASTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2102,,Mejillones,MEJILLONES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2103,,Sierra Gorda,SIERRA GORDA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2104,,Taltal,TALTAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2201,,Calama,CALAMA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2202,,Ollagüe,OLLAGUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2203,,San Pedro de Atacama,SAN PEDRO DE ATACAMA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2301,,Tocopilla,TOCOPILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,2302,,María Elena,MARIA ELENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3101,,Copiapó,COPIAPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3102,,Caldera,CALDERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3103,,Tierra Amarilla,TIERRA AMARILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3201,,Chañaral,CHANARAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3202,,Diego de Almagro,DIEGO DE ALMAGRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3301,,Vallenar,VALLENAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3302,,Alto del Carmen,ALTO DEL CARMEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3303,,Freirina,FREIRINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,3304,,Huasco,HUASCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4101,,La Serena,LA SERENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4102,,Coquimbo,COQUIMBO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4103,,Andacollo,ANDACOLLO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4104,,La Higuera,LA HIGUERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4105,,Paihuano,PAIHUANO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4106,,Vicuña,VICUNA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4201,,Illapel,ILLAPEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4202,,Canela,CANELA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4203,,Los Vilos,LOS VILOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4204,,Salamanca,SALAMANCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4301,,Ovalle,OVALLE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4302,,Combarbalá,COMBARBALA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4303,,Monte Patria,MONTE PATRIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4304,,Punitaqui,PUNITAQUI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,4305,,Río Hurtado,RIO HURTADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5101,,Valparaíso,VALPARAISO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5102,,Casablanca,CASABLANCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5103,,Concón,CONCON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5104,,Juan Fernández,JUAN FERNANDEZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5105,,Puchuncaví,PUCHUNCAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5107,,Quintero,QUINTERO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5109,,Viña del Mar,VINA DEL MAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5201,,Isla de Pascua,ISLA DE PASCUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5301,,Los Andes,LOS ANDES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5302,,Calle Larga,CALLE LARGA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5303,,Rinconada,RINCONADA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5304,,San Esteban,SAN ESTEBAN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5401,,La Ligua,LA LIGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5402,,Cabildo,CABILDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5403,,Papudo,PAPUDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5404,,Petorca,PETORCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5405,,Zapallar,ZAPALLAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5501,,Quillota,QUILLOTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5502,,Calera,CALERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5503,,Hijuelas,HIJUELAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5504,,La Cruz,LA CRUZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5506,,Nogales,NOGALES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5601,,San Antonio,SAN ANTONIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5602,,Algarrobo,ALGARROBO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5603,,Cartagena,CARTAGENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5604,,El Quisco,EL QUISCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5605,,El Tabo,EL TABO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5606,,Santo Domingo,SANTO DOMINGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5701,,San Felipe,SAN FELIPE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5702,,Catemu,CATEMU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5703,,Llaillay,LLAILLAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5704,,Panquehue,PANQUEHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5705,,Putaendo,PUTAENDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5706,,Santa María,SANTA MARIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5801,,Quilpué,QUILPUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5802,,Limache,LIMACHE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5803,,Olmué,OLMUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,5804,,Villa Alemana,VILLA ALEMANA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6101,,Rancagua,RANCAGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6102,,Codegua,CODEGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6103,,Coinco,COINCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6104,,Coltauco,COLTAUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6105,,Doñihue,DONIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6106,,Graneros,GRANEROS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6107,,Las Cabras,LAS CABRAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6108,,Machalí,MACHALI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6109,,Malloa,MALLOA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6110,,Mostazal,MOSTAZAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6111,,Olivar,OLIVAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6112,,Peumo,PEUMO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6113,,Pichidegua,PICHIDEGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6114,,Quinta de Tilcoco,QUINTA DE TILCOCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6115,,Rengo,RENGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6116,,Requínoa,REQUINOA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6117,,San Vicente,SAN VICENTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6201,,Pichilemu,PICHILEMU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6202,,La Estrella,LA ESTRELLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6203,,Litueche,LITUECHE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6204,,Marchihue,MARCHIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6205,,Navidad,NAVIDAD,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6206,,Paredones,PAREDONES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6301,,San Fernando,SAN FERNANDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6302,,Chépica,CHEPICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6303,,Chimbarongo,CHIMBARONGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6304,,Lolol,LOLOL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6305,,Nancagua,NANCAGUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6306,,Palmilla,PALMILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6307,,Peralillo,PERALILLO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6308,,Placilla,PLACILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6309,,Pumanque,PUMANQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,6310,,Santa Cruz,SANTA CRUZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7101,,Talca,TALCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7102,,Constitución,CONSTITUCION,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7103,,Curepto,CUREPTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7104,,Empedrado,EMPEDRADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7105,,Maule,MAULE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7106,,Pelarco,PELARCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7107,,Pencahue,PENCAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7108,,Río Claro,RIO CLARO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7109,,San Clemente,SAN CLEMENTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7110,,San Rafael,SAN RAFAEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7201,,Cauquenes,CAUQUENES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7202,,Chanco,CHANCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7203,,Pelluhue,PELLUHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7301,,Curicó,CURICO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7302,,Hualañé,HUALANE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7303,,Licantén,LICANTEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7304,,Molina,MOLINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7305,,Rauco,RAUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7306,,Romeral,ROMERAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7307,,Sagrada Familia,SAGRADA FAMILIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7308,,Teno,TENO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7309,,Vichuquén,VICHUQUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7401,,Linares,LINARES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7402,,Colbún,COLBUN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7403,,Longaví,LONGAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7404,,Parral,PARRAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7405,,Retiro,RETIRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7406,,San Javier,SAN JAVIER,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7407,,Villa Alegre,VILLA ALEGRE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,7408,,Yerbas Buenas,YERBAS BUENAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8101,,Concepción,CONCEPCION,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8102,,Coronel,CORONEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8103,,Chiguayante,CHIGUAYANTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8104,,Florida,FLORIDA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8105,,Hualqui,HUALQUI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8106,,Lota,LOTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8107,,Penco,PENCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8108,,San Pedro de La paz,SAN PEDRO DE LA PAZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8109,,Santa Juana,SANTA JUANA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8110,,Talcahuano,TALCAHUANO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8111,,Tomé,TOME,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8112,,Hualpén,HUALPEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8201,,Lebu,LEBU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8202,,Arauco,ARAUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8203,,Cañete,CANETE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8204,,Contulmo,CONTULMO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8205,,Curanilahue,CURANILAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8206,,Los Álamos,LOS ALAMOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8207,,Tirúa,TIRUA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8301,,Los Ángeles,LOS ANGELES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8302,,Antuco,ANTUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8303,,Cabrero,CABRERO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8304,,Laja,LAJA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8305,,Mulchén,MULCHEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8306,,Nacimiento,NACIMIENTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8307,,Negrete,NEGRETE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8308,,Quilaco,QUILACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8309,,Quilleco,QUILLECO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8310,,San Rosendo,SAN ROSENDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8311,,Santa Bárbara,SANTA BARBARA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8312,,Tucapel,TUCAPEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8313,,Yumbel,YUMBEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,8314,,Alto Biobío,ALTO BIOBIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9101,,Temuco,TEMUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9102,,Carahue,CARAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9103,,Cunco,CUNCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9104,,Curarrehue,CURARREHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9105,,Freire,FREIRE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9106,,Galvarino,GALVARINO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9107,,Gorbea,GORBEA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9108,,Lautaro,LAUTARO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9109,,Loncoche,LONCOCHE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9110,,Melipeuco,MELIPEUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9111,,Nueva Imperial,NUEVA IMPERIAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9112,,Padre Las Casas,PADRE LAS CASAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9113,,Perquenco,PERQUENCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9114,,Pitrufquén,PITRUFQUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9115,,Pucón,PUCON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9116,,Saavedra,SAAVEDRA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9117,,Teodoro Schmidt,TEODORO SCHMIDT,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9118,,Toltén,TOLTEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9119,,Vilcún,VILCUN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9120,,Villarrica,VILLARRICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9121,,Cholchol,CHOLCHOL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9201,,Angol,ANGOL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9202,,Collipulli,COLLIPULLI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9203,,Curacautín,CURACAUTIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9204,,Ercilla,ERCILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9205,,Lonquimay,LONQUIMAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9206,,Los Sauces,LOS SAUCES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9207,,Lumaco,LUMACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9208,,Purén,PUREN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9209,,Renaico,RENAICO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9210,,Traiguén,TRAIGUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,9211,,Victoria,VICTORIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10101,,Puerto Montt,PUERTO MONTT,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10102,,Calbuco,CALBUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10103,,Cochamó,COCHAMO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10104,,Fresia,FRESIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10105,,Frutillar,FRUTILLAR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10106,,Los Muermos,LOS MUERMOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10107,,Llanquihue,LLANQUIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10108,,Maullín,MAULLIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10109,,Puerto Varas,PUERTO VARAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10201,,Castro,CASTRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10202,,Ancud,ANCUD,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10203,,Chonchi,CHONCHI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10204,,Curaco de Vélez,CURACO DE VELEZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10205,,Dalcahue,DALCAHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10206,,Puqueldón,PUQUELDON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10207,,Queilén,QUEILEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10208,,Quellón,QUELLON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10209,,Quemchi,QUEMCHI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10210,,Quinchao,QUINCHAO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10301,,Osorno,OSORNO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10302,,Puerto Octay,PUERTO OCTAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10303,,Purranque,PURRANQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10304,,Puyehue,PUYEHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10305,,Río Negro,RIO NEGRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10306,,San Juan de la Costa,SAN JUAN DE LA COSTA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10307,,San Pablo,SAN PABLO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10401,,Chaitén,CHAITEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10402,,Futaleufú,FUTALEUFU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10403,,Hualaihué,HUALAIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,10404,,Palena,PALENA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11101,,Coyhaique,COYHAIQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11102,,Lago Verde,LAGO VERDE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11201,,Aysén,AYSEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11202,,Cisnes,CISNES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11203,,Guaitecas,GUAITECAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11301,,Cochrane,COCHRANE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11302,,O'Higgins,O HIGGINS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11303,,Tortel,TORTEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11401,,Chile Chico,CHILE CHICO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,11402,,Río Ibáñez,RIO IBANEZ,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12101,,Punta Arenas,PUNTA ARENAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12102,,Laguna Blanca,LAGUNA BLANCA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12103,,Río Verde,RIO VERDE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12104,,San Gregorio,SAN GREGORIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12201,,Cabo de Hornos,CABO DE HORNOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12202,,Antártica,ANTARTICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12301,,Porvenir,PORVENIR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12302,,Primavera,PRIMAVERA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12303,,Timaukel,TIMAUKEL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12401,,Natales,NATALES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,12402,,Torres del Paine,TORRES DEL PAINE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13101,SANTIAGO,Santiago,SANTIAGO,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13102,CERRILLOS,Cerrillos,CERRILLOS,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13103,CERRO NAVIA,Cerro Navia,CERRO NAVIA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13104,CONCHALI,Conchalí,CONCHALI,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13105,EL BOSQUE,El Bosque,EL BOSQUE,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13106,ESTACION CENTRAL,Estación Central,ESTACION CENTRAL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13107,HUECHURABA,Huechuraba,HUECHURABA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13108,INDEPENDENCIA,Independencia,INDEPENDENCIA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13109,LA CISTERNA,La Cisterna,LA CISTERNA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13110,LA FLORIDA,La Florida,LA FLORIDA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13111,LA GRANJA,La Granja,LA GRANJA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13112,LA PINTANA,La Pintana,LA PINTANA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13113,LA REINA,La Reina,LA REINA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13114,LAS CONDES,Las Condes,LAS CONDES,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13115,LO BARNECHEA,Lo Barnechea,LO BARNECHEA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13116,LO ESPEJO,Lo Espejo,LO ESPEJO,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13117,LO PRADO,Lo Prado,LO PRADO,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13118,MACUL,Macul,MACUL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13119,MAIPU,Maipú,MAIPU,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13120,ÑUÑOA,Ñuñoa,NUNOA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13121,PEDRO AGUIRRE CERDA,Pedro Aguirre Cerda,PEDRO AGUIRRE CERDA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13122,PEÑALOLEN,Peñalolén,PENALOLEN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13123,PROVIDENCIA,Providencia,PROVIDENCIA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13124,PUDAHUEL,Pudahuel,PUDAHUEL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13125,QUILICURA,Quilicura,QUILICURA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13126,QUINTA NORMAL,Quinta Normal,QUINTA NORMAL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13127,RECOLETA,Recoleta,RECOLETA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13128,RENCA,Renca,RENCA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13129,SAN JOAQUIN,San Joaquín,SAN JOAQUIN,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13130,SAN MIGUEL,San Miguel,SAN MIGUEL,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13131,SAN RAMON,San Ramón,SAN RAMON,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13132,VITACURA,Vitacura,VITACURA,coincidencia_por_normalizacion,False,"La diferencia de nombre se resuelve automaticamente con normalizacion de mayusculas, espacios y tildes.",codigo_comuna
+D,13201,,Puente Alto,PUENTE ALTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13202,,Pirque,PIRQUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13203,,San José de Maipo,SAN JOSE DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13301,,Colina,COLINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13302,,Lampa,LAMPA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13303,,Tiltil,TILTIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13401,,San Bernardo,SAN BERNARDO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13402,,Buin,BUIN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13403,,Calera de Tango,CALERA DE TANGO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13404,,Paine,PAINE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13501,,Melipilla,MELIPILLA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13502,,Alhué,ALHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13503,,Curacaví,CURACAVI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13504,,María Pinto,MARIA PINTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13505,,San Pedro,SAN PEDRO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13601,,Talagante,TALAGANTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13602,,El Monte,EL MONTE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13603,,Isla de Maipo,ISLA DE MAIPO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13604,,Padre Hurtado,PADRE HURTADO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,13605,,Peñaflor,PENAFLOR,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14101,,Valdivia,VALDIVIA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14102,,Corral,CORRAL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14103,,Lanco,LANCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14104,,Los Lagos,LOS LAGOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14105,,Máfil,MAFIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14106,,Mariquina,MARIQUINA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14107,,Paillaco,PAILLACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14108,,Panguipulli,PANGUIPULLI,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14201,,La Unión,LA UNION,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14202,,Futrono,FUTRONO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14203,,Lago Ranco,LAGO RANCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,14204,,Río Bueno,RIO BUENO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,15101,,Arica,ARICA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,15102,,Camarones,CAMARONES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,15201,,Putre,PUTRE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,15202,,General Lagos,GENERAL LAGOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16101,,Chillán,CHILLAN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16102,,Bulnes,BULNES,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16103,,Chillán Viejo,CHILLAN VIEJO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16104,,El Carmen,EL CARMEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16105,,Pemuco,PEMUCO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16106,,Pinto,PINTO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16107,,Quillón,QUILLON,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16108,,San Ignacio,SAN IGNACIO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16109,,Yungay,YUNGAY,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16201,,Quirihue,QUIRIHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16202,,Cobquecura,COBQUECURA,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16203,,Coelemu,COELEMU,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16204,,Ninhue,NINHUE,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16205,,Portezuelo,PORTEZUELO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16206,,Ránquil,RANQUIL,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16207,,Trehuaco,TREHUACO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16301,,San Carlos,SAN CARLOS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16302,,Coihueco,COIHUECO,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16303,,Ñiquén,NIQUEN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16304,,San Fabián,SAN FABIAN,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna
+D,16305,,San Nicolás,SAN NICOLAS,fuera_de_alcance,False,"Codigo comunal presente en la fuente, pero fuera del universo final de 32 comunas.",codigo_comuna

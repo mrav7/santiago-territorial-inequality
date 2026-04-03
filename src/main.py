@@ -10,6 +10,7 @@ from config import (
     CONFLICTOS_FUENTES_PATH,
     DIM_COMUNA_BASE_PATH,
     DIM_COMUNA_BASE_REQUIRED_COLUMNS,
+    HOMOLOGACION_COMUNAS_PATH,
     KEY_PATHS,
     METADATA_PATH,
     METADATA_REQUIRED_COLUMNS,
@@ -19,10 +20,12 @@ from config import (
     PROJECT_TITLE,
     RAW_SOURCES,
     REQUIRED_DIRS,
+    RESUMEN_HOMOLOGACION_PATH,
     TIPO_ANALISIS,
     UNIDAD_ANALISIS,
     ensure_directories,
 )
+from comunas import run_phase_3_master_key
 from extract import run_phase_2_profile
 
 
@@ -210,6 +213,7 @@ def main() -> int:
     print()
     print("Paso 1: verificacion de base heredada desde Fase 1.")
     print("Paso 2: lectura real y perfilado diagnostico de las cuatro fuentes.")
+    print("Paso 3: validacion de base maestra comunal y homologacion reproducible.")
     print("Este proceso no integra aun el dataset final ni genera SQLite.")
     print()
 
@@ -247,7 +251,31 @@ def main() -> int:
     for highlight in phase_2_result["highlights"]:
         print(f"  - {highlight}")
     print()
-    print("Resultado final: Fase 2 implementada y outputs de evidencia generados.")
+
+    phase_3_result = run_phase_3_master_key(datasets=phase_2_result["datasets"])
+    print("Fase 3 - Llave maestra comunal")
+    for status in phase_3_result["validation"].statuses:
+        print(f"  {status}")
+    for warning in phase_3_result["validation"].warnings:
+        print(f"  [OBSERVACION] {warning}")
+    print(f"  Politica de llave: {phase_3_result['master_key_policy']}")
+    print()
+    print(
+        f"Output homologacion: {HOMOLOGACION_COMUNAS_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"Output resumen homologacion: {RESUMEN_HOMOLOGACION_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print("Resumen por fuente:")
+    for _, row in phase_3_result["summary_df"].iterrows():
+        print(
+            "  - Fuente {fuente}: exactas={coincidencias_exactas}, "
+            "normalizacion={coincidencias_por_normalizacion}, "
+            "manuales={requieren_homologacion_manual}, "
+            "fuera_de_alcance={fuera_universo_final}".format(**row.to_dict())
+        )
+    print()
+    print("Resultado final: Fase 2 y Fase 3 ejecutadas con evidencia reproducible.")
     return 0
 
 
