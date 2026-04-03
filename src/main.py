@@ -10,8 +10,10 @@ from config import (
     CONFLICTOS_FUENTES_PATH,
     DIM_COMUNA_BASE_PATH,
     DIM_COMUNA_BASE_REQUIRED_COLUMNS,
+    FINAL_DATASET_PATH,
     HOMOLOGACION_COMUNAS_PATH,
     KEY_PATHS,
+    LOG_INTEGRACION_PATH,
     METADATA_PATH,
     METADATA_REQUIRED_COLUMNS,
     PERFILADO_FUENTES_PATH,
@@ -20,6 +22,7 @@ from config import (
     PROJECT_TITLE,
     RAW_SOURCES,
     REQUIRED_DIRS,
+    RESUMEN_DATASET_FINAL_PATH,
     RESUMEN_HOMOLOGACION_PATH,
     RESUMEN_TRANSFORMACIONES_PATH,
     STAGING_SOURCE_PATHS,
@@ -30,6 +33,7 @@ from config import (
 )
 from comunas import run_phase_3_master_key
 from extract import run_phase_2_profile
+from integrate import run_phase_6_integration
 from transform import extract_all_to_staging
 from validate import run_phase_5_validation
 
@@ -221,7 +225,8 @@ def main() -> int:
     print("Paso 3: validacion de base maestra comunal y homologacion reproducible.")
     print("Paso 4: extraccion reproducible a staging por fuente.")
     print("Paso 5: transformacion y validacion de staging por fuente.")
-    print("Este proceso no integra aun el dataset final ni genera SQLite.")
+    print("Paso 6: integracion del dataset final comunal desde staging.")
+    print("Este proceso aun no genera SQLite ni cierra la validacion final del laboratorio.")
     print()
 
     print_section("Estructura minima", validate_directories(errors))
@@ -320,7 +325,32 @@ def main() -> int:
     print(f"Resumen transformaciones: {RESUMEN_TRANSFORMACIONES_PATH.relative_to(BASE_DIR).as_posix()}")
     print(f"Validacion staging: {VALIDACION_STAGING_PATH.relative_to(BASE_DIR).as_posix()}")
     print()
-    print("Resultado final: Fase 2, Fase 3, Fase 4 y Fase 5 ejecutadas sin integrar aun el dataset final.")
+
+    phase_6_result = run_phase_6_integration()
+    print("Fase 6 - Integracion y dataset final")
+    for evidence in phase_6_result["merge_evidences"]:
+        print(
+            f"  [OK] Merge {evidence.source_id} ({evidence.source_label}): "
+            f"{evidence.rows_before} -> {evidence.rows_after} filas; "
+            f"columnas incorporadas: {', '.join(evidence.added_columns)}"
+        )
+    print(
+        f"  [OK] Dataset final: {phase_6_result['validation']['row_count']} filas, "
+        f"{phase_6_result['validation']['column_count']} columnas -> "
+        f"{FINAL_DATASET_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print()
+    print("Outputs Fase 6:")
+    print(f"  - Dataset final: {FINAL_DATASET_PATH.relative_to(BASE_DIR).as_posix()}")
+    print(f"  - Log de integracion: {LOG_INTEGRACION_PATH.relative_to(BASE_DIR).as_posix()}")
+    print(
+        f"  - Resumen dataset final: {RESUMEN_DATASET_FINAL_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print()
+    print(
+        "Resultado final: Fases 1 a 6 ejecutadas con dataset final integrado; "
+        "SQLite y validacion final completa quedan pendientes para fases posteriores."
+    )
     return 0
 
 

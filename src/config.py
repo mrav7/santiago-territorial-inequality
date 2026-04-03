@@ -14,7 +14,7 @@ PROJECT_TITLE = (
 )
 COURSE_NAME = "Inteligencia de Negocios"
 LAB_NAME = "Lab 1 - Proceso ETL"
-PROJECT_PHASE = "Fase 5"
+PROJECT_PHASE = "Fase 6"
 
 # Alcance definido
 UNIDAD_ANALISIS = "Una fila = una comuna"
@@ -62,6 +62,9 @@ HOMOLOGACION_COMUNAS_PATH = OUTPUTS_DIR / "homologacion_comunas.csv"
 RESUMEN_HOMOLOGACION_PATH = OUTPUTS_DIR / "resumen_homologacion.md"
 RESUMEN_TRANSFORMACIONES_PATH = OUTPUTS_DIR / "resumen_transformaciones.md"
 VALIDACION_STAGING_PATH = OUTPUTS_DIR / "validacion_staging.csv"
+FINAL_DATASET_PATH = PROCESSED_DIR / "desigualdad_comunal_final.csv"
+LOG_INTEGRACION_PATH = OUTPUTS_DIR / "log_integracion.md"
+RESUMEN_DATASET_FINAL_PATH = OUTPUTS_DIR / "resumen_dataset_final.md"
 
 EXPECTED_DIM_COMUNA_ROWS = 32
 EXPECTED_PROVINCIA = "SANTIAGO"
