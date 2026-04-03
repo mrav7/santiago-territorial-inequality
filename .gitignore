@@ -255,6 +255,7 @@ yarn-error.log*
 .ray/
 .metaflow/
 spark-warehouse/
+.codex
 
 # MLflow
 mlruns/
