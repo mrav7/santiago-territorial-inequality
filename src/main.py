@@ -7,11 +7,13 @@ from pathlib import Path
 from config import (
     BASE_DIR,
     COBERTURA_TERRITORIAL,
+    CONFLICTOS_FUENTES_PATH,
     DIM_COMUNA_BASE_PATH,
     DIM_COMUNA_BASE_REQUIRED_COLUMNS,
     KEY_PATHS,
     METADATA_PATH,
     METADATA_REQUIRED_COLUMNS,
+    PERFILADO_FUENTES_PATH,
     PROJECT_NAME,
     PROJECT_PHASE,
     PROJECT_TITLE,
@@ -21,6 +23,7 @@ from config import (
     UNIDAD_ANALISIS,
     ensure_directories,
 )
+from extract import run_phase_2_profile
 
 
 def relpath(path: Path) -> str:
@@ -199,15 +202,15 @@ def main() -> int:
     ensure_directories()
 
     errors: list[str] = []
-    print(f"Preflight {PROJECT_PHASE} - {PROJECT_NAME}")
+    print(f"{PROJECT_PHASE} - {PROJECT_NAME}")
     print(PROJECT_TITLE)
     print(f"Unidad de analisis: {UNIDAD_ANALISIS}")
     print(f"Cobertura: {COBERTURA_TERRITORIAL}")
     print(f"Tipo de analisis: {TIPO_ANALISIS}")
-    print(
-        "Este preflight solo valida la base del repositorio. "
-        "No genera staging, dataset final ni SQLite."
-    )
+    print()
+    print("Paso 1: verificacion de base heredada desde Fase 1.")
+    print("Paso 2: lectura real y perfilado diagnostico de las cuatro fuentes.")
+    print("Este proceso no integra aun el dataset final ni genera SQLite.")
     print()
 
     print_section("Estructura minima", validate_directories(errors))
@@ -226,9 +229,25 @@ def main() -> int:
         print("Base de Fase 1 aun no verificada.")
         return 1
 
-    print("Resultado: validaciones completadas sin errores.")
+    print("Resultado preflight: validaciones completadas sin errores.")
     print("Base de Fase 1 verificada.")
-    print("Repositorio preparado para nueva auditoria de Fase 1 y para iniciar Fase 2.")
+    print()
+
+    phase_2_result = run_phase_2_profile()
+    print("Fase 2 - Perfilado y diagnostico")
+    for source_id, dataset in phase_2_result["datasets"].items():
+        print(
+            f"  [OK] Fuente {source_id}: {len(dataset.dataframe)} filas, "
+            f"{len(dataset.dataframe.columns)} columnas, parser={dataset.diagnostics['source_parser']}"
+        )
+    print()
+    print(f"Output perfilado: {PERFILADO_FUENTES_PATH.relative_to(BASE_DIR).as_posix()}")
+    print(f"Output conflictos: {CONFLICTOS_FUENTES_PATH.relative_to(BASE_DIR).as_posix()}")
+    print("Hallazgos clave:")
+    for highlight in phase_2_result["highlights"]:
+        print(f"  - {highlight}")
+    print()
+    print("Resultado final: Fase 2 implementada y outputs de evidencia generados.")
     return 0
 
 

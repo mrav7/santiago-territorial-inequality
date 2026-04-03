@@ -14,7 +14,7 @@ PROJECT_TITLE = (
 )
 COURSE_NAME = "Inteligencia de Negocios"
 LAB_NAME = "Lab 1 - Proceso ETL"
-PROJECT_PHASE = "Fase 1"
+PROJECT_PHASE = "Fase 2"
 
 # Alcance definido
 UNIDAD_ANALISIS = "Una fila = una comuna"
@@ -56,6 +56,8 @@ DIM_COMUNA_BASE_PATH = RAW_DIR / "dim_comuna_base.csv"
 
 # Ruta reservada para fases posteriores. En Fase 1 no se genera todavia.
 SQLITE_PATH = DB_DIR / "lab1_desigualdad.sqlite"
+PERFILADO_FUENTES_PATH = OUTPUTS_DIR / "perfilado_fuentes.xlsx"
+CONFLICTOS_FUENTES_PATH = OUTPUTS_DIR / "conflictos_fuentes.md"
 
 # Fuentes raw versionadas
 FUENTE_A_FILENAME = "datos_municipales_20260402222841_Sin-Corrección-Monetaria.xls"
