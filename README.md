@@ -11,11 +11,13 @@ Repositorio del **Lab 1 - Proceso ETL** del curso **Inteligencia de Negocios**.
 
 ## Estado real del proyecto
 
-El repositorio esta en **Fase 3**. Actualmente `src/main.py` ejecuta de forma reproducible:
+El repositorio esta en **Fase 5**. Actualmente `src/main.py` ejecuta de forma reproducible:
 
 1. preflight de estructura y consistencia heredado de Fase 1;
 2. Fase 2: lectura real de las 4 fuentes y perfilado diagnostico;
 3. Fase 3: validacion de la base maestra comunal y homologacion de nombres por fuente.
+4. Fase 4: materializacion de tablas de `staging` reproducibles por fuente.
+5. Fase 5: transformacion de tablas limpias por fuente, filtradas al universo final de 32 comunas.
 
 Todavia **no** se implementa el ETL completo. El proyecto no integra aun el dataset final ni genera SQLite.
 
@@ -33,6 +35,18 @@ Si todo pasa, el comando regenera estos outputs:
 - `outputs/conflictos_fuentes.md`
 - `outputs/homologacion_comunas.csv`
 - `outputs/resumen_homologacion.md`
+- `outputs/resumen_fase_4_5.md`
+
+Y deja materializadas estas capas intermedias:
+
+- `data/staging/fuente_a_sinim_areas_verdes.csv`
+- `data/staging/fuente_b_sinim_capacidad_municipal.csv`
+- `data/staging/fuente_c_pobreza_ingresos.csv`
+- `data/staging/fuente_d_poblacion_comunal.csv`
+- `data/processed/fuente_a_areas_verdes_limpia.csv`
+- `data/processed/fuente_b_capacidad_municipal_limpia.csv`
+- `data/processed/fuente_c_pobreza_ingresos_limpia.csv`
+- `data/processed/fuente_d_poblacion_limpia.csv`
 
 ## Fuentes contempladas
 
@@ -59,6 +73,21 @@ Si todo pasa, el comando regenera estos outputs:
 - `nombre_comuna` se usa solo como apoyo descriptivo y de verificacion.
 - Los merges futuros no deben hacerse por nombre crudo.
 
+### Fase 4
+
+- Cada fuente se materializa en `data/staging/` como tabla cruda parseada desde los archivos versionados.
+- `staging` conserva la cobertura nacional original y sirve como base reproducible para transformaciones posteriores.
+
+### Fase 5
+
+- Cada fuente se transforma por separado y se filtra al universo final usando `codigo_comuna`.
+- Las tablas limpias viven en `data/processed/` y quedan listas para merge futuro, pero aun no se integran entre si.
+- Reglas clave:
+  - A: el total de areas verdes se construye como parques + plazas.
+  - B: el IPP se conserva en miles de pesos nominales 2024.
+  - C: la pobreza se convierte desde proporcion 0-1 a porcentaje 0-100.
+  - D: se excluyen filas agregadas/notas al filtrar por `codigo_comuna`.
+
 ## Estructura relevante del repositorio
 
 ```text
@@ -83,8 +112,10 @@ lab1-bi-1s2026/
 - `data/raw/dim_comuna_base.csv`: universo final maestro de comunas.
 - `src/extract.py`: lectura y perfilado de Fase 2.
 - `src/comunas.py`: normalizacion comunal, validacion maestra y homologacion de Fase 3.
+- `src/transform.py`: exportacion a `staging` y transformaciones limpias por fuente.
+- `src/validate.py`: validaciones de salida y resumen de Fase 4/Fase 5.
 - `src/main.py`: orquestacion reproducible del estado actual del proyecto.
 
 ## Proximo paso tecnico
 
-Implementar la transformacion por fuente usando `codigo_comuna` como llave maestra estable y reutilizando la homologacion ya generada.
+Integrar las cuatro tablas limpias en un dataset comunal final y cargarlo a SQLite, manteniendo `codigo_comuna` como llave maestra estable.

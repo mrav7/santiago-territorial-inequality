@@ -15,18 +15,23 @@ from config import (
     METADATA_PATH,
     METADATA_REQUIRED_COLUMNS,
     PERFILADO_FUENTES_PATH,
+    PROCESSED_SOURCE_PATHS,
     PROJECT_NAME,
     PROJECT_PHASE,
     PROJECT_TITLE,
     RAW_SOURCES,
     REQUIRED_DIRS,
+    RESUMEN_FASE_45_PATH,
     RESUMEN_HOMOLOGACION_PATH,
+    STAGING_SOURCE_PATHS,
     TIPO_ANALISIS,
     UNIDAD_ANALISIS,
     ensure_directories,
 )
 from comunas import run_phase_3_master_key
 from extract import run_phase_2_profile
+from transform import run_phase_4_stage_sources, run_phase_5_transform_sources
+from validate import run_phase_45_validate_outputs
 
 
 def relpath(path: Path) -> str:
@@ -214,6 +219,8 @@ def main() -> int:
     print("Paso 1: verificacion de base heredada desde Fase 1.")
     print("Paso 2: lectura real y perfilado diagnostico de las cuatro fuentes.")
     print("Paso 3: validacion de base maestra comunal y homologacion reproducible.")
+    print("Paso 4: materializacion reproducible de staging por fuente.")
+    print("Paso 5: transformacion y validacion de tablas limpias por fuente.")
     print("Este proceso no integra aun el dataset final ni genera SQLite.")
     print()
 
@@ -275,7 +282,48 @@ def main() -> int:
             "fuera_de_alcance={fuera_universo_final}".format(**row.to_dict())
         )
     print()
-    print("Resultado final: Fase 2 y Fase 3 ejecutadas con evidencia reproducible.")
+
+    phase_4_result = run_phase_4_stage_sources(datasets=phase_2_result["datasets"])
+    print("Fase 4 - Staging reproducible")
+    for source_id, artifact in phase_4_result["artifacts"].items():
+        print(
+            f"  [OK] Fuente {source_id}: {artifact.row_count} filas, "
+            f"{artifact.column_count} columnas -> "
+            f"{artifact.path.relative_to(BASE_DIR).as_posix()}"
+        )
+    print()
+
+    phase_5_result = run_phase_5_transform_sources(
+        datasets=phase_2_result["datasets"],
+        dim_base=phase_3_result["master_dimension"],
+    )
+    validation_result = run_phase_45_validate_outputs(
+        staging_artifacts=phase_4_result["artifacts"],
+        processed_tables=phase_5_result["processed_tables"],
+        processed_artifacts=phase_5_result["artifacts"],
+        dim_base=phase_3_result["master_dimension"],
+    )
+    print("Fase 5 - Tablas limpias por fuente")
+    for source_id, artifact in phase_5_result["artifacts"].items():
+        status = validation_result["validation_results"][source_id]
+        label = "[OK]" if status.is_valid else "[ERROR]"
+        print(
+            f"  {label} Fuente {source_id}: {artifact.row_count} filas, "
+            f"{artifact.column_count} columnas -> "
+            f"{artifact.path.relative_to(BASE_DIR).as_posix()}"
+        )
+        for warning in status.warnings:
+            print(f"    [OBSERVACION] {warning}")
+    print()
+    print("Outputs de staging:")
+    for source_id in sorted(STAGING_SOURCE_PATHS):
+        print(f"  - Fuente {source_id}: {STAGING_SOURCE_PATHS[source_id].relative_to(BASE_DIR).as_posix()}")
+    print("Outputs de tablas limpias:")
+    for source_id in sorted(PROCESSED_SOURCE_PATHS):
+        print(f"  - Fuente {source_id}: {PROCESSED_SOURCE_PATHS[source_id].relative_to(BASE_DIR).as_posix()}")
+    print(f"Resumen Fase 4 y 5: {RESUMEN_FASE_45_PATH.relative_to(BASE_DIR).as_posix()}")
+    print()
+    print("Resultado final: Fase 2, Fase 3, Fase 4 y Fase 5 ejecutadas con evidencia reproducible.")
     return 0
 
 
