@@ -5,6 +5,8 @@ import sys
 from pathlib import Path
 
 from config import (
+    ANALISIS_EXPLORATORIO_MD_PATH,
+    AREAS_VERDES_BOTTOM10_FIGURE_PATH,
     BASE_DIR,
     COBERTURA_TERRITORIAL,
     CONFLICTOS_FUENTES_PATH,
@@ -12,15 +14,22 @@ from config import (
     DIM_COMUNA_BASE_REQUIRED_COLUMNS,
     FINAL_DATASET_PATH,
     HOMOLOGACION_COMUNAS_PATH,
+    INDICE_REZAGO_TOP10_FIGURE_PATH,
+    IPP_BOTTOM10_FIGURE_PATH,
     KEY_PATHS,
     LOG_INTEGRACION_PATH,
     METADATA_PATH,
     METADATA_REQUIRED_COLUMNS,
     PERFILADO_FUENTES_PATH,
+    POBREZA_AREAS_SCATTER_FIGURE_PATH,
+    POBREZA_TOP10_FIGURE_PATH,
     PROJECT_NAME,
     PROJECT_PHASE,
     PROJECT_TITLE,
     RAW_SOURCES,
+    RANKING_AREAS_VERDES_CSV_PATH,
+    RANKING_IPP_CSV_PATH,
+    RANKING_POBREZA_CSV_PATH,
     REPORTE_CARGA_SQLITE_MD_PATH,
     REPORTE_CONSULTAS_SQLITE_CSV_PATH,
     REPORTE_VALIDACION_FINAL_CSV_PATH,
@@ -31,11 +40,13 @@ from config import (
     RESUMEN_TRANSFORMACIONES_PATH,
     SQLITE_PATH,
     STAGING_SOURCE_PATHS,
+    TABLAS_HALLAZGOS_FASE9_CSV_PATH,
     TIPO_ANALISIS,
     UNIDAD_ANALISIS,
     VALIDACION_STAGING_PATH,
     ensure_directories,
 )
+from analyze import run_phase_9_analysis
 from comunas import run_phase_3_master_key
 from extract import run_phase_2_profile
 from integrate import run_phase_6_integration
@@ -234,6 +245,7 @@ def main() -> int:
     print("Paso 6: integracion del dataset final comunal desde staging.")
     print("Paso 7: validacion formal del dataset final integrado.")
     print("Paso 8: carga final a SQLite y validacion formal de la base resultante.")
+    print("Paso 9: analisis exploratorio reproducible y outputs para comunicar.")
     print()
 
     print_section("Estructura minima", validate_directories(errors))
@@ -375,7 +387,7 @@ def main() -> int:
     )
     print()
     print(
-        "Resultado final: Fases 1 a 7 ejecutadas; el dataset final queda "
+        "Resultado parcial: Fases 1 a 7 ejecutadas; el dataset final queda "
         f"{'apto' if final_validation.is_valid else 'no apto'} para pasar a SQLite."
     )
     print()
@@ -406,6 +418,65 @@ def main() -> int:
     print(
         "  - Reporte de consultas: "
         f"{REPORTE_CONSULTAS_SQLITE_CSV_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print()
+
+    phase_9_result = run_phase_9_analysis(
+        final_df=phase_6_result["final_dataset"],
+        dataset_path=FINAL_DATASET_PATH,
+        sqlite_path=SQLITE_PATH,
+    )
+    print("Fase 9 - Analisis exploratorio y hallazgos")
+    consistency_result = phase_9_result["consistency_result"]
+    print(
+        "  [OK] Consistencia CSV/SQLite: "
+        f"filas_csv={consistency_result['csv_rows']}; "
+        f"filas_sqlite={consistency_result['sqlite_rows']}; "
+        f"csv_only={list(consistency_result['csv_only_codes'])}; "
+        f"sqlite_only={list(consistency_result['sqlite_only_codes'])}"
+    )
+    print(
+        "  [OK] Comunas rezagadas en al menos dos dimensiones: "
+        f"{len(phase_9_result['cross_tables']['rezagadas_en_dos_o_mas_dimensiones'])}"
+    )
+    print(
+        "  [OK] Reporte analitico: "
+        f"{ANALISIS_EXPLORATORIO_MD_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print()
+    print("Outputs Fase 9:")
+    print(
+        f"  - Analisis exploratorio: {ANALISIS_EXPLORATORIO_MD_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"  - Tablas de hallazgos: {TABLAS_HALLAZGOS_FASE9_CSV_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"  - Ranking areas verdes: {RANKING_AREAS_VERDES_CSV_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"  - Ranking pobreza: {RANKING_POBREZA_CSV_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"  - Ranking IPP: {RANKING_IPP_CSV_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        "  - Figura areas verdes: "
+        f"{AREAS_VERDES_BOTTOM10_FIGURE_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"  - Figura pobreza: {POBREZA_TOP10_FIGURE_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"  - Figura IPP: {IPP_BOTTOM10_FIGURE_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        "  - Figura scatter pobreza/areas: "
+        f"{POBREZA_AREAS_SCATTER_FIGURE_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        "  - Figura indice de rezago: "
+        f"{INDICE_REZAGO_TOP10_FIGURE_PATH.relative_to(BASE_DIR).as_posix()}"
     )
     return 0
 

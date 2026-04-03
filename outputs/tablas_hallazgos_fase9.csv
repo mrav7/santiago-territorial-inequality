@@ -1,0 +1,45 @@
+tabla,orden,detalle,codigo_comuna,nombre_comuna,poblacion,pobreza_ingresos_pct,areas_verdes_m2_hab,ipp_pesos_hab,quintil_rezago_areas_verdes,quintil_rezago_pobreza,quintil_rezago_ipp,dimensiones_rezago_critico,indice_rezago_territorial
+top_5_menor_areas_verdes_m2_hab,1,Ranking ascendente por areas_verdes_m2_hab.,13104,CONCHALI,121587,6.0799,0.603247,88427.175603,5,5,4,2,14
+top_5_menor_areas_verdes_m2_hab,2,Ranking ascendente por areas_verdes_m2_hab.,13102,CERRILLOS,85041,5.2287,0.878035,225846.838584,5,4,2,1,11
+top_5_menor_areas_verdes_m2_hab,3,Ranking ascendente por areas_verdes_m2_hab.,13108,INDEPENDENCIA,116943,5.834,0.878941,116100.715733,5,4,3,1,12
+top_5_menor_areas_verdes_m2_hab,4,Ranking ascendente por areas_verdes_m2_hab.,13109,LA CISTERNA,103157,4.0923,0.904776,109774.974069,5,3,4,1,12
+top_5_menor_areas_verdes_m2_hab,5,Ranking ascendente por areas_verdes_m2_hab.,13130,SAN MIGUEL,150829,2.1727,1.154347,114842.245192,5,2,4,1,11
+top_5_mayor_areas_verdes_m2_hab,1,Ranking descendente por areas_verdes_m2_hab.,13125,QUILICURA,205624,5.2223,3931.614773,243326.134109,1,4,2,0,7
+top_5_mayor_areas_verdes_m2_hab,2,Ranking descendente por areas_verdes_m2_hab.,13113,LA REINA,89870,1.6027,21.734172,345157.616557,1,1,1,0,3
+top_5_mayor_areas_verdes_m2_hab,3,Ranking descendente por areas_verdes_m2_hab.,13123,PROVIDENCIA,143974,1.3219,20.172865,697639.671052,1,1,1,0,3
+top_5_mayor_areas_verdes_m2_hab,4,Ranking descendente por areas_verdes_m2_hab.,13122,PEÑALOLEN,236478,3.2417,13.012166,154866.258172,1,2,3,0,6
+top_5_mayor_areas_verdes_m2_hab,5,Ranking descendente por areas_verdes_m2_hab.,13119,MAIPU,503635,3.2512,7.97995,91762.290151,1,2,4,0,7
+top_5_mayor_pobreza_ingresos_pct,1,Ranking descendente por pobreza_ingresos_pct.,13112,LA PINTANA,175421,9.2938,4.309741,38281.739358,3,5,5,2,13
+top_5_mayor_pobreza_ingresos_pct,2,Ranking descendente por pobreza_ingresos_pct.,13131,SAN RAMON,76002,6.8821,5.256743,54032.104418,3,5,5,2,13
+top_5_mayor_pobreza_ingresos_pct,3,Ranking descendente por pobreza_ingresos_pct.,13116,LO ESPEJO,87295,6.7817,3.344647,48908.769116,4,5,5,2,14
+top_5_mayor_pobreza_ingresos_pct,4,Ranking descendente por pobreza_ingresos_pct.,13105,EL BOSQUE,155257,6.1982,2.780551,45941.619379,4,5,5,2,14
+top_5_mayor_pobreza_ingresos_pct,5,Ranking descendente por pobreza_ingresos_pct.,13104,CONCHALI,121587,6.0799,0.603247,88427.175603,5,5,4,2,14
+top_5_menor_pobreza_ingresos_pct,1,Ranking ascendente por pobreza_ingresos_pct.,13132,VITACURA,86420,0.891,7.685189,1001090.685027,1,1,1,0,3
+top_5_menor_pobreza_ingresos_pct,2,Ranking ascendente por pobreza_ingresos_pct.,13115,LO BARNECHEA,112620,0.9028,7.942843,1048997.007636,1,1,1,0,3
+top_5_menor_pobreza_ingresos_pct,3,Ranking ascendente por pobreza_ingresos_pct.,13114,LAS CONDES,296134,0.9093,3.813767,743724.158658,3,1,1,0,5
+top_5_menor_pobreza_ingresos_pct,4,Ranking ascendente por pobreza_ingresos_pct.,13123,PROVIDENCIA,143974,1.3219,20.172865,697639.671052,1,1,1,0,3
+top_5_menor_pobreza_ingresos_pct,5,Ranking ascendente por pobreza_ingresos_pct.,13120,ÑUÑOA,241467,1.4888,2.653915,192108.702224,5,1,2,1,8
+top_5_menor_ipp_pesos_hab,1,Ranking ascendente por ipp_pesos_hab.,13103,CERRO NAVIA,127250,6.0135,5.851764,27701.980354,2,5,5,2,12
+top_5_menor_ipp_pesos_hab,2,Ranking ascendente por ipp_pesos_hab.,13112,LA PINTANA,175421,9.2938,4.309741,38281.739358,3,5,5,2,13
+top_5_menor_ipp_pesos_hab,3,Ranking ascendente por ipp_pesos_hab.,13117,LO PRADO,91290,5.3267,3.76131,39312.805346,4,4,5,1,13
+top_5_menor_ipp_pesos_hab,4,Ranking ascendente por ipp_pesos_hab.,13105,EL BOSQUE,155257,6.1982,2.780551,45941.619379,4,5,5,2,14
+top_5_menor_ipp_pesos_hab,5,Ranking ascendente por ipp_pesos_hab.,13111,LA GRANJA,112022,6.0302,6.233793,47063.353627,2,5,5,2,12
+top_5_mayor_ipp_pesos_hab,1,Ranking descendente por ipp_pesos_hab.,13115,LO BARNECHEA,112620,0.9028,7.942843,1048997.007636,1,1,1,0,3
+top_5_mayor_ipp_pesos_hab,2,Ranking descendente por ipp_pesos_hab.,13132,VITACURA,86420,0.891,7.685189,1001090.685027,1,1,1,0,3
+top_5_mayor_ipp_pesos_hab,3,Ranking descendente por ipp_pesos_hab.,13114,LAS CONDES,296134,0.9093,3.813767,743724.158658,3,1,1,0,5
+top_5_mayor_ipp_pesos_hab,4,Ranking descendente por ipp_pesos_hab.,13123,PROVIDENCIA,143974,1.3219,20.172865,697639.671052,1,1,1,0,3
+top_5_mayor_ipp_pesos_hab,5,Ranking descendente por ipp_pesos_hab.,13107,HUECHURABA,101808,4.2766,1.644841,424803.227644,5,3,1,1,9
+peor_quintil_pobreza_y_areas_verdes,1,Comunas en peor quintil simultaneo de pobreza y areas verdes por habitante.,13104,CONCHALI,121587,6.0799,0.603247,88427.175603,5,5,4,2,14
+peor_quintil_pobreza_y_ipp,1,Comunas en peor quintil simultaneo de pobreza e IPP por habitante.,13112,LA PINTANA,175421,9.2938,4.309741,38281.739358,3,5,5,2,13
+peor_quintil_pobreza_y_ipp,2,Comunas en peor quintil simultaneo de pobreza e IPP por habitante.,13131,SAN RAMON,76002,6.8821,5.256743,54032.104418,3,5,5,2,13
+peor_quintil_pobreza_y_ipp,3,Comunas en peor quintil simultaneo de pobreza e IPP por habitante.,13116,LO ESPEJO,87295,6.7817,3.344647,48908.769116,4,5,5,2,14
+peor_quintil_pobreza_y_ipp,4,Comunas en peor quintil simultaneo de pobreza e IPP por habitante.,13105,EL BOSQUE,155257,6.1982,2.780551,45941.619379,4,5,5,2,14
+peor_quintil_pobreza_y_ipp,5,Comunas en peor quintil simultaneo de pobreza e IPP por habitante.,13111,LA GRANJA,112022,6.0302,6.233793,47063.353627,2,5,5,2,12
+peor_quintil_pobreza_y_ipp,6,Comunas en peor quintil simultaneo de pobreza e IPP por habitante.,13103,CERRO NAVIA,127250,6.0135,5.851764,27701.980354,2,5,5,2,12
+rezagadas_en_dos_o_mas_dimensiones,1,Comunas con rezago critico en al menos dos de las tres dimensiones.,13116,LO ESPEJO,87295,6.7817,3.344647,48908.769116,4,5,5,2,14
+rezagadas_en_dos_o_mas_dimensiones,2,Comunas con rezago critico en al menos dos de las tres dimensiones.,13105,EL BOSQUE,155257,6.1982,2.780551,45941.619379,4,5,5,2,14
+rezagadas_en_dos_o_mas_dimensiones,3,Comunas con rezago critico en al menos dos de las tres dimensiones.,13104,CONCHALI,121587,6.0799,0.603247,88427.175603,5,5,4,2,14
+rezagadas_en_dos_o_mas_dimensiones,4,Comunas con rezago critico en al menos dos de las tres dimensiones.,13112,LA PINTANA,175421,9.2938,4.309741,38281.739358,3,5,5,2,13
+rezagadas_en_dos_o_mas_dimensiones,5,Comunas con rezago critico en al menos dos de las tres dimensiones.,13131,SAN RAMON,76002,6.8821,5.256743,54032.104418,3,5,5,2,13
+rezagadas_en_dos_o_mas_dimensiones,6,Comunas con rezago critico en al menos dos de las tres dimensiones.,13111,LA GRANJA,112022,6.0302,6.233793,47063.353627,2,5,5,2,12
+rezagadas_en_dos_o_mas_dimensiones,7,Comunas con rezago critico en al menos dos de las tres dimensiones.,13103,CERRO NAVIA,127250,6.0135,5.851764,27701.980354,2,5,5,2,12

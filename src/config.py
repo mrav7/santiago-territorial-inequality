@@ -14,7 +14,7 @@ PROJECT_TITLE = (
 )
 COURSE_NAME = "Inteligencia de Negocios"
 LAB_NAME = "Lab 1 - Proceso ETL"
-PROJECT_PHASE = "Fase 8"
+PROJECT_PHASE = "Fase 9"
 
 # Alcance definido
 UNIDAD_ANALISIS = "Una fila = una comuna"
@@ -32,6 +32,7 @@ DOCS_INFORME_DIR = DOCS_DIR / "informe"
 DOCS_PRESENTACION_DIR = DOCS_DIR / "presentacion"
 NOTEBOOKS_DIR = BASE_DIR / "notebooks"
 OUTPUTS_DIR = BASE_DIR / "outputs"
+FIGURES_DIR = OUTPUTS_DIR / "figures"
 SRC_DIR = BASE_DIR / "src"
 
 REQUIRED_DIRS = (
@@ -69,6 +70,17 @@ REPORTE_VALIDACION_FINAL_CSV_PATH = OUTPUTS_DIR / "reporte_validacion_final.csv"
 REPORTE_VALIDACION_FINAL_MD_PATH = OUTPUTS_DIR / "reporte_validacion_final.md"
 REPORTE_CARGA_SQLITE_MD_PATH = OUTPUTS_DIR / "reporte_carga_sqlite.md"
 REPORTE_CONSULTAS_SQLITE_CSV_PATH = OUTPUTS_DIR / "reporte_consultas_sqlite.csv"
+ANALISIS_EXPLORATORIO_MD_PATH = OUTPUTS_DIR / "analisis_exploratorio.md"
+TABLAS_HALLAZGOS_FASE9_CSV_PATH = OUTPUTS_DIR / "tablas_hallazgos_fase9.csv"
+RANKING_AREAS_VERDES_CSV_PATH = OUTPUTS_DIR / "ranking_areas_verdes.csv"
+RANKING_POBREZA_CSV_PATH = OUTPUTS_DIR / "ranking_pobreza.csv"
+RANKING_IPP_CSV_PATH = OUTPUTS_DIR / "ranking_ipp.csv"
+INDICE_REZAGO_TERRITORIAL_CSV_PATH = OUTPUTS_DIR / "indice_rezago_territorial.csv"
+AREAS_VERDES_BOTTOM10_FIGURE_PATH = FIGURES_DIR / "areas_verdes_m2_hab_bottom10.png"
+POBREZA_TOP10_FIGURE_PATH = FIGURES_DIR / "pobreza_ingresos_top10.png"
+IPP_BOTTOM10_FIGURE_PATH = FIGURES_DIR / "ipp_pesos_hab_bottom10.png"
+POBREZA_AREAS_SCATTER_FIGURE_PATH = FIGURES_DIR / "pobreza_vs_areas_verdes_scatter.png"
+INDICE_REZAGO_TOP10_FIGURE_PATH = FIGURES_DIR / "indice_rezago_territorial_top10.png"
 
 EXPECTED_DIM_COMUNA_ROWS = 32
 EXPECTED_PROVINCIA = "SANTIAGO"
