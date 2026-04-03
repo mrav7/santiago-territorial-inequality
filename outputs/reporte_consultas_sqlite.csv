@@ -1,0 +1,22 @@
+consulta,orden,tabla,codigo_comuna,nombre_comuna,valor,detalle
+conteo_filas_por_tabla,,dim_comuna,,,32.0,conteo de filas
+conteo_filas_por_tabla,,fact_desigualdad_comunal,,,32.0,conteo de filas
+conteo_filas_por_tabla,,metadata_fuentes,,,4.0,conteo de filas
+top_5_menor_areas_verdes_m2_hab,1.0,fact_desigualdad_comunal,13104,CONCHALI,0.603247,areas_verdes_m2_hab
+top_5_menor_areas_verdes_m2_hab,2.0,fact_desigualdad_comunal,13102,CERRILLOS,0.878035,areas_verdes_m2_hab
+top_5_menor_areas_verdes_m2_hab,3.0,fact_desigualdad_comunal,13108,INDEPENDENCIA,0.878941,areas_verdes_m2_hab
+top_5_menor_areas_verdes_m2_hab,4.0,fact_desigualdad_comunal,13109,LA CISTERNA,0.904776,areas_verdes_m2_hab
+top_5_menor_areas_verdes_m2_hab,5.0,fact_desigualdad_comunal,13130,SAN MIGUEL,1.154347,areas_verdes_m2_hab
+top_5_mayor_pobreza_ingresos_pct,1.0,fact_desigualdad_comunal,13112,LA PINTANA,9.2938,pobreza_ingresos_pct
+top_5_mayor_pobreza_ingresos_pct,2.0,fact_desigualdad_comunal,13131,SAN RAMON,6.8821,pobreza_ingresos_pct
+top_5_mayor_pobreza_ingresos_pct,3.0,fact_desigualdad_comunal,13116,LO ESPEJO,6.7817,pobreza_ingresos_pct
+top_5_mayor_pobreza_ingresos_pct,4.0,fact_desigualdad_comunal,13105,EL BOSQUE,6.1982,pobreza_ingresos_pct
+top_5_mayor_pobreza_ingresos_pct,5.0,fact_desigualdad_comunal,13104,CONCHALI,6.0799,pobreza_ingresos_pct
+top_5_menor_ipp_pesos_hab,1.0,fact_desigualdad_comunal,13103,CERRO NAVIA,27701.980354,ipp_pesos_hab
+top_5_menor_ipp_pesos_hab,2.0,fact_desigualdad_comunal,13112,LA PINTANA,38281.739358,ipp_pesos_hab
+top_5_menor_ipp_pesos_hab,3.0,fact_desigualdad_comunal,13117,LO PRADO,39312.805346,ipp_pesos_hab
+top_5_menor_ipp_pesos_hab,4.0,fact_desigualdad_comunal,13105,EL BOSQUE,45941.619379,ipp_pesos_hab
+top_5_menor_ipp_pesos_hab,5.0,fact_desigualdad_comunal,13111,LA GRANJA,47063.353627,ipp_pesos_hab
+unicidad_codigo_fact,1.0,fact_desigualdad_comunal,,,0.0,cantidad de codigos duplicados detectados en fact
+cobertura_fact_vs_dim,1.0,fact_desigualdad_comunal,,,0.0,codigos presentes en fact y ausentes en dim
+cobertura_dim_vs_fact,1.0,dim_comuna,,,0.0,codigos presentes en dim y ausentes en fact

@@ -14,7 +14,7 @@ PROJECT_TITLE = (
 )
 COURSE_NAME = "Inteligencia de Negocios"
 LAB_NAME = "Lab 1 - Proceso ETL"
-PROJECT_PHASE = "Fase 7"
+PROJECT_PHASE = "Fase 8"
 
 # Alcance definido
 UNIDAD_ANALISIS = "Una fila = una comuna"
@@ -54,7 +54,7 @@ REQUIREMENTS_PATH = BASE_DIR / "requirements.txt"
 METADATA_PATH = RAW_DIR / "metadata_fuentes.csv"
 DIM_COMUNA_BASE_PATH = RAW_DIR / "dim_comuna_base.csv"
 
-# Ruta reservada para fases posteriores. En Fase 1 no se genera todavia.
+# Ruta estable para la carga final a SQLite en Fase 8.
 SQLITE_PATH = DB_DIR / "lab1_desigualdad.sqlite"
 PERFILADO_FUENTES_PATH = OUTPUTS_DIR / "perfilado_fuentes.xlsx"
 CONFLICTOS_FUENTES_PATH = OUTPUTS_DIR / "conflictos_fuentes.md"
@@ -67,6 +67,8 @@ LOG_INTEGRACION_PATH = OUTPUTS_DIR / "log_integracion.md"
 RESUMEN_DATASET_FINAL_PATH = OUTPUTS_DIR / "resumen_dataset_final.md"
 REPORTE_VALIDACION_FINAL_CSV_PATH = OUTPUTS_DIR / "reporte_validacion_final.csv"
 REPORTE_VALIDACION_FINAL_MD_PATH = OUTPUTS_DIR / "reporte_validacion_final.md"
+REPORTE_CARGA_SQLITE_MD_PATH = OUTPUTS_DIR / "reporte_carga_sqlite.md"
+REPORTE_CONSULTAS_SQLITE_CSV_PATH = OUTPUTS_DIR / "reporte_consultas_sqlite.csv"
 
 EXPECTED_DIM_COMUNA_ROWS = 32
 EXPECTED_PROVINCIA = "SANTIAGO"

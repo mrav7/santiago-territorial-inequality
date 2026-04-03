@@ -21,12 +21,15 @@ from config import (
     PROJECT_PHASE,
     PROJECT_TITLE,
     RAW_SOURCES,
+    REPORTE_CARGA_SQLITE_MD_PATH,
+    REPORTE_CONSULTAS_SQLITE_CSV_PATH,
     REPORTE_VALIDACION_FINAL_CSV_PATH,
     REPORTE_VALIDACION_FINAL_MD_PATH,
     REQUIRED_DIRS,
     RESUMEN_DATASET_FINAL_PATH,
     RESUMEN_HOMOLOGACION_PATH,
     RESUMEN_TRANSFORMACIONES_PATH,
+    SQLITE_PATH,
     STAGING_SOURCE_PATHS,
     TIPO_ANALISIS,
     UNIDAD_ANALISIS,
@@ -36,6 +39,7 @@ from config import (
 from comunas import run_phase_3_master_key
 from extract import run_phase_2_profile
 from integrate import run_phase_6_integration
+from load import run_phase_8_load
 from transform import extract_all_to_staging
 from validate import run_phase_5_validation, run_phase_7_validation
 
@@ -229,7 +233,7 @@ def main() -> int:
     print("Paso 5: transformacion y validacion de staging por fuente.")
     print("Paso 6: integracion del dataset final comunal desde staging.")
     print("Paso 7: validacion formal del dataset final integrado.")
-    print("Este proceso aun no genera SQLite.")
+    print("Paso 8: carga final a SQLite y validacion formal de la base resultante.")
     print()
 
     print_section("Estructura minima", validate_directories(errors))
@@ -372,7 +376,36 @@ def main() -> int:
     print()
     print(
         "Resultado final: Fases 1 a 7 ejecutadas; el dataset final queda "
-        f"{'apto' if final_validation.is_valid else 'no apto'} para pasar a SQLite en una fase posterior."
+        f"{'apto' if final_validation.is_valid else 'no apto'} para pasar a SQLite."
+    )
+    print()
+
+    phase_8_result = run_phase_8_load(
+        final_df=phase_6_result["final_dataset"],
+        dim_base=phase_3_result["master_dimension"],
+        dataset_path=FINAL_DATASET_PATH,
+    )
+    print("Fase 8 - Carga final a SQLite")
+    for table_name, row_count in phase_8_result["row_counts"].items():
+        print(f"  [OK] Tabla {table_name}: {row_count} filas")
+    print(
+        "  [OK] Cobertura dim/fact: "
+        f"fact_sin_dim={phase_8_result['coverage']['fact_without_dim']}; "
+        f"dim_sin_fact={phase_8_result['coverage']['dim_without_fact']}"
+    )
+    print(
+        "  [OK] Base SQLite generada: "
+        f"{SQLITE_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print()
+    print("Outputs Fase 8:")
+    print(f"  - SQLite: {SQLITE_PATH.relative_to(BASE_DIR).as_posix()}")
+    print(
+        f"  - Reporte de carga: {REPORTE_CARGA_SQLITE_MD_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        "  - Reporte de consultas: "
+        f"{REPORTE_CONSULTAS_SQLITE_CSV_PATH.relative_to(BASE_DIR).as_posix()}"
     )
     return 0
 
