@@ -21,6 +21,8 @@ from config import (
     PROJECT_PHASE,
     PROJECT_TITLE,
     RAW_SOURCES,
+    REPORTE_VALIDACION_FINAL_CSV_PATH,
+    REPORTE_VALIDACION_FINAL_MD_PATH,
     REQUIRED_DIRS,
     RESUMEN_DATASET_FINAL_PATH,
     RESUMEN_HOMOLOGACION_PATH,
@@ -35,7 +37,7 @@ from comunas import run_phase_3_master_key
 from extract import run_phase_2_profile
 from integrate import run_phase_6_integration
 from transform import extract_all_to_staging
-from validate import run_phase_5_validation
+from validate import run_phase_5_validation, run_phase_7_validation
 
 
 def relpath(path: Path) -> str:
@@ -226,7 +228,8 @@ def main() -> int:
     print("Paso 4: extraccion reproducible a staging por fuente.")
     print("Paso 5: transformacion y validacion de staging por fuente.")
     print("Paso 6: integracion del dataset final comunal desde staging.")
-    print("Este proceso aun no genera SQLite ni cierra la validacion final del laboratorio.")
+    print("Paso 7: validacion formal del dataset final integrado.")
+    print("Este proceso aun no genera SQLite.")
     print()
 
     print_section("Estructura minima", validate_directories(errors))
@@ -347,9 +350,29 @@ def main() -> int:
         f"  - Resumen dataset final: {RESUMEN_DATASET_FINAL_PATH.relative_to(BASE_DIR).as_posix()}"
     )
     print()
+    phase_7_result = run_phase_7_validation(
+        dim_base=phase_3_result["master_dimension"],
+        dataset_path=FINAL_DATASET_PATH,
+    )
+    final_validation = phase_7_result["validation_result"]
+    print("Fase 7 - Validacion formal del dataset final")
+    for check in final_validation.checks:
+        print(
+            f"  [{'OK' if check.is_valid else 'ERROR'}] {check.check_id}: "
+            f"{check.observed_value}"
+        )
+    print()
+    print("Outputs Fase 7:")
     print(
-        "Resultado final: Fases 1 a 6 ejecutadas con dataset final integrado; "
-        "SQLite y validacion final completa quedan pendientes para fases posteriores."
+        f"  - Reporte CSV: {REPORTE_VALIDACION_FINAL_CSV_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print(
+        f"  - Reporte Markdown: {REPORTE_VALIDACION_FINAL_MD_PATH.relative_to(BASE_DIR).as_posix()}"
+    )
+    print()
+    print(
+        "Resultado final: Fases 1 a 7 ejecutadas; el dataset final queda "
+        f"{'apto' if final_validation.is_valid else 'no apto'} para pasar a SQLite en una fase posterior."
     )
     return 0
 

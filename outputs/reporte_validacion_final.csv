@@ -1,0 +1,40 @@
+categoria,check_id,descripcion,resultado,valor_observado,criterio,detalle
+check,columnas_esperadas,El dataset final contiene exactamente las columnas esperadas.,OK,codigo_comuna | nombre_comuna | poblacion | anio_poblacion | pobreza_ingresos_pct | anio_pobreza | areas_verdes_m2 | anio_areas_verdes | ipp_miles_pesos | anio_ingresos | areas_verdes_m2_hab | ipp_pesos_hab,codigo_comuna | nombre_comuna | poblacion | anio_poblacion | pobreza_ingresos_pct | anio_pobreza | areas_verdes_m2 | anio_areas_verdes | ipp_miles_pesos | anio_ingresos | areas_verdes_m2_hab | ipp_pesos_hab,Sin diferencias de esquema.
+check,fila_por_comuna,Existe una sola fila por comuna.,OK,filas=32; comunas_unicas=32,filas == comunas_unicas,Sin multiplicacion de filas por comuna.
+check,codigo_comuna_no_nulo,`codigo_comuna` no contiene nulos.,OK,0,0,Llave primaria completa.
+check,codigo_comuna_formato,`codigo_comuna` mantiene formato string de 5 digitos.,OK,OK,regex ^\d{5}$,Todos los codigos cumplen el formato esperado.
+check,codigo_comuna_unico,`codigo_comuna` es unico.,OK,0,0,Sin duplicados por llave.
+check,cantidad_comunas,El dataset final contiene exactamente 32 comunas.,OK,32,32,Cobertura total observada.
+check,cobertura_dim_base,La cobertura comunal coincide con `dim_comuna_base.csv`.,OK,faltantes=[]; extras=[],sin faltantes ni extras,Cobertura exacta contra la base maestra.
+check,nombre_comuna_base,`nombre_comuna` coincide con la base maestra.,OK,0,0,Los nombres finales preservan la base maestra.
+check,convertibilidad_numerica,Las columnas numericas son convertibles a tipo numerico razonable.,OK,poblacion=0; anio_poblacion=0; pobreza_ingresos_pct=0; anio_pobreza=0; areas_verdes_m2=0; anio_areas_verdes=0; ipp_miles_pesos=0; anio_ingresos=0; areas_verdes_m2_hab=0; ipp_pesos_hab=0,0 errores de conversion,Todas las columnas numericas son convertibles.
+check,anios_referencia,Los anios de referencia permanecen consistentes con Fase 6.,OK,anio_poblacion=[2024]; anio_pobreza=[2022]; anio_areas_verdes=[2024]; anio_ingresos=[2024],anio_poblacion=[2024]; anio_pobreza=[2022]; anio_areas_verdes=[2024]; anio_ingresos=[2024],Anios de referencia consistentes.
+check,poblacion_positiva,`poblacion` es estrictamente mayor que 0.,OK,0,0,Toda la poblacion es positiva.
+check,pobreza_rango,`pobreza_ingresos_pct` queda entre 0 y 100 cuando hay dato.,OK,0,0,La variable de pobreza esta dentro de rango.
+check,areas_verdes_no_negativas,`areas_verdes_m2` es no negativa cuando hay dato.,OK,0,0,Sin areas verdes negativas.
+check,ipp_no_negativo,`ipp_miles_pesos` es no negativo cuando hay dato.,OK,0,0,Sin IPP negativos.
+check,areas_verdes_m2_hab_sin_inf,`areas_verdes_m2_hab` no contiene infinitos.,OK,0,0,Sin infinitos en areas verdes por habitante.
+check,ipp_pesos_hab_sin_inf,`ipp_pesos_hab` no contiene infinitos.,OK,0,0,Sin infinitos en IPP por habitante.
+check,apto_para_sqlite,El dataset final es apto para pasar a Fase 8 / carga a SQLite.,OK,APTO,APTO,El dataset final cumple los criterios estructurales y de integridad requeridos.
+null_count,nulos_codigo_comuna,Nulos observados en `codigo_comuna`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_nombre_comuna,Nulos observados en `nombre_comuna`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_poblacion,Nulos observados en `poblacion`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_anio_poblacion,Nulos observados en `anio_poblacion`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_pobreza_ingresos_pct,Nulos observados en `pobreza_ingresos_pct`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_anio_pobreza,Nulos observados en `anio_pobreza`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_areas_verdes_m2,Nulos observados en `areas_verdes_m2`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_anio_areas_verdes,Nulos observados en `anio_areas_verdes`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_ipp_miles_pesos,Nulos observados en `ipp_miles_pesos`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_anio_ingresos,Nulos observados en `anio_ingresos`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_areas_verdes_m2_hab,Nulos observados en `areas_verdes_m2_hab`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+null_count,nulos_ipp_pesos_hab,Nulos observados en `ipp_pesos_hab`.,INFO,0,conteo >= 0,Conteo de nulos por columna del dataset final.
+numeric_convertibility,convertibilidad_poblacion,Valores no convertibles en `poblacion`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_anio_poblacion,Valores no convertibles en `anio_poblacion`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_pobreza_ingresos_pct,Valores no convertibles en `pobreza_ingresos_pct`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_anio_pobreza,Valores no convertibles en `anio_pobreza`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_areas_verdes_m2,Valores no convertibles en `areas_verdes_m2`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_anio_areas_verdes,Valores no convertibles en `anio_areas_verdes`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_ipp_miles_pesos,Valores no convertibles en `ipp_miles_pesos`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_anio_ingresos,Valores no convertibles en `anio_ingresos`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_areas_verdes_m2_hab,Valores no convertibles en `areas_verdes_m2_hab`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
+numeric_convertibility,convertibilidad_ipp_pesos_hab,Valores no convertibles en `ipp_pesos_hab`.,OK,0,0,Cantidad de celdas no nulas que no pudieron convertirse a numerico.
