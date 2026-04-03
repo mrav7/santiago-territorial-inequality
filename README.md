@@ -1,263 +1,99 @@
-# Laboratorio I — Proceso ETL
-## Desigualdad territorial en Santiago: áreas verdes, pobreza por ingresos y capacidad municipal por comuna
+# lab1-bi-1s2026
 
-### Inteligencia de Negocios — ICI6442
-**Período:** 1S 2026  
-**Profesor:** Ignacio Toro Cabrera  
-**Escuela:** Escuela de Informática PUCV  
+Repositorio del **Lab 1 - Proceso ETL** del curso **Inteligencia de Negocios**.
 
----
+## Tema y alcance
 
-## Integrantes
+- Tema: desigualdad territorial en Santiago: areas verdes, pobreza por ingresos y capacidad municipal por comuna.
+- Unidad de analisis: una fila = una comuna.
+- Cobertura: Provincia de Santiago.
+- Tipo de analisis: comparativo y descriptivo, no causal.
 
-- Matías Andrade Valenzuela
+## Estado real del proyecto
 
----
+El repositorio esta en **Fase 1**. Actualmente contiene:
 
-## 1. Descripción del proyecto
+- las 4 fuentes raw reales A-D versionadas en `data/raw/`;
+- `data/raw/dim_comuna_base.csv` como dimension base de comunas;
+- `data/raw/metadata_fuentes.csv` alineado con los archivos reales;
+- un preflight minimo en `src/main.py` para validar estructura y consistencia.
 
-Este repositorio contiene el desarrollo del **Laboratorio I de Inteligencia de Negocios (ICI6442)**, centrado en la implementación de un proceso **ETL (Extract, Transform, Load)** completo y reproducible.
+Todavia **no** se implementa el ETL completo. `src/main.py` no genera staging, dataset final ni SQLite; solo verifica que la base de Fase 1 este consistente y lista para auditoria o para iniciar Fase 2.
 
-El proyecto aborda el problema de la **desigualdad territorial en Santiago**, integrando información comunal proveniente de múltiples fuentes públicas para construir un dataset limpio y estructurado que permita comparar tres dimensiones:
+## Ejecucion
 
-- disponibilidad de áreas verdes;
-- pobreza por ingresos;
-- capacidad municipal.
+Desde la raiz del repositorio:
 
-Desde la lógica del curso, la Inteligencia de Negocios busca transformar datos en información útil para apoyar la toma de decisiones, y el proceso ETL cumple un rol central en esa transformación al extraer, limpiar, integrar y cargar datos desde múltiples fuentes hacia una estructura final consistente.
+```bash
+python src/main.py
+```
 
----
+Si todas las validaciones pasan, el script informa que la base de Fase 1 fue verificada. Si encuentra inconsistencias, termina con error y detalla los problemas detectados.
 
-## 2. Objetivo general
+## Fuentes contempladas
 
-Desarrollar un proceso ETL completo y funcional que integre múltiples fuentes de datos comunales para construir un dataset final orientado al análisis descriptivo de desigualdad territorial en Santiago.
+| ID | Fuente | Archivo real |
+| --- | --- | --- |
+| A | SINIM - Areas Verdes | `data/raw/datos_municipales_20260402222841_Sin-Corrección-Monetaria.xls` |
+| B | SINIM - Capacidad Municipal | `data/raw/datos_municipales_20260402223904_Sin-Corrección-Monetaria.xls` |
+| C | Observatorio Social - Pobreza por Ingresos | `data/raw/estimaciones_tasa_pobreza_ingresos_comunas_2022.xlsx` |
+| D | Censo 2024 - Poblacion Comunal | `data/raw/D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx` |
 
-## 3. Objetivos específicos
+Los metadatos operativos de estas fuentes se registran en `data/raw/metadata_fuentes.csv`, incluyendo `archivo_origen`, `archivo_logico`, `hoja` y `skiprows`.
 
-- Extraer datos desde al menos cuatro fuentes públicas distintas.
-- Explorar las fuentes para identificar su estructura, calidad, tipos de atributos y conflictos potenciales.
-- Diseñar un modelo de datos y un mapa lógico de datos.
-- Aplicar transformaciones de limpieza, normalización, conversión e integración.
-- Generar un dataset final limpio por comuna.
-- Cargar el resultado final en formato CSV y en una base de datos SQLite.
-- Documentar técnica y metodológicamente todo el proceso.
+## Estrategia tecnica de lectura
 
----
+### Fuentes A y B (SINIM)
 
-## 4. Contexto académico
+Los archivos SINIM con extension `.xls` **no** son libros Excel binarios clasicos. Fueron validados como **SpreadsheetML/XML 2003** con hoja `Hoja1`.
 
-Este trabajo corresponde al **Laboratorio I** del curso **Inteligencia de Negocios (ICI6442)**. Según el programa del curso, los laboratorios evalúan progresivamente contenidos asociados a ETL, Data Warehouse, KDD, minería de datos y calidad de datos. En particular, el **Laboratorio 1** está enfocado en **Extracción, Transformación y Carga de Datos (ETL)**.
+Implicancias para Fase 2:
 
----
+- no asumir lectura directa con `pandas.read_excel()`;
+- parsear el XML de Excel 2003 o convertirlo previamente a una estructura tabular;
+- considerar `skiprows=2`, porque las dos primeras filas son encabezado descriptivo y la tercera contiene el encabezado tabular util.
 
-## 5. Descripción de la evaluación
+### Fuentes C y D
 
-De acuerdo con la pauta del laboratorio, este trabajo debe cumplir con los siguientes requerimientos:
+- Fuente C: lectura directa con `pandas.read_excel(sheet_name="Estimaciones", skiprows=2)`.
+- Fuente D: lectura directa con `pandas.read_excel(sheet_name="2", skiprows=3)`.
 
-- usar al menos **3 fuentes de datos** diferentes;
-- explorar estructura, calidad, tipos de atributos y conflictos;
-- diseñar un **modelo de datos**;
-- elaborar un **mapa lógico de datos**;
-- implementar un proceso **ETL completo**;
-- aplicar al menos **6 transformaciones**;
-- cargar el resultado a una base de datos o a un dataset limpio;
-- documentar el proceso en un informe técnico;
-- presentar el trabajo oralmente al curso.
-
-### Entregables exigidos
-
-- Informe en PDF  
-- Diapositivas en PDF  
-- Código fuente del ETL  
-- Datos originales o enlaces  
-- Dataset final transformado
-
-### Ponderación del laboratorio
-
-- **Presentación oral:** 60%
-- **Informe escrito:** 40%
-
-### Requisitos formales relevantes
-
-- grupos de **1 a 2 integrantes**;
-- todos los entregables deben estar completos;
-- penalización de **10 puntos por hora de retraso**;
-- el informe debe seguir el **formato escuela**;
-- la entrega final debe comprimirse en archivo `.7zip` con el nombre indicado por la pauta.
-
-### Fechas importantes del laboratorio
-
-- **Entrega:** viernes 10 de abril de 2026, 23:59
-- **Presentaciones:** viernes 17 de abril de 2026
-
----
-
-## 6. Alcance del trabajo
-
-Para este proyecto se fijaron las siguientes decisiones metodológicas:
-
-- **Tema:** Desigualdad territorial en Santiago: áreas verdes, pobreza por ingresos y capacidad municipal por comuna.
-- **Unidad de análisis:** una fila representa una comuna.
-- **Cobertura territorial:** Provincia de Santiago.
-- **Naturaleza del análisis:** comparativo y descriptivo.
-- **Corte analítico:** perfil comunal integrado a partir de indicadores recientes disponibles.
-
-Este proyecto no busca establecer relaciones causales, sino construir una base integrada y confiable para comparar comunas bajo tres dimensiones relevantes.
-
----
-
-## 7. Pregunta del proyecto
-
-**¿Cómo se expresa la desigualdad territorial entre comunas de Santiago al integrar indicadores de áreas verdes, pobreza por ingresos y capacidad municipal?**
-
-### Preguntas de apoyo
-
-- ¿Qué comunas presentan menos áreas verdes por habitante?
-- ¿Qué comunas combinan alta pobreza y baja disponibilidad relativa de áreas verdes?
-- ¿Qué diferencias se observan entre comunas con mayor y menor capacidad municipal?
-- ¿Qué comunas aparecen más rezagadas al combinar las tres dimensiones?
-
----
-
-## 8. Fuentes de datos
-
-El proyecto trabaja con **cuatro fuentes públicas**, superando el mínimo exigido por la pauta:
-
-### Fuente A — SINIM: áreas verdes
-Uso principal: medir superficie de áreas verdes con mantenimiento y, de manera complementaria, número de parques y plazas.
-
-### Fuente B — SINIM: capacidad municipal
-Uso principal: medir capacidad financiera local mediante indicadores como ingresos propios permanentes (IPP) e ingresos municipales totales.
-
-### Fuente C — Observatorio Social: pobreza por ingresos comunal
-Uso principal: medir vulnerabilidad socioeconómica mediante la tasa de pobreza por ingresos.
-
-### Fuente D — Censo 2024: población comunal
-Uso principal: obtener la población comunal para construir indicadores relativos y per cápita.
-
-> Las URLs exactas, fechas de descarga, formatos y observaciones de cada fuente deben quedar registradas en el archivo de metadatos del proyecto.
-
----
-
-## 9. Descripción del trabajo realizado
-
-El trabajo consiste en construir un pipeline ETL reproducible en Python que permita:
-
-1. **Extraer** los datos desde fuentes heterogéneas.
-2. **Perfilar** cada fuente para detectar problemas de calidad.
-3. **Estandarizar** nombres y códigos de comuna.
-4. **Transformar** los datos mediante reglas de limpieza y normalización.
-5. **Integrar** todas las fuentes en una tabla comunal única.
-6. **Derivar** indicadores comparables, como:
-   - áreas verdes por habitante;
-   - IPP por habitante.
-7. **Validar** la calidad del resultado final.
-8. **Cargar** el dataset final en CSV y SQLite.
-
-En términos conceptuales, el pipeline sigue la arquitectura tradicional de BI estudiada en el curso: capa de fuentes, integración ETL, almacenamiento de datos y soporte posterior al análisis y la visualización.
-
----
-
-## 10. Transformaciones esperadas
-
-Como parte del laboratorio, el proceso contempla al menos las siguientes transformaciones documentadas:
-
-- selección de columnas relevantes;
-- renombrado estandarizado de columnas;
-- normalización de nombres de comuna;
-- homologación de código de comuna;
-- conversión de tipos de datos;
-- limpieza de nulos o valores inválidos;
-- eliminación de duplicados;
-- filtrado territorial;
-- estandarización de unidades monetarias;
-- validación de rangos;
-- creación de métricas derivadas.
-
----
-
-## 11. Producto final esperado
-
-El resultado del proyecto corresponde a:
-
-- un **dataset final limpio** con una fila por comuna;
-- una base de datos **SQLite** con tablas estructuradas;
-- salidas auxiliares para validación, perfilado y análisis;
-- insumos para informe técnico y presentación oral.
-
-### Estructura general del dataset final
-
-Columnas mínimas esperadas:
-
-- `codigo_comuna`
-- `nombre_comuna`
-- `poblacion`
-- `anio_poblacion`
-- `pobreza_ingresos_pct`
-- `anio_pobreza`
-- `areas_verdes_m2`
-- `anio_areas_verdes`
-- `ipp_miles_pesos`
-- `anio_ingresos`
-- `areas_verdes_m2_hab`
-- `ipp_pesos_hab`
-
-### Tablas esperadas en SQLite
-
-- `dim_comuna`
-- `fact_desigualdad_comunal`
-- `metadata_fuentes`
-
----
-
-## 12. Stack tecnológico
-
-El entorno técnico recomendado para este proyecto es:
-
-- **Python 3.11**
-- **pandas**
-- **openpyxl**
-- **numpy**
-- **matplotlib**
-- **sqlite3**
-- **pathlib**
-- **re**
-- **unicodedata**
-- **Jupyter Notebook** para exploración auxiliar
-
-La convención técnica del proyecto establece que todo el pipeline debe ser reproducible desde `main.py`, sin trabajar directamente sobre los archivos en `raw/`, dejando resultados intermedios en `staging/` y resultados finales en `processed/` y SQLite.
-
----
-
-## 13. Estructura del repositorio
+## Estructura del repositorio
 
 ```text
-lab1_desigualdad_territorial/
+lab1-bi-1s2026/
 ├── data/
 │   ├── raw/
 │   ├── staging/
 │   └── processed/
 ├── db/
-├── src/
-│   ├── config.py
-│   ├── extract.py
-│   ├── transform.py
-│   ├── validate.py
-│   ├── load.py
-│   └── main.py
 ├── docs/
 │   ├── informe/
 │   └── presentacion/
 ├── notebooks/
 ├── outputs/
+├── src/
+│   ├── config.py
+│   ├── extract.py
+│   ├── load.py
+│   ├── main.py
+│   ├── transform.py
+│   └── validate.py
+├── .gitignore
 ├── README.md
-├── requirements.txt
-└── .gitignore
+└── requirements.txt
 ```
 
-### Descripción de carpetas
+## Archivos clave de Fase 1
 
-- `data/raw/`: archivos originales descargados desde las fuentes.
+- `data/raw/metadata_fuentes.csv`: catalogo operativo de las fuentes A-D.
+- `data/raw/dim_comuna_base.csv`: comunas objetivo para el alcance Provincia de Santiago.
+- `src/config.py`: rutas y constantes centrales del proyecto.
+- `src/main.py`: preflight de Fase 1.
+
+## Proximo paso tecnico
+
+Implementar la Fase 2 sobre esta base validada: extraccion reproducible, normalizacion comunal, staging y dataset integrado final.
 - `data/staging/`: archivos intermedios y datasets parcialmente procesados.
 - `data/processed/`: dataset final limpio listo para análisis o entrega.
 - `db/`: base SQLite del proyecto.

@@ -1,11 +1,236 @@
-from config import ensure_directories
+from __future__ import annotations
+
+import csv
+import sys
+from pathlib import Path
+
+from config import (
+    BASE_DIR,
+    COBERTURA_TERRITORIAL,
+    DIM_COMUNA_BASE_PATH,
+    DIM_COMUNA_BASE_REQUIRED_COLUMNS,
+    KEY_PATHS,
+    METADATA_PATH,
+    METADATA_REQUIRED_COLUMNS,
+    PROJECT_NAME,
+    PROJECT_PHASE,
+    PROJECT_TITLE,
+    RAW_SOURCES,
+    REQUIRED_DIRS,
+    TIPO_ANALISIS,
+    UNIDAD_ANALISIS,
+    ensure_directories,
+)
 
 
-def main() -> None:
+def relpath(path: Path) -> str:
+    """Devuelve una ruta relativa al repositorio para reportes legibles."""
+    return path.relative_to(BASE_DIR).as_posix()
+
+
+def read_csv_rows(path: Path) -> list[dict[str, str]]:
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def validate_directories(errors: list[str]) -> list[str]:
+    statuses: list[str] = []
+    for directory in REQUIRED_DIRS:
+        if directory.is_dir():
+            statuses.append(f"[OK] Directorio presente: {relpath(directory)}")
+        else:
+            errors.append(f"Falta el directorio requerido: {relpath(directory)}")
+            statuses.append(f"[ERROR] Directorio ausente: {relpath(directory)}")
+    return statuses
+
+
+def validate_key_paths(errors: list[str]) -> list[str]:
+    statuses: list[str] = []
+    for path in KEY_PATHS:
+        if path.exists():
+            statuses.append(f"[OK] Ruta clave presente: {relpath(path)}")
+        else:
+            errors.append(f"Falta la ruta clave: {relpath(path)}")
+            statuses.append(f"[ERROR] Ruta clave ausente: {relpath(path)}")
+    return statuses
+
+
+def validate_dim_comuna_base(errors: list[str]) -> list[str]:
+    statuses: list[str] = []
+    if not DIM_COMUNA_BASE_PATH.exists():
+        errors.append(f"No existe {relpath(DIM_COMUNA_BASE_PATH)}")
+        return [f"[ERROR] Archivo ausente: {relpath(DIM_COMUNA_BASE_PATH)}"]
+
+    rows = read_csv_rows(DIM_COMUNA_BASE_PATH)
+    if not rows:
+        errors.append("dim_comuna_base.csv esta vacio")
+        return [f"[ERROR] Archivo vacio: {relpath(DIM_COMUNA_BASE_PATH)}"]
+
+    header = tuple(rows[0].keys())
+    if header != DIM_COMUNA_BASE_REQUIRED_COLUMNS:
+        errors.append(
+            "dim_comuna_base.csv no tiene las columnas esperadas: "
+            f"{DIM_COMUNA_BASE_REQUIRED_COLUMNS}"
+        )
+        statuses.append(
+            "[ERROR] dim_comuna_base.csv tiene columnas distintas a las esperadas."
+        )
+    else:
+        statuses.append(
+            "[OK] dim_comuna_base.csv tiene las columnas esperadas."
+        )
+
+    if len(rows) != 32:
+        errors.append(
+            "dim_comuna_base.csv deberia contener 32 comunas de la Provincia de "
+            f"Santiago y contiene {len(rows)}."
+        )
+        statuses.append(
+            f"[ERROR] dim_comuna_base.csv contiene {len(rows)} filas; se esperaban 32."
+        )
+    else:
+        statuses.append(
+            "[OK] dim_comuna_base.csv contiene 32 comunas de la Provincia de Santiago."
+        )
+
+    return statuses
+
+
+def validate_metadata(errors: list[str]) -> list[str]:
+    statuses: list[str] = []
+    if not METADATA_PATH.exists():
+        errors.append(f"No existe {relpath(METADATA_PATH)}")
+        return [f"[ERROR] Archivo ausente: {relpath(METADATA_PATH)}"]
+
+    rows = read_csv_rows(METADATA_PATH)
+    if not rows:
+        errors.append("metadata_fuentes.csv esta vacio")
+        return [f"[ERROR] Archivo vacio: {relpath(METADATA_PATH)}"]
+
+    header = tuple(rows[0].keys())
+    if header != METADATA_REQUIRED_COLUMNS:
+        errors.append(
+            "metadata_fuentes.csv no tiene las columnas esperadas: "
+            f"{METADATA_REQUIRED_COLUMNS}"
+        )
+        statuses.append(
+            "[ERROR] metadata_fuentes.csv tiene una estructura de columnas distinta."
+        )
+        return statuses
+
+    statuses.append("[OK] metadata_fuentes.csv tiene la estructura esperada.")
+
+    rows_by_id = {row["id_fuente"]: row for row in rows}
+    expected_ids = tuple(RAW_SOURCES.keys())
+    if tuple(rows_by_id.keys()) != expected_ids:
+        errors.append(
+            "metadata_fuentes.csv debe documentar exactamente las fuentes "
+            f"{expected_ids} y hoy contiene {tuple(rows_by_id.keys())}."
+        )
+        statuses.append(
+            "[ERROR] metadata_fuentes.csv no documenta exactamente las fuentes A-D."
+        )
+
+    for source_id, source_data in RAW_SOURCES.items():
+        row = rows_by_id.get(source_id)
+        if row is None:
+            errors.append(f"Falta la fuente {source_id} en metadata_fuentes.csv")
+            statuses.append(f"[ERROR] Falta la fuente {source_id} en metadata_fuentes.csv.")
+            continue
+
+        expected_path = source_data["archivo_origen"]
+        expected_logical_name = source_data["archivo_logico"]
+        expected_sheet = source_data["hoja"]
+        expected_skiprows = str(source_data["skiprows"])
+
+        actual_values = {
+            "archivo_origen": row["archivo_origen"],
+            "archivo_logico": row["archivo_logico"],
+            "hoja": row["hoja"],
+            "skiprows": row["skiprows"],
+        }
+        expected_values = {
+            "archivo_origen": expected_path,
+            "archivo_logico": expected_logical_name,
+            "hoja": expected_sheet,
+            "skiprows": expected_skiprows,
+        }
+
+        mismatches = [
+            field_name
+            for field_name, expected_value in expected_values.items()
+            if actual_values[field_name] != expected_value
+        ]
+
+        if mismatches:
+            errors.append(
+                f"Fuente {source_id} en metadata_fuentes.csv tiene diferencias en: "
+                f"{', '.join(mismatches)}."
+            )
+            statuses.append(
+                f"[ERROR] Fuente {source_id} con metadata inconsistente en "
+                f"{', '.join(mismatches)}."
+            )
+        else:
+            statuses.append(
+                f"[OK] Fuente {source_id} consistente: archivo, hoja y skiprows validados."
+            )
+
+        referenced_path = BASE_DIR / row["archivo_origen"]
+        if not referenced_path.exists():
+            errors.append(
+                f"La fuente {source_id} referencia un archivo inexistente: "
+                f"{row['archivo_origen']}"
+            )
+            statuses.append(
+                f"[ERROR] La fuente {source_id} apunta a un archivo que no existe."
+            )
+
+    return statuses
+
+
+def print_section(title: str, items: list[str]) -> None:
+    print(title)
+    for item in items:
+        print(f"  {item}")
+
+
+def main() -> int:
     ensure_directories()
-    print("Estructura verificada.")
-    print("Proyecto listo para iniciar perfilado y extracción de fuentes.")
+
+    errors: list[str] = []
+    print(f"Preflight {PROJECT_PHASE} - {PROJECT_NAME}")
+    print(PROJECT_TITLE)
+    print(f"Unidad de analisis: {UNIDAD_ANALISIS}")
+    print(f"Cobertura: {COBERTURA_TERRITORIAL}")
+    print(f"Tipo de analisis: {TIPO_ANALISIS}")
+    print(
+        "Este preflight solo valida la base del repositorio. "
+        "No genera staging, dataset final ni SQLite."
+    )
+    print()
+
+    print_section("Estructura minima", validate_directories(errors))
+    print()
+    print_section("Rutas clave", validate_key_paths(errors))
+    print()
+    print_section("Dimension base", validate_dim_comuna_base(errors))
+    print()
+    print_section("Metadata y fuentes", validate_metadata(errors))
+    print()
+
+    if errors:
+        print(f"Resultado: preflight con errores ({len(errors)}).")
+        for error in errors:
+            print(f"- {error}")
+        print("Base de Fase 1 aun no verificada.")
+        return 1
+
+    print("Resultado: validaciones completadas sin errores.")
+    print("Base de Fase 1 verificada.")
+    print("Repositorio preparado para nueva auditoria de Fase 1 y para iniciar Fase 2.")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
