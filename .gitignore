@@ -1,0 +1,266 @@
+# =========================================================
+# .gitignore — Proyecto ETL Python / Jupyter / SQLite
+# Laboratorio 1 — Inteligencia de Negocios
+# =========================================================
+
+# ---------------------------------------------------------
+# Sistema operativo
+# ---------------------------------------------------------
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+$RECYCLE.BIN/
+.Spotlight-V100/
+.Trashes/
+
+# ---------------------------------------------------------
+# Archivos temporales y de respaldo
+# ---------------------------------------------------------
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.rej
+*.swp
+*.swo
+*~
+~$*
+*.lock
+
+# ---------------------------------------------------------
+# Python
+# ---------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Extensiones compiladas
+*.so
+*.dylib
+*.dll
+*.pyd
+
+# Distribución / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+share/python-wheels/
+wheels/
+pip-wheel-metadata/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+htmlcov/
+
+# Type checkers / linters
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+.pylint.d/
+
+# Entornos virtuales
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Variables de entorno / secretos
+.env
+.env.*
+*.env
+*.secrets
+secrets.*
+*.key
+*.pem
+
+# Logs de Python / herramientas
+*.log
+logs/
+log/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ---------------------------------------------------------
+# Jupyter Notebook
+# ---------------------------------------------------------
+.ipynb_checkpoints
+**/.ipynb_checkpoints/
+
+# Salidas temporales de notebooks
+*.nbconvert.ipynb
+
+# ---------------------------------------------------------
+# Editores e IDEs
+# ---------------------------------------------------------
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+
+# Spyder
+.spyproject/
+.spyderproject
+
+# Rope
+.ropeproject/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.un~
+Session.vim
+
+# ---------------------------------------------------------
+# Documentación / compilación
+# ---------------------------------------------------------
+_site/
+docs/_build/
+site/
+
+# LaTeX temporales
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# ---------------------------------------------------------
+# Node / front-end (por si luego agregas dashboards)
+# ---------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.parcel-cache/
+.next/
+.nuxt/
+.svelte-kit/
+
+# ---------------------------------------------------------
+# Bases de datos y archivos binarios
+# ---------------------------------------------------------
+# Mantener comentado porque SQLite puede ser entregable final.
+# Descomenta solo si NO quieres versionar la base:
+# *.sqlite
+# *.sqlite3
+# *.db
+# *.db-journal
+# *.db-wal
+# *.db-shm
+
+# ---------------------------------------------------------
+# Datos del proyecto
+# ---------------------------------------------------------
+# Mantener comentado por defecto, porque los datos pueden ser
+# parte de los entregables del laboratorio.
+#
+# Si tus archivos raw son muy pesados y prefieres entregar enlaces,
+# puedes descomentar las siguientes líneas:
+#
+# data/raw/*
+# !data/raw/.gitkeep
+#
+# Si no quieres versionar datos intermedios:
+# data/staging/*
+# !data/staging/.gitkeep
+#
+# Si el dataset final lo generarás siempre por pipeline y no lo
+# subirás al repositorio:
+# data/processed/*
+# !data/processed/.gitkeep
+
+# ---------------------------------------------------------
+# Outputs del proyecto
+# ---------------------------------------------------------
+# Mantener comentado por defecto. Muchos outputs pueden servir
+# como evidencia para el informe o la presentación.
+#
+# outputs/*
+# !outputs/.gitkeep
+
+# ---------------------------------------------------------
+# Archivos de figuras generadas
+# ---------------------------------------------------------
+# Descomenta si prefieres no versionar imágenes generadas
+# automáticamente por scripts:
+#
+# *.png
+# *.jpg
+# *.jpeg
+# *.svg
+# *.pdf
+
+# ---------------------------------------------------------
+# Reportes de profiling / validación
+# ---------------------------------------------------------
+# Descomenta si estos archivos se generan siempre y no quieres
+# subirlos:
+#
+# profiling/
+# validation/
+# reports/
+
+# ---------------------------------------------------------
+# Archivos específicos de herramientas de datos
+# ---------------------------------------------------------
+# Dask / Ray / Spark temporales
+.dask/
+.ray/
+.metaflow/
+spark-warehouse/
+
+# MLflow
+mlruns/
+
+# ---------------------------------------------------------
+# Git keeps
+# ---------------------------------------------------------
+# Permite mantener carpetas vacías necesarias en el repo
+!.gitkeep
