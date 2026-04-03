@@ -16,8 +16,8 @@ El repositorio esta en **Fase 5**. Actualmente `src/main.py` ejecuta de forma re
 1. preflight de estructura y consistencia heredado de Fase 1;
 2. Fase 2: lectura real de las 4 fuentes y perfilado diagnostico;
 3. Fase 3: validacion de la base maestra comunal y homologacion de nombres por fuente.
-4. Fase 4: materializacion de tablas de `staging` reproducibles por fuente.
-5. Fase 5: transformacion de tablas limpias por fuente, filtradas al universo final de 32 comunas.
+4. Fase 4: extraccion reproducible a `staging` por fuente.
+5. Fase 5: transformacion de tablas staging por fuente, filtradas al universo final de 32 comunas.
 
 Todavia **no** se implementa el ETL completo. El proyecto no integra aun el dataset final ni genera SQLite.
 
@@ -35,18 +35,15 @@ Si todo pasa, el comando regenera estos outputs:
 - `outputs/conflictos_fuentes.md`
 - `outputs/homologacion_comunas.csv`
 - `outputs/resumen_homologacion.md`
-- `outputs/resumen_fase_4_5.md`
+- `outputs/resumen_transformaciones.md`
+- `outputs/validacion_staging.csv`
 
-Y deja materializadas estas capas intermedias:
+Y deja materializados estos archivos staging:
 
-- `data/staging/fuente_a_sinim_areas_verdes.csv`
-- `data/staging/fuente_b_sinim_capacidad_municipal.csv`
-- `data/staging/fuente_c_pobreza_ingresos.csv`
-- `data/staging/fuente_d_poblacion_comunal.csv`
-- `data/processed/fuente_a_areas_verdes_limpia.csv`
-- `data/processed/fuente_b_capacidad_municipal_limpia.csv`
-- `data/processed/fuente_c_pobreza_ingresos_limpia.csv`
-- `data/processed/fuente_d_poblacion_limpia.csv`
+- `data/staging/areas_verdes_staging.csv`
+- `data/staging/ingresos_staging.csv`
+- `data/staging/pobreza_staging.csv`
+- `data/staging/poblacion_staging.csv`
 
 ## Fuentes contempladas
 
@@ -75,13 +72,13 @@ Y deja materializadas estas capas intermedias:
 
 ### Fase 4
 
-- Cada fuente se materializa en `data/staging/` como tabla cruda parseada desde los archivos versionados.
-- `staging` conserva la cobertura nacional original y sirve como base reproducible para transformaciones posteriores.
+- Cada fuente se relee desde `data/raw/` usando el contrato de `metadata_fuentes.csv`.
+- La salida de Fase 4 se materializa en `data/staging/` con trazabilidad explicita entre archivo raw y archivo staging.
 
 ### Fase 5
 
 - Cada fuente se transforma por separado y se filtra al universo final usando `codigo_comuna`.
-- Las tablas limpias viven en `data/processed/` y quedan listas para merge futuro, pero aun no se integran entre si.
+- Las tablas staging quedan listas para merge futuro, pero aun no se integran entre si.
 - Reglas clave:
   - A: el total de areas verdes se construye como parques + plazas.
   - B: el IPP se conserva en miles de pesos nominales 2024.
@@ -112,8 +109,8 @@ lab1-bi-1s2026/
 - `data/raw/dim_comuna_base.csv`: universo final maestro de comunas.
 - `src/extract.py`: lectura y perfilado de Fase 2.
 - `src/comunas.py`: normalizacion comunal, validacion maestra y homologacion de Fase 3.
-- `src/transform.py`: exportacion a `staging` y transformaciones limpias por fuente.
-- `src/validate.py`: validaciones de salida y resumen de Fase 4/Fase 5.
+- `src/transform.py`: exportacion a `staging` y transformaciones por fuente.
+- `src/validate.py`: validaciones de staging y documentacion de transformaciones.
 - `src/main.py`: orquestacion reproducible del estado actual del proyecto.
 
 ## Proximo paso tecnico

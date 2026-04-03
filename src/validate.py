@@ -8,414 +8,302 @@ import pandas as pd
 from config import (
     BASE_DIR,
     EXPECTED_DIM_COMUNA_ROWS,
-    PROCESSED_SOURCE_PATHS,
-    RESUMEN_FASE_45_PATH,
-    RESUMEN_HOMOLOGACION_PATH,
+    RESUMEN_TRANSFORMACIONES_PATH,
     STAGING_SOURCE_PATHS,
+    VALIDACION_STAGING_PATH,
     ensure_directories,
 )
-from transform import TableArtifact
+from transform import StagingArtifact, TransformationEvidence
 
-EXPECTED_PROCESSED_COLUMNS = {
+EXPECTED_STAGING_COLUMNS = {
     "A": (
         "codigo_comuna",
         "nombre_comuna",
-        "areas_verdes_parques_m2_2024",
-        "areas_verdes_plazas_m2_2024",
-        "areas_verdes_total_m2_2024",
+        "mmpqc_2024",
+        "mmpzc_2024",
+        "areas_verdes_m2",
     ),
     "B": (
         "codigo_comuna",
         "nombre_comuna",
-        "ipp_miles_pesos_2024",
+        "ipp_miles_pesos",
     ),
     "C": (
         "codigo_comuna",
         "nombre_comuna",
-        "personas_proyectadas_2022",
-        "personas_pobreza_ingresos_2022",
-        "pobreza_ingresos_pct_2022",
-        "pobreza_ingresos_pct_limite_inferior_2022",
-        "pobreza_ingresos_pct_limite_superior_2022",
+        "pobreza_ingresos_pct",
     ),
     "D": (
         "codigo_comuna",
         "nombre_comuna",
-        "poblacion_censada_2024",
-        "hombres_2024",
-        "mujeres_2024",
-        "razon_hombre_mujer_2024",
+        "poblacion",
     ),
 }
 
 
 @dataclass(frozen=True)
-class SourceValidationResult:
+class StagingValidationResult:
     source_id: str
-    path: Path
+    nombre_fuente: str
     is_valid: bool
-    row_count: int
-    null_counts: dict[str, int]
     statuses: tuple[str, ...]
     warnings: tuple[str, ...]
+    summary_row: dict[str, object]
 
 
 def _relpath(path: Path) -> str:
     return path.relative_to(BASE_DIR).as_posix()
 
 
-def _series_equal_with_na(left: pd.Series, right: pd.Series) -> bool:
-    left_safe = left.astype("object").where(left.notna(), "__NA__")
-    right_safe = right.astype("object").where(right.notna(), "__NA__")
-    return left_safe.astype(str).equals(right_safe.astype(str))
+def _count_key_nulls(dataframe: pd.DataFrame) -> int:
+    return int(dataframe[["codigo_comuna", "nombre_comuna"]].isna().sum().sum())
 
 
-def _non_negative(series: pd.Series) -> bool:
-    return bool(series.dropna().ge(0).all())
+def _code_format_ok(series: pd.Series) -> bool:
+    return bool(series.dropna().astype(str).str.fullmatch(r"\d{5}").all())
 
 
-def _common_validation(
-    source_id: str,
-    dataframe: pd.DataFrame,
+def _range_validation_text(source_id: str, dataframe: pd.DataFrame) -> tuple[bool, str]:
+    if source_id == "A":
+        ok = bool(dataframe["areas_verdes_m2"].dropna().ge(0).all())
+        return ok, "areas_verdes_m2 >= 0"
+    if source_id == "B":
+        ok = bool(dataframe["ipp_miles_pesos"].dropna().ge(0).all())
+        return ok, "ipp_miles_pesos >= 0"
+    if source_id == "C":
+        ok = bool(dataframe["pobreza_ingresos_pct"].dropna().between(0, 100).all())
+        return ok, "pobreza_ingresos_pct entre 0 y 100"
+    ok = bool(dataframe["poblacion"].dropna().gt(0).all())
+    return ok, "poblacion > 0"
+
+
+def validate_staging_outputs(
+    staging_tables: dict[str, pd.DataFrame],
     dim_base: pd.DataFrame,
-    path: Path,
-) -> tuple[list[str], list[str], dict[str, int]]:
-    statuses: list[str] = []
-    warnings: list[str] = []
-    null_counts = {
-        column: int(dataframe[column].isna().sum())
-        for column in dataframe.columns
-        if column not in {"codigo_comuna", "nombre_comuna"}
-    }
+    artifacts: dict[str, StagingArtifact],
+    evidences: dict[str, TransformationEvidence],
+) -> dict[str, StagingValidationResult]:
+    results: dict[str, StagingValidationResult] = {}
+    expected_codes = list(dim_base["codigo_comuna"].astype(int).map(lambda value: f"{value:05d}"))
 
-    expected_columns = EXPECTED_PROCESSED_COLUMNS[source_id]
-    actual_columns = tuple(map(str, dataframe.columns))
-    if actual_columns == expected_columns:
-        statuses.append("[OK] La tabla tiene el esquema esperado.")
-    else:
-        statuses.append(
-            f"[ERROR] El esquema no coincide con el esperado: {expected_columns}."
-        )
+    for source_id, dataframe in staging_tables.items():
+        artifact = artifacts[source_id]
+        evidence = evidences[source_id]
 
-    if len(dataframe) == EXPECTED_DIM_COMUNA_ROWS:
-        statuses.append(
-            f"[OK] La tabla contiene {EXPECTED_DIM_COMUNA_ROWS} filas, una por comuna objetivo."
-        )
-    else:
-        statuses.append(
-            f"[ERROR] La tabla contiene {len(dataframe)} filas; se esperaban {EXPECTED_DIM_COMUNA_ROWS}."
-        )
+        statuses: list[str] = []
+        warnings: list[str] = []
 
-    duplicate_codes = int(dataframe["codigo_comuna"].duplicated().sum())
-    if duplicate_codes == 0:
-        statuses.append("[OK] `codigo_comuna` es unico en la tabla limpia.")
-    else:
-        statuses.append(
-            f"[ERROR] `codigo_comuna` presenta {duplicate_codes} duplicados en la tabla limpia."
-        )
-
-    observed_codes = set(dataframe["codigo_comuna"].dropna().astype(int))
-    expected_codes = set(dim_base["codigo_comuna"].dropna().astype(int))
-    missing_codes = sorted(expected_codes - observed_codes)
-    extra_codes = sorted(observed_codes - expected_codes)
-    if not missing_codes and not extra_codes:
-        statuses.append("[OK] La cobertura comunal coincide exactamente con la dimension maestra.")
-    else:
-        statuses.append(
-            "[ERROR] La cobertura comunal no coincide con la dimension maestra "
-            f"(faltantes={missing_codes}, extras={extra_codes})."
-        )
-
-    merged_names = dim_base[["codigo_comuna", "nombre_comuna"]].merge(
-        dataframe[["codigo_comuna", "nombre_comuna"]],
-        on="codigo_comuna",
-        how="left",
-        suffixes=("_base", "_tabla"),
-    )
-    mismatched_names = merged_names[
-        merged_names["nombre_comuna_base"] != merged_names["nombre_comuna_tabla"]
-    ]
-    if mismatched_names.empty:
-        statuses.append("[OK] `nombre_comuna` quedo estandarizado contra la dimension maestra.")
-    else:
-        statuses.append(
-            f"[ERROR] Hay {len(mismatched_names)} diferencias de nombre frente a la base maestra."
-        )
-
-    null_columns = {column: count for column, count in null_counts.items() if count > 0}
-    if null_columns:
-        warning_text = ", ".join(f"{column}={count}" for column, count in null_columns.items())
-        warnings.append(f"Nulos presentes en columnas de datos: {warning_text}.")
-
-    data_columns = [column for column in dataframe.columns if column not in {"codigo_comuna", "nombre_comuna"}]
-    fully_null_rows = int(dataframe[data_columns].isna().all(axis=1).sum())
-    if fully_null_rows:
-        statuses.append(
-            f"[ERROR] Hay {fully_null_rows} comunas sin datos en ninguna variable de la tabla limpia."
-        )
-
-    if not path.exists():
-        statuses.append(f"[ERROR] No existe el archivo exportado {_relpath(path)}.")
-    else:
-        statuses.append(f"[OK] Archivo exportado: {_relpath(path)}.")
-
-    return statuses, warnings, null_counts
-
-
-def _validate_source_a(dataframe: pd.DataFrame) -> tuple[list[str], list[str]]:
-    statuses: list[str] = []
-    warnings: list[str] = []
-
-    numeric_columns = [
-        "areas_verdes_parques_m2_2024",
-        "areas_verdes_plazas_m2_2024",
-        "areas_verdes_total_m2_2024",
-    ]
-    for column in numeric_columns:
-        if _non_negative(dataframe[column]):
-            statuses.append(f"[OK] `{column}` no contiene valores negativos.")
+        actual_columns = tuple(map(str, dataframe.columns))
+        expected_columns = EXPECTED_STAGING_COLUMNS[source_id]
+        if actual_columns == expected_columns:
+            statuses.append("[OK] Las columnas finales coinciden con el esquema esperado.")
         else:
-            statuses.append(f"[ERROR] `{column}` contiene valores negativos.")
+            statuses.append(
+                f"[ERROR] El esquema final no coincide con lo esperado: {expected_columns}."
+            )
 
-    expected_total = dataframe[
-        [
-            "areas_verdes_parques_m2_2024",
-            "areas_verdes_plazas_m2_2024",
+        if len(dataframe) == EXPECTED_DIM_COMUNA_ROWS:
+            statuses.append(
+                f"[OK] La tabla contiene {EXPECTED_DIM_COMUNA_ROWS} comunas del universo final."
+            )
+        else:
+            statuses.append(
+                f"[ERROR] La tabla contiene {len(dataframe)} filas; se esperaban {EXPECTED_DIM_COMUNA_ROWS}."
+            )
+
+        duplicates = int(dataframe["codigo_comuna"].duplicated().sum())
+        if duplicates == 0:
+            statuses.append("[OK] `codigo_comuna` es unico en la salida staging.")
+        else:
+            statuses.append(
+                f"[ERROR] `codigo_comuna` tiene {duplicates} duplicados en staging."
+            )
+
+        key_nulls = _count_key_nulls(dataframe)
+        if key_nulls == 0:
+            statuses.append("[OK] No hay nulos en las columnas clave.")
+        else:
+            statuses.append(f"[ERROR] Hay {key_nulls} nulos en columnas clave.")
+
+        if _code_format_ok(dataframe["codigo_comuna"]):
+            statuses.append("[OK] `codigo_comuna` quedo como string consistente de 5 digitos.")
+        else:
+            statuses.append("[ERROR] `codigo_comuna` no cumple el formato esperado de 5 digitos.")
+
+        observed_codes = list(dataframe["codigo_comuna"].dropna().astype(str))
+        missing_codes = sorted(set(expected_codes) - set(observed_codes))
+        extra_codes = sorted(set(observed_codes) - set(expected_codes))
+        if not missing_codes and not extra_codes:
+            statuses.append("[OK] La cobertura comunal coincide exactamente con la dimension maestra.")
+        else:
+            statuses.append(
+                "[ERROR] La cobertura comunal no coincide con la dimension maestra "
+                f"(faltantes={missing_codes}, extras={extra_codes})."
+            )
+
+        merged_names = dataframe.merge(
+            dim_base.assign(
+                codigo_comuna=dim_base["codigo_comuna"].astype(int).map(lambda value: f"{value:05d}")
+            )[["codigo_comuna", "nombre_comuna"]],
+            on="codigo_comuna",
+            how="left",
+            suffixes=("_staging", "_base"),
+        )
+        mismatched_names = merged_names[
+            merged_names["nombre_comuna_staging"] != merged_names["nombre_comuna_base"]
         ]
-    ].sum(axis=1, min_count=2).astype("Int64")
-    if _series_equal_with_na(expected_total, dataframe["areas_verdes_total_m2_2024"]):
-        statuses.append("[OK] El total de areas verdes coincide con la suma de parques y plazas.")
-    else:
-        statuses.append("[ERROR] El total de areas verdes no coincide con sus componentes.")
+        if mismatched_names.empty:
+            statuses.append("[OK] `nombre_comuna` quedo estandarizado contra la base maestra.")
+        else:
+            statuses.append(
+                f"[ERROR] Hay {len(mismatched_names)} nombres de comuna no estandarizados."
+            )
 
-    return statuses, warnings
+        range_ok, range_rule = _range_validation_text(source_id, dataframe)
+        if range_ok:
+            statuses.append(f"[OK] Se cumple la validacion de rango: {range_rule}.")
+        else:
+            statuses.append(f"[ERROR] Falla la validacion de rango: {range_rule}.")
 
+        if artifact.path.exists():
+            statuses.append(f"[OK] Archivo staging exportado: {_relpath(artifact.path)}.")
+        else:
+            statuses.append(f"[ERROR] No existe el archivo staging {_relpath(artifact.path)}.")
 
-def _validate_source_b(dataframe: pd.DataFrame) -> tuple[list[str], list[str]]:
-    if _non_negative(dataframe["ipp_miles_pesos_2024"]):
-        return ["[OK] `ipp_miles_pesos_2024` no contiene valores negativos."], []
-    return ["[ERROR] `ipp_miles_pesos_2024` contiene valores negativos."], []
+        data_columns = [column for column in dataframe.columns if column not in {"codigo_comuna", "nombre_comuna"}]
+        all_null_rows = int(dataframe[data_columns].isna().all(axis=1).sum())
+        if all_null_rows:
+            warnings.append(
+                f"Hay {all_null_rows} filas del universo final sin datos en las variables de la fuente."
+            )
 
-
-def _validate_source_c(dataframe: pd.DataFrame) -> tuple[list[str], list[str]]:
-    statuses: list[str] = []
-    warnings: list[str] = []
-
-    count_columns = [
-        "personas_proyectadas_2022",
-        "personas_pobreza_ingresos_2022",
-    ]
-    pct_columns = [
-        "pobreza_ingresos_pct_2022",
-        "pobreza_ingresos_pct_limite_inferior_2022",
-        "pobreza_ingresos_pct_limite_superior_2022",
-    ]
-
-    if all(_non_negative(dataframe[column]) for column in count_columns):
-        statuses.append("[OK] Los conteos de poblacion y pobreza son no negativos.")
-    else:
-        statuses.append("[ERROR] Hay conteos negativos en la fuente de pobreza.")
-
-    pct_in_range = all(
-        bool(dataframe[column].dropna().between(0, 100).all())
-        for column in pct_columns
-    )
-    if pct_in_range:
-        statuses.append("[OK] Las tasas de pobreza quedaron expresadas como porcentaje 0-100.")
-    else:
-        statuses.append("[ERROR] Hay porcentajes de pobreza fuera del rango 0-100.")
-
-    interval_ok = bool(
-        (
-            dataframe["pobreza_ingresos_pct_limite_inferior_2022"]
-            <= dataframe["pobreza_ingresos_pct_2022"]
-        ).all()
-        and (
-            dataframe["pobreza_ingresos_pct_2022"]
-            <= dataframe["pobreza_ingresos_pct_limite_superior_2022"]
-        ).all()
-    )
-    if interval_ok:
-        statuses.append("[OK] El porcentaje puntual queda dentro del intervalo inferior/superior.")
-    else:
-        statuses.append("[ERROR] Hay intervalos de pobreza inconsistentes.")
-
-    return statuses, warnings
-
-
-def _validate_source_d(dataframe: pd.DataFrame) -> tuple[list[str], list[str]]:
-    statuses: list[str] = []
-    warnings: list[str] = []
-
-    count_columns = [
-        "poblacion_censada_2024",
-        "hombres_2024",
-        "mujeres_2024",
-    ]
-    if all(_non_negative(dataframe[column]) for column in count_columns):
-        statuses.append("[OK] Los conteos poblacionales son no negativos.")
-    else:
-        statuses.append("[ERROR] Hay conteos poblacionales negativos.")
-
-    composition_ok = _series_equal_with_na(
-        dataframe["hombres_2024"] + dataframe["mujeres_2024"],
-        dataframe["poblacion_censada_2024"],
-    )
-    if composition_ok:
-        statuses.append("[OK] `hombres_2024 + mujeres_2024` coincide con la poblacion censada.")
-    else:
-        statuses.append("[ERROR] La composicion por sexo no cuadra con la poblacion censada.")
-
-    if bool(dataframe["razon_hombre_mujer_2024"].dropna().gt(0).all()):
-        statuses.append("[OK] `razon_hombre_mujer_2024` contiene valores positivos.")
-    else:
-        statuses.append("[ERROR] `razon_hombre_mujer_2024` contiene valores no validos.")
-
-    return statuses, warnings
-
-
-SOURCE_VALIDATORS = {
-    "A": _validate_source_a,
-    "B": _validate_source_b,
-    "C": _validate_source_c,
-    "D": _validate_source_d,
-}
-
-
-def validate_processed_tables(
-    processed_tables: dict[str, pd.DataFrame],
-    dim_base: pd.DataFrame,
-    processed_artifacts: dict[str, TableArtifact],
-) -> dict[str, SourceValidationResult]:
-    results: dict[str, SourceValidationResult] = {}
-    for source_id, dataframe in processed_tables.items():
-        common_statuses, common_warnings, null_counts = _common_validation(
-            source_id=source_id,
-            dataframe=dataframe,
-            dim_base=dim_base,
-            path=processed_artifacts[source_id].path,
-        )
-        source_statuses, source_warnings = SOURCE_VALIDATORS[source_id](dataframe)
-        statuses = tuple(common_statuses + source_statuses)
-        warnings = tuple(common_warnings + source_warnings)
         is_valid = not any(status.startswith("[ERROR]") for status in statuses)
-        results[source_id] = SourceValidationResult(
+        summary_row = {
+            "source_id": source_id,
+            "nombre_fuente": evidence.nombre_fuente,
+            "archivo_raw_origen": evidence.raw_path,
+            "archivo_logico": evidence.archivo_logico,
+            "archivo_staging_generado": evidence.staging_path,
+            "filas_antes": evidence.filas_antes,
+            "filas_despues": evidence.filas_despues,
+            "columnas_finales": " | ".join(dataframe.columns),
+            "duplicados_codigo_comuna": duplicates,
+            "nulos_clave": key_nulls,
+            "fuera_de_universo_detectados": evidence.fuera_de_universo_detectados,
+            "validacion_rango": f"{'OK' if range_ok else 'ERROR'}: {range_rule}",
+            "estado": "OK" if is_valid else "ERROR",
+        }
+
+        results[source_id] = StagingValidationResult(
             source_id=source_id,
-            path=processed_artifacts[source_id].path,
+            nombre_fuente=evidence.nombre_fuente,
             is_valid=is_valid,
-            row_count=len(dataframe),
-            null_counts=null_counts,
-            statuses=statuses,
-            warnings=warnings,
+            statuses=tuple(statuses),
+            warnings=tuple(warnings),
+            summary_row=summary_row,
         )
+
     return results
 
 
-def build_phase_45_summary_markdown(
-    staging_artifacts: dict[str, TableArtifact],
-    processed_artifacts: dict[str, TableArtifact],
-    validation_results: dict[str, SourceValidationResult],
+def export_validacion_staging(
+    validation_results: dict[str, StagingValidationResult],
+    path: Path = VALIDACION_STAGING_PATH,
+) -> pd.DataFrame:
+    ensure_directories()
+    rows = [
+        validation_results[source_id].summary_row
+        for source_id in sorted(validation_results)
+    ]
+    dataframe = pd.DataFrame(rows)
+    dataframe.to_csv(path, index=False, encoding="utf-8")
+    return dataframe
+
+
+def build_transformations_summary(
+    evidences: dict[str, TransformationEvidence],
+    validation_results: dict[str, StagingValidationResult],
 ) -> str:
     lines = [
-        "# Resumen Fase 4 y Fase 5",
+        "# Resumen de transformaciones a staging",
         "",
-        "## Fase 4 - Staging reproducible",
-        "- La extraccion queda materializada como tablas crudas parseadas, una por fuente, sin integrar aun el dataset final.",
-        "- Los archivos de staging preservan la estructura leida desde cada fuente y sirven como base reproducible para las transformaciones posteriores.",
+        "Este documento resume la trazabilidad y las reglas aplicadas en Fase 4 y Fase 5.",
         "",
     ]
 
-    for source_id in sorted(staging_artifacts):
-        artifact = staging_artifacts[source_id]
-        lines.append(
-            f"- Fuente {source_id}: `{_relpath(artifact.path)}` con {artifact.row_count} filas y {artifact.column_count} columnas."
-        )
-
-    lines.extend(
-        [
-            "",
-            "## Fase 5 - Reglas de transformacion",
-            "- Fuente A: `No Aplica` se interpreta como 0 solo para componentes de areas verdes; `No Recepcionado` permanece como nulo. El total se calcula como parques + plazas.",
-            "- Fuente B: el IPP se conserva en miles de pesos nominales 2024.",
-            "- Fuente C: las tasas de pobreza pasan de proporcion 0-1 a porcentaje 0-100.",
-            "- Fuente D: la tabla comunal queda filtrada al universo final de 32 comunas y se excluyen filas agregadas o notas al trabajar por `codigo_comuna`.",
-            "",
-            "## Tablas limpias listas para merge",
-        ]
-    )
-
-    for source_id in sorted(processed_artifacts):
-        artifact = processed_artifacts[source_id]
+    for source_id in sorted(evidences):
+        evidence = evidences[source_id]
         validation = validation_results[source_id]
-        status_label = "OK" if validation.is_valid else "ERROR"
-        lines.append(
-            f"- Fuente {source_id}: `{_relpath(artifact.path)}` con {artifact.row_count} filas y {artifact.column_count} columnas. Estado={status_label}."
+        lines.extend(
+            [
+                f"## Fuente {source_id} - {evidence.nombre_fuente}",
+                f"- Archivo raw origen: `{evidence.raw_path}`",
+                f"- Fuente logica / archivo logico: `{evidence.archivo_logico}`",
+                f"- Archivo staging generado: `{evidence.staging_path}`",
+                f"- Filas antes: {evidence.filas_antes}",
+                f"- Filas despues: {evidence.filas_despues}",
+                f"- Fuera de universo detectados: {evidence.fuera_de_universo_detectados}",
+                f"- Filas sin codigo comunal valido excluidas: {evidence.filas_sin_codigo_excluidas}",
+                f"- Duplicados por `codigo_comuna` en staging: {evidence.duplicados_codigo_comuna}",
+                f"- Columnas originales consideradas: {', '.join(evidence.columnas_originales_consideradas)}",
+                f"- Columnas finales conservadas: {', '.join(evidence.columnas_finales)}",
+                f"- Renombres realizados: {'; '.join(evidence.renombres_realizados)}",
+                f"- Tipos convertidos: {'; '.join(evidence.tipos_convertidos)}",
+                f"- Valores especiales tratados: {'; '.join(evidence.valores_especiales_tratados)}",
+                f"- Filtros aplicados: {'; '.join(evidence.filtros_aplicados)}",
+                "- Validaciones ejecutadas:",
+            ]
         )
-        null_columns = {
-            column: count
-            for column, count in validation.null_counts.items()
-            if count > 0
-        }
-        if null_columns:
-            null_text = ", ".join(f"{column}={count}" for column, count in null_columns.items())
-            lines.append(f"  Nulos en datos: {null_text}.")
-
-    lines.extend(
-        [
-            "",
-            "## Validacion de salida",
-        ]
-    )
-
-    for source_id in sorted(validation_results):
-        validation = validation_results[source_id]
-        lines.append(f"- Fuente {source_id}:")
         for status in validation.statuses:
             lines.append(f"  {status}")
+        lines.append("- Observaciones o limitaciones pendientes:")
+        for observation in evidence.observaciones:
+            lines.append(f"  {observation}")
         for warning in validation.warnings:
-            lines.append(f"  [OBSERVACION] {warning}")
+            lines.append(f"  {warning}")
+        lines.append("")
 
     lines.extend(
         [
-            "",
-            "## Estado del proyecto",
-            f"- Sigue vigente la homologacion comunal de `{_relpath(RESUMEN_HOMOLOGACION_PATH)}` como soporte de trazabilidad.",
-            "- No se integra aun el dataset final comunal.",
-            "- No se carga aun ningun archivo SQLite.",
+            "## Estado",
+            "- Las tablas staging quedan listas para merge posterior, pero aun no existe dataset final integrado.",
+            "- No se genera SQLite en esta fase.",
         ]
     )
-
     return "\n".join(lines) + "\n"
 
 
-def export_phase_45_summary(summary_markdown: str, path: Path = RESUMEN_FASE_45_PATH) -> None:
+def export_transformations_summary(
+    summary_markdown: str,
+    path: Path = RESUMEN_TRANSFORMACIONES_PATH,
+) -> None:
     ensure_directories()
     path.write_text(summary_markdown, encoding="utf-8")
 
 
-def run_phase_45_validate_outputs(
-    staging_artifacts: dict[str, TableArtifact],
-    processed_tables: dict[str, pd.DataFrame],
-    processed_artifacts: dict[str, TableArtifact],
+def run_phase_5_validation(
+    staging_tables: dict[str, pd.DataFrame],
     dim_base: pd.DataFrame,
+    artifacts: dict[str, StagingArtifact],
+    evidences: dict[str, TransformationEvidence],
 ) -> dict[str, object]:
-    validation_results = validate_processed_tables(
-        processed_tables=processed_tables,
+    validation_results = validate_staging_outputs(
+        staging_tables=staging_tables,
         dim_base=dim_base,
-        processed_artifacts=processed_artifacts,
+        artifacts=artifacts,
+        evidences=evidences,
     )
-    summary_markdown = build_phase_45_summary_markdown(
-        staging_artifacts=staging_artifacts,
-        processed_artifacts=processed_artifacts,
+    validation_df = export_validacion_staging(validation_results)
+    summary_markdown = build_transformations_summary(
+        evidences=evidences,
         validation_results=validation_results,
     )
-    export_phase_45_summary(summary_markdown)
-    overall_valid = all(result.is_valid for result in validation_results.values())
+    export_transformations_summary(summary_markdown)
     return {
-        "is_valid": overall_valid,
         "validation_results": validation_results,
+        "validation_df": validation_df,
         "summary_markdown": summary_markdown,
-        "summary_path": RESUMEN_FASE_45_PATH,
+        "summary_path": RESUMEN_TRANSFORMACIONES_PATH,
+        "validation_path": VALIDACION_STAGING_PATH,
         "staging_paths": STAGING_SOURCE_PATHS,
-        "processed_paths": PROCESSED_SOURCE_PATHS,
     }

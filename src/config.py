@@ -60,7 +60,8 @@ PERFILADO_FUENTES_PATH = OUTPUTS_DIR / "perfilado_fuentes.xlsx"
 CONFLICTOS_FUENTES_PATH = OUTPUTS_DIR / "conflictos_fuentes.md"
 HOMOLOGACION_COMUNAS_PATH = OUTPUTS_DIR / "homologacion_comunas.csv"
 RESUMEN_HOMOLOGACION_PATH = OUTPUTS_DIR / "resumen_homologacion.md"
-RESUMEN_FASE_45_PATH = OUTPUTS_DIR / "resumen_fase_4_5.md"
+RESUMEN_TRANSFORMACIONES_PATH = OUTPUTS_DIR / "resumen_transformaciones.md"
+VALIDACION_STAGING_PATH = OUTPUTS_DIR / "validacion_staging.csv"
 
 EXPECTED_DIM_COMUNA_ROWS = 32
 EXPECTED_PROVINCIA = "SANTIAGO"
@@ -123,17 +124,10 @@ RAW_SOURCES = {
 }
 
 STAGING_SOURCE_PATHS = {
-    "A": STAGING_DIR / "fuente_a_sinim_areas_verdes.csv",
-    "B": STAGING_DIR / "fuente_b_sinim_capacidad_municipal.csv",
-    "C": STAGING_DIR / "fuente_c_pobreza_ingresos.csv",
-    "D": STAGING_DIR / "fuente_d_poblacion_comunal.csv",
-}
-
-PROCESSED_SOURCE_PATHS = {
-    "A": PROCESSED_DIR / "fuente_a_areas_verdes_limpia.csv",
-    "B": PROCESSED_DIR / "fuente_b_capacidad_municipal_limpia.csv",
-    "C": PROCESSED_DIR / "fuente_c_pobreza_ingresos_limpia.csv",
-    "D": PROCESSED_DIR / "fuente_d_poblacion_limpia.csv",
+    "A": STAGING_DIR / "areas_verdes_staging.csv",
+    "B": STAGING_DIR / "ingresos_staging.csv",
+    "C": STAGING_DIR / "pobreza_staging.csv",
+    "D": STAGING_DIR / "poblacion_staging.csv",
 }
 
 FUENTES = {
