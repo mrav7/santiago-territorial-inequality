@@ -1,7 +1,3 @@
-# lab1-bi-1s2026
-
-Repositorio del **Lab 1 - Proceso ETL** del curso **Inteligencia de Negocios**.
-
 ## Objetivo
 
 Construir un pipeline ETL reproducible para analizar **desigualdad territorial en Santiago** combinando:
