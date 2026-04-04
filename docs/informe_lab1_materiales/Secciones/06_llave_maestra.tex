@@ -1,0 +1,23 @@
+\chapter{Estandarización de la Llave Maestra Comunal}
+
+\section{Criterio de llave principal}
+
+El proyecto resuelve la integración por \texttt{codigo\_comuna}. Esta decisión se sustenta en evidencia directa de las fuentes: los nombres de comuna cambian entre escritura completamente en mayúsculas, escritura capitalizada y variantes con o sin tildes. Por esa razón, \texttt{nombre\_comuna} se mantiene como apoyo descriptivo y de verificación, pero no como llave de merge.
+
+\section{Base maestra y universo final}
+
+La base maestra se encuentra en \texttt{data/raw/dim\_comuna\_base.csv}. El reporte de homologación confirma 32 filas, unicidad de \texttt{codigo\_comuna} y \texttt{nombre\_comuna}, provincia única \texttt{SANTIAGO} y región única \texttt{METROPOLITANA DE SANTIAGO}. Ese archivo define el universo final del proyecto y se utiliza para acotar cobertura durante transformación e integración.
+
+\section{Resultados de homologación}
+
+Dentro del universo final, las fuentes A y B presentan 26 coincidencias exactas y 6 coincidencias resueltas por normalización. Las fuentes C y D presentan 32 coincidencias resueltas por normalización y no dejan pendientes manuales para las comunas de interés. En todos los casos, el criterio operativo es filtrar por \texttt{codigo\_comuna} y luego sobreescribir \texttt{nombre\_comuna} con la versión estandarizada de la dimensión maestra.
+
+\input{Tablas/tabla_homologacion_resumen_fuente.tex}
+
+\section{Ejemplos reales}
+
+\input{Tablas/tabla_homologacion_ejemplos.tex}
+
+\section{Controles de unicidad y cobertura}
+
+La homologación no deja casos pendientes dentro de las 32 comunas del proyecto. El dataset final validado conserva una sola fila por \texttt{codigo\_comuna}, sin faltantes ni extras respecto a \texttt{dim\_comuna\_base.csv}. Esta consistencia se vuelve a confirmar en la validación final y en la carga a SQLite.

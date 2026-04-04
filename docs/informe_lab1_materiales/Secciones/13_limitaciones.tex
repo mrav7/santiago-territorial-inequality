@@ -1,0 +1,14 @@
+\chapter{Limitaciones}
+
+El proyecto presenta limitaciones metodológicas que deben hacerse explícitas para interpretar correctamente el dataset y los outputs analíticos.
+
+\begin{itemize}
+\item Las fuentes no son perfectamente homogéneas en términos temporales: pobreza por ingresos corresponde a 2022, mientras población, áreas verdes e IPP corresponden a 2024.
+\item El análisis es comparativo y descriptivo; no permite sostener inferencias causales entre pobreza, áreas verdes y capacidad municipal.
+\item El \texttt{indice\_rezago\_territorial} es una construcción auxiliar de Fase 9 y no una variable oficial provista por las instituciones fuente.
+\item Existen outliers plausibles que afectan la lectura visual, en particular Quilicura en \texttt{areas\_verdes\_m2\_hab} y varias comunas de altos ingresos en \texttt{ipp\_pesos\_hab}.
+\item La interpretación depende de definiciones institucionales de origen, por ejemplo la forma en que cada fuente publica áreas verdes, IPP o pobreza por ingresos.
+\item El universo analizado se restringe a la Provincia de Santiago, por lo que el dataset final no representa al total regional ni nacional.
+\end{itemize}
+
+Estas limitaciones no invalidan el producto final, pero sí acotan su uso legítimo: comparación territorial observada, trazabilidad metodológica y reutilización del dataset integrado bajo el mismo marco descriptivo.

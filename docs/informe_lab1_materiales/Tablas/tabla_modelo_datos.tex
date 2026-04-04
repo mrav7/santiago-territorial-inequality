@@ -1,0 +1,14 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Resumen del modelo físico observado en SQLite.}
+\begin{tabular}{|p{3.5cm}|p{4.2cm}|p{2.2cm}|r|r|p{3.2cm}|}
+\hline
+Tabla & Rol & Llave primaria & Cols. & Filas & Observación \\
+\hline
+dim\_comuna & Dimensión de comunas del universo final. & codigo\_comuna & 5 & 32 & Conserva nombre, provincia, región y fuente\_referencia. \\
+fact\_desigualdad\_comunal & Tabla de hechos con variables finales y métricas derivadas. & codigo\_comuna & 11 & 32 & No replica nombre\_comuna; se relaciona con dim\_comuna. \\
+metadata\_fuentes & Contrato operativo y trazabilidad de lectura de fuentes. & id\_fuente & 13 & 4 & Documenta institución, URL, hoja, skiprows y archivo lógico. \\
+\hline
+\end{tabular}
+\end{table}

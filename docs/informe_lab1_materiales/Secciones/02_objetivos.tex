@@ -1,0 +1,17 @@
+\chapter{Objetivos}
+
+\section{Objetivo general}
+
+Construir y documentar un proceso ETL reproducible que integre fuentes públicas sobre áreas verdes, pobreza por ingresos, capacidad municipal y población comunal, con el fin de generar un dataset final por comuna para la Provincia de Santiago y una base SQLite apta para consulta y análisis descriptivo.
+
+\section{Objetivos específicos}
+
+\begin{itemize}
+\item Verificar la estructura base del repositorio, las rutas críticas y el contrato operativo de lectura de las fuentes.
+\item Perfilar las cuatro fuentes reales, identificar conflictos de estructura y registrar diferencias relevantes para la integración.
+\item Validar la dimensión maestra de comunas y resolver la homologación reproducible con \texttt{codigo\_comuna} como llave principal.
+\item Generar artefactos staging por fuente con selección de columnas, tipificación, filtrado territorial y estandarización comunal.
+\item Integrar el dataset final comunal con métricas derivadas por habitante y años de referencia explícitos.
+\item Validar formalmente el dataset final y cargarlo a una base SQLite con estructura consultable.
+\item Producir rankings, cruces descriptivos y figuras analíticas reutilizables para comunicación de resultados.
+\end{itemize}

@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Transformaciones y controles relevantes observados en el ETL.}
+\begin{tabular}{|p{2.7cm}|p{1.2cm}|p{7.0cm}|p{3.5cm}|}
+\hline
+Transformación & Fuente & Regla aplicada & Evidencia \\
+\hline
+Selección de columnas & A-D & Solo se conservan campos comunales y variables de interés. & outputs/resumen\_transformaciones.md \\
+Normalización comunal & A-D & Estandarización de nombre\_comuna contra dim\_comuna\_base.csv. & outputs/resumen\_transformaciones.md; outputs/homologacion\_comunas.csv \\
+Formateo de llave & A-D & codigo\_comuna se tipifica y luego se fija como string de 5 dígitos. & src/transform.py; src/integrate.py \\
+Tratamiento de valores especiales & A & No Aplica -> 0 y No Recepcionado -> NA en componentes de áreas verdes. & outputs/conflictos\_fuentes.md; src/transform.py \\
+Conversión de escala & C & La pobreza se transforma desde proporción 0-1 a porcentaje 0-100. & data/raw/metadata\_fuentes.csv; src/transform.py \\
+Filtrado territorial & A-D & Se excluyen comunas fuera de la Provincia de Santiago y filas sin código válido. & outputs/resumen\_transformaciones.md \\
+Renombre semántico & B-D & iadm41\_2024 -> ipp\_miles\_pesos; Población censada -> poblacion. & src/transform.py \\
+Métricas derivadas & Fase 6 & Se calculan areas\_verdes\_m2\_hab e ipp\_pesos\_hab con control de población > 0. & outputs/resumen\_dataset\_final.md; src/integrate.py \\
+Validaciones de rango & A-D & Población > 0; pobreza 0-100; áreas verdes e IPP no negativos. & outputs/validacion\_staging.csv; outputs/reporte\_validacion\_final.csv \\
+Control de cardinalidad & Fase 6 & Todos los merges se ejecutan como left con validación one\_to\_one. & outputs/log\_integracion.md; src/integrate.py \\
+\hline
+\end{tabular}
+\end{table}

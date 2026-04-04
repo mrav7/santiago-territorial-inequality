@@ -1,0 +1,21 @@
+\chapter{Carga Final a SQLite}
+
+La persistencia final del proyecto se materializa en \texttt{db/lab1\_desigualdad.sqlite}. En términos operativos, esta elección deja un artefacto local único, consultable con SQL y suficiente para validar consistencia entre dimensión, tabla de hechos y metadata sin depender de un servidor externo.
+
+\section{Estructura y conteos}
+
+La base resultante contiene las tablas \texttt{dim\_comuna}, \texttt{fact\_desigualdad\_comunal} y \texttt{metadata\_fuentes}. El reporte de carga y la inspección directa de la base coinciden en los conteos observados.
+
+\input{Tablas/tabla_sqlite_conteos.tex}
+
+\section{Integridad básica}
+
+El archivo abre correctamente y el chequeo \texttt{PRAGMA quick\_check} devuelve \texttt{ok}. Además, los reportes de carga informan ausencia de duplicados por \texttt{codigo\_comuna} en la dimensión y en la tabla de hechos, y ausencia de códigos huérfanos entre ambas tablas.
+
+\section{Consultas de prueba}
+
+Las consultas documentadas tras la carga reproducen conteos por tabla y rankings básicos para áreas verdes, pobreza e IPP. Esto confirma que la base queda utilizable no solo como respaldo del dataset final, sino también como soporte de consulta analítica.
+
+\input{Tablas/tabla_sqlite_consultas_prueba.tex}
+
+En síntesis, la carga final reproduce el resultado del ETL sin alterar la centralidad de \texttt{codigo\_comuna}. \texttt{dim\_comuna} conserva los descriptores territoriales, \texttt{fact\_desigualdad\_comunal} concentra las variables finales cuantitativas y \texttt{metadata\_fuentes} mantiene la trazabilidad del proceso de lectura.

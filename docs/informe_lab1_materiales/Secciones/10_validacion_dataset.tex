@@ -1,0 +1,9 @@
+\chapter{Validación del Dataset Final}
+
+La validación formal del dataset final quedó documentada en \texttt{outputs/reporte\_validacion\_final.csv} y \texttt{outputs/reporte\_validacion\_final.md}. El archivo validado es \texttt{data/processed/desigualdad\_comunal\_final.csv}, con 32 filas y 12 columnas.
+
+\input{Tablas/tabla_validacion_resumen.tex}
+
+Los chequeos reportados confirman una fila por comuna, unicidad de \texttt{codigo\_comuna}, formato de llave consistente de cinco dígitos, cobertura exacta respecto de la dimensión maestra y coincidencia de \texttt{nombre\_comuna} con \texttt{dim\_comuna\_base.csv}. También se informa convertibilidad numérica sin errores para todas las columnas cuantitativas, nulos igual a cero en las doce columnas finales y años de referencia consistentes con la fase de integración.
+
+Desde el punto de vista de reglas de negocio mínimas, la validación confirma \texttt{poblacion > 0}, \texttt{pobreza\_ingresos\_pct} entre 0 y 100, ausencia de áreas verdes negativas, ausencia de IPP negativos y ausencia de infinitos en las métricas derivadas por habitante. Sobre esa base, el propio reporte marca el dataset como apto para la fase de carga a SQLite.

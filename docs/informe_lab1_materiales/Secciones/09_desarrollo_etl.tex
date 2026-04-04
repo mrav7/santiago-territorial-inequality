@@ -1,0 +1,19 @@
+\chapter{Desarrollo del ETL}
+
+\section{Extracción}
+
+La extracción se coordina desde \texttt{src/main.py} y \texttt{src/extract.py}. El proceso usa \texttt{data/raw/metadata\_fuentes.csv} como contrato operativo para ubicar archivo, hoja, \texttt{skiprows}, formato y observaciones por fuente. Las fuentes A y B se leen mediante un parser específico para SpreadsheetML/XML 2003, mientras que las fuentes C y D se leen con \texttt{pandas.read\_excel()} respetando la configuración registrada en metadata.
+
+El resultado de esta etapa no es solo la lectura en memoria, sino también la generación de evidencia diagnóstica en \texttt{outputs/perfilado\_fuentes.xlsx} y \texttt{outputs/conflictos\_fuentes.md}. Esto permite detectar estructura real, filas fuera de alcance, valores especiales y heterogeneidad en nombres comunales antes de construir los staging.
+
+\section{Transformación}
+
+La transformación se implementa en \texttt{src/transform.py}. Cada fuente produce un staging independiente y validado. Las reglas aplicadas incluyen selección de columnas, renombre semántico, tipificación, formateo de \texttt{codigo\_comuna}, estandarización de \texttt{nombre\_comuna}, tratamiento de valores especiales, filtrado al universo final de 32 comunas y validaciones de rango.
+
+\input{Tablas/tabla_transformaciones.tex}
+
+\section{Integración}
+
+La integración se implementa en \texttt{src/integrate.py}. El proceso parte desde \texttt{dim\_comuna\_base.csv} y ejecuta cuatro merges \texttt{left} con validación \texttt{one\_to\_one}, en el orden población, pobreza, áreas verdes y capacidad municipal. Después del merge se asignan los años de referencia por variable y se calculan las métricas derivadas \texttt{areas\_verdes\_m2\_hab} e \texttt{ipp\_pesos\_hab}, controlando divisiones inválidas e infinitos.
+
+El flujo completo puede reejecutarse desde la raíz del repositorio con \texttt{python src/main.py} o \texttt{python -m src.main}. Los reportes \texttt{outputs/log\_integracion.md}, \texttt{outputs/resumen\_dataset\_final.md} y \texttt{outputs/reporte\_correcciones\_pre\_fase10.md} respaldan tanto la lógica del merge como la reproducibilidad observada del pipeline.

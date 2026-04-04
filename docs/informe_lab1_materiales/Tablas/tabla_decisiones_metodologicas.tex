@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Decisiones metodológicas observadas en el repositorio.}
+\begin{tabular}{|p{3.0cm}|p{5.6cm}|p{5.0cm}|}
+\hline
+Dimensión & Decisión observada & Evidencia principal \\
+\hline
+Unidad de análisis & Una fila = una comuna & README.md; outputs/resumen\_dataset\_final.md \\
+Cobertura territorial & Provincia de Santiago, 32 comunas & data/raw/dim\_comuna\_base.csv; outputs/reporte\_validacion\_final.md \\
+Llave principal & codigo\_comuna & outputs/resumen\_homologacion.md; src/comunas.py \\
+Naturaleza analítica & Comparativa y descriptiva, no causal & README.md; outputs/analisis\_exploratorio.md \\
+Temporalidad & Pobreza 2022; población, áreas verdes e IPP 2024 & data/raw/metadata\_fuentes.csv; outputs/resumen\_dataset\_final.md \\
+Integración & Merges left con validación one\_to\_one sobre codigo\_comuna & outputs/log\_integracion.md; src/integrate.py \\
+Tratamiento de faltantes & Sin imputación; métricas derivadas quedan NA solo si la división es inválida & outputs/resumen\_dataset\_final.md; src/integrate.py \\
+Producto final & CSV final, SQLite y outputs analíticos reproducibles & README.md; outputs/reporte\_carga\_sqlite.md \\
+\hline
+\end{tabular}
+\end{table}

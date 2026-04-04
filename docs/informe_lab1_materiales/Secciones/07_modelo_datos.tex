@@ -1,0 +1,21 @@
+\chapter{Modelo de Datos}
+
+Esta sección describe el modelo tal como existe en \texttt{db/lab1\_desigualdad.sqlite}. No se corrige ni reinterpreta el diseño observado; se documenta su implementación real. El modelo responde a una lógica dimensión-hecho complementada por una tabla de metadata.
+
+\input{Tablas/tabla_modelo_datos.tex}
+
+\section{Tabla \texttt{dim\_comuna}}
+
+La dimensión comunal contiene 32 filas y cinco columnas: \texttt{codigo\_comuna}, \texttt{nombre\_comuna}, \texttt{provincia}, \texttt{region} y \texttt{fuente\_referencia}. Esta tabla preserva la identificación y el contexto territorial del universo final.
+
+\section{Tabla \texttt{fact\_desigualdad\_comunal}}
+
+La tabla de hechos contiene 32 filas y once columnas. Su llave es \texttt{codigo\_comuna} y almacena \texttt{poblacion}, \texttt{anio\_poblacion}, \texttt{pobreza\_ingresos\_pct}, \texttt{anio\_pobreza}, \texttt{areas\_verdes\_m2}, \texttt{anio\_areas\_verdes}, \texttt{ipp\_miles\_pesos}, \texttt{anio\_ingresos}, \texttt{areas\_verdes\_m2\_hab} e \texttt{ipp\_pesos\_hab}. El campo \texttt{nombre\_comuna} no se replica en esta tabla; se obtiene mediante unión con \texttt{dim\_comuna}.
+
+\section{Tabla \texttt{metadata\_fuentes}}
+
+La tabla \texttt{metadata\_fuentes} contiene 4 filas y trece columnas. Su función es conservar la trazabilidad operativa de las fuentes: institución, URL, fecha de descarga, formato, año de referencia, hoja, \texttt{skiprows}, archivo lógico y observaciones. Esta tabla conecta el resultado analítico con el contrato de lectura real del ETL.
+
+\section{Relación entre tablas}
+
+El vínculo entre la dimensión y la tabla de hechos se realiza por \texttt{codigo\_comuna}. En términos operativos, la combinación \texttt{dim\_comuna} + \texttt{fact\_desigualdad\_comunal} reproduce el dataset final validado, mientras que \texttt{metadata\_fuentes} documenta el origen de los insumos y las reglas mínimas de lectura.

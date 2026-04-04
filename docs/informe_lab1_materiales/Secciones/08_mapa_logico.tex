@@ -1,0 +1,9 @@
+\chapter{Mapa Lógico de Datos}
+
+El mapa lógico resume cómo los datos transitan desde archivos raw heterogéneos hasta variables finales listas para validación, persistencia y análisis. En este proyecto, la secuencia observable es: contrato de lectura en metadata, lectura real por fuente, staging por fuente, integración sobre dimensión maestra, métricas derivadas y persistencia final en CSV y SQLite.
+
+\input{Tablas/tabla_mapa_logico_resumido.tex}
+
+El flujo anterior muestra dos criterios centrales. Primero, las variables finales solo se construyen a partir de campos realmente presentes en las fuentes y en los artefactos staging. Segundo, cualquier transformación semántica relevante queda documentada en el código y en los reportes de salida, por ejemplo la conversión de pobreza desde proporción a porcentaje o la suma de componentes de áreas verdes para producir \texttt{areas\_verdes\_m2}.
+
+El detalle extendido de artefactos y destinos se deja en anexos para facilitar trazabilidad técnica sin sobrecargar el cuerpo principal del informe.

@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Diccionario resumido del dataset final integrado.}
+\begin{tabular}{|p{3.2cm}|p{1.8cm}|p{5.5cm}|p{3.5cm}|}
+\hline
+Variable & Tipo & Descripción & Origen \\
+\hline
+codigo\_comuna & string(5) & Llave maestra comunal. & dim\_comuna\_base / todas las fuentes \\
+nombre\_comuna & string & Nombre oficial de la base maestra. & dim\_comuna\_base \\
+poblacion & int & Población censada comunal. & Fuente D / Censo 2024 \\
+anio\_poblacion & int & Año de referencia de población. & Constante Fase 6 \\
+pobreza\_ingresos\_pct & float & Porcentaje de pobreza por ingresos. & Fuente C / Observatorio Social \\
+anio\_pobreza & int & Año de referencia de pobreza. & Constante Fase 6 \\
+areas\_verdes\_m2 & int & Superficie total de áreas verdes comunales. & Fuente A / SINIM \\
+anio\_areas\_verdes & int & Año de referencia de áreas verdes. & Constante Fase 6 \\
+ipp\_miles\_pesos & int & Ingresos propios permanentes en miles de pesos. & Fuente B / SINIM \\
+anio\_ingresos & int & Año de referencia del IPP. & Constante Fase 6 \\
+areas\_verdes\_m2\_hab & float & Áreas verdes por habitante. & Derivada Fase 6 \\
+ipp\_pesos\_hab & float & IPP en pesos por habitante. & Derivada Fase 6 \\
+\hline
+\end{tabular}
+\end{table}

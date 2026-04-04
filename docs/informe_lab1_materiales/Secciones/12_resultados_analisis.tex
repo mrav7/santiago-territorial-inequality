@@ -1,0 +1,53 @@
+\chapter{Resultados y Análisis Exploratorio}
+
+Esta sección se apoya en \texttt{outputs/analisis\_exploratorio.md}, \texttt{outputs/tablas\_hallazgos\_fase9.csv}, los rankings exportados y las figuras generadas en Fase 9. La lectura se mantiene en un plano estrictamente descriptivo.
+
+\section{Rankings por dimensión}
+
+Los menores valores observados de \texttt{areas\_verdes\_m2\_hab} corresponden a CONCHALI, CERRILLOS, INDEPENDENCIA, LA CISTERNA, SAN MIGUEL. En pobreza por ingresos, los mayores valores observados corresponden a LA PINTANA, SAN RAMON, LO ESPEJO, EL BOSQUE, CONCHALI. En \texttt{ipp\_pesos\_hab}, los menores valores observados corresponden a CERRO NAVIA, LA PINTANA, LO PRADO, EL BOSQUE, LA GRANJA.
+
+\input{Tablas/tabla_hallazgos_resumen.tex}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{Figuras/areas_verdes_m2_hab_bottom10.png}
+\caption{Diez comunas con menor disponibilidad de áreas verdes por habitante.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{Figuras/pobreza_ingresos_top10.png}
+\caption{Diez comunas con mayor pobreza por ingresos en el dataset final.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{Figuras/ipp_pesos_hab_bottom10.png}
+\caption{Diez comunas con menor IPP por habitante en el dataset final.}
+\end{figure}
+
+\section{Cruces descriptivos y rezago en múltiples dimensiones}
+
+El cruce por quintiles muestra que el peor quintil simultáneo de pobreza y áreas verdes por habitante se observa en CONCHALI. Por su parte, el peor quintil simultáneo de pobreza e IPP por habitante se observa en LA PINTANA, SAN RAMON, LO ESPEJO, EL BOSQUE, LA GRANJA, CERRO NAVIA. Al ampliar la mirada a rezago crítico en al menos dos dimensiones, aparecen LO ESPEJO, EL BOSQUE, CONCHALI, LA PINTANA, SAN RAMON, LA GRANJA, CERRO NAVIA.
+
+El índice auxiliar de rezago territorial, definido en Fase 9 como suma de quintiles de rezago, ordena en los primeros lugares a Conchalí, El Bosque, Lo Espejo, La Pintana y San Ramón. Este índice se interpreta solo como apoyo descriptivo para resumir coincidencias de rezago relativo entre comunas.
+
+\input{Tablas/tabla_rezagadas_multidimensionales.tex}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{Figuras/indice_rezago_territorial_top10.png}
+\caption{Diez comunas con mayor índice auxiliar de rezago territorial.}
+\end{figure}
+
+\section{Lectura descriptiva del scatter y tratamiento del outlier}
+
+El scatter de pobreza y áreas verdes por habitante se mantiene como evidencia exploratoria y no como prueba de relación causal. Su lectura exige una advertencia metodológica explícita: Quilicura registra \texttt{areas\_verdes\_m2\_hab = 3931.614773}, muy por encima de La Reina (21.734172) y Providencia (20.172865). Por esta razón, el gráfico fue documentado con escala logarítmica en el eje X para preservar visibilidad sobre el resto de las comunas.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{Figuras/pobreza_vs_areas_verdes_scatter.png}
+\caption{Scatter descriptivo entre pobreza por ingresos y áreas verdes por habitante.}
+\end{figure}
+
+En términos comunicacionales, el caso de Quilicura debe tratarse como outlier plausible y no como valor descartado. El repositorio no aporta evidencia para clasificarlo como error; por lo tanto, la decisión metodológica correcta es mantenerlo, advertir su influencia en la escala y evitar interpretaciones causales a partir del gráfico.

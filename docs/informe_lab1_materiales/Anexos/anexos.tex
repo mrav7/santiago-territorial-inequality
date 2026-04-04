@@ -1,0 +1,47 @@
+\appendix
+
+\chapter{Diccionario de datos final}
+
+Este anexo resume las 12 variables que componen el dataset final integrado y deja explícito el origen de cada una.
+
+\input{Tablas/tabla_diccionario_datos_final.tex}
+
+\chapter{Perfilado extendido}
+
+El detalle extendido del perfilado se respalda en \texttt{outputs/perfilado\_fuentes.xlsx}. La siguiente tabla resume la estructura observada en la etapa diagnóstica.
+
+\input{Tablas/tabla_perfilado_resumen.tex}
+
+\chapter{Homologación de comunas}
+
+La homologación se resolvió sin pendientes manuales dentro del universo final. Se documentan a continuación el resumen por fuente y ejemplos de normalización aplicada.
+
+\input{Tablas/tabla_homologacion_resumen_fuente.tex}
+
+\input{Tablas/tabla_homologacion_ejemplos.tex}
+
+\chapter{Mapa lógico extendido}
+
+Este anexo deja trazabilidad entre artefactos del ETL y sus destinos operativos.
+
+\input{Tablas/tabla_mapa_logico_extendido.tex}
+
+\chapter{Validación final del dataset}
+
+La validación de Fase 7 confirma consistencia estructural, cobertura y rangos.
+
+\input{Tablas/tabla_validacion_resumen.tex}
+
+\chapter{Carga SQLite}
+
+Se resumen los conteos observados y las consultas de prueba utilizadas tras la carga final.
+
+\input{Tablas/tabla_sqlite_conteos.tex}
+
+\input{Tablas/tabla_sqlite_consultas_prueba.tex}
+
+\chapter{Revisión breve de Fase 9: outliers y comunicabilidad}
+
+La revisión corta de Fase 9 respalda tres advertencias: el índice de rezago es auxiliar, Quilicura debe tratarse como outlier plausible en áreas verdes por habitante y el scatter requiere lectura cuidadosa por su escala. Para el informe final conviene mantener estas advertencias junto a las figuras analíticas.
+
+\input{Tablas/tabla_hallazgos_resumen.tex}

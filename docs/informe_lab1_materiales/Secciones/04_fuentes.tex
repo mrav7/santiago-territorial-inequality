@@ -1,0 +1,21 @@
+\chapter{Descripción de Fuentes}
+
+Las fuentes primarias del proyecto se documentan en \texttt{data/raw/metadata\_fuentes.csv}, archivo que opera como contrato de lectura para fases posteriores. Sobre esa base se distinguen cuatro insumos oficiales y versionados dentro del repositorio.
+
+\input{Tablas/tabla_fuentes.tex}
+
+\section{SINIM - Áreas verdes}
+
+Esta fuente se almacena en \texttt{data/raw/datos\_municipales\_20260402222841\_Sin-Corrección-Monetaria.xls}. Aunque usa extensión \texttt{.xls}, la metadata y el código de extracción la tratan como SpreadsheetML/XML 2003. El archivo se lee en la hoja \texttt{Hoja1} con \texttt{skiprows = 2}. Su variable principal no está disponible como columna única de salida; el valor final \texttt{areas\_verdes\_m2} se construye combinando \texttt{mmpqc\_2024} y \texttt{mmpzc\_2024}.
+
+\section{SINIM - Capacidad municipal}
+
+La fuente de capacidad municipal se almacena en \texttt{data/raw/datos\_municipales\_20260402223904\_Sin-Corrección-Monetaria.xls}. Al igual que la fuente anterior, se lee como SpreadsheetML/XML 2003 desde \texttt{Hoja1} con \texttt{skiprows = 2}. La variable comunal utilizada es \texttt{iadm41\_2024}, que luego se renombra a \texttt{ipp\_miles\_pesos} y se conserva en miles de pesos nominales 2024.
+
+\section{Observatorio Social - Pobreza por ingresos}
+
+La fuente de pobreza corresponde a \texttt{data/raw/estimaciones\_tasa\_pobreza\_ingresos\_comunas\_2022.xlsx}. La metadata registra lectura directa con \texttt{pandas.read\_excel()}, hoja \texttt{Estimaciones} y \texttt{skiprows = 2}. La columna utilizada es \texttt{Porcentaje de personas en situación de pobreza por ingresos 2022}. La propia metadata advierte que esta variable viene en escala 0--1, por lo que en transformación se convierte a porcentaje 0--100.
+
+\section{Censo 2024 - Población comunal}
+
+La población comunal se toma desde \texttt{data/raw/D1\_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx}. La hoja operativa es \texttt{2} con \texttt{skiprows = 3}. Aunque la fuente incluye columnas adicionales de sexo y razón hombre-mujer, en esta fase solo se conserva \texttt{Población censada}, ya que el objetivo del ETL es disponer de un denominador comunal consistente para indicadores por habitante.

@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Mapa lógico resumido desde origen hasta variable final.}
+\begin{tabular}{|p{1.2cm}|p{4.0cm}|p{5.5cm}|p{3.4cm}|}
+\hline
+Fase/fuente & Origen & Transformación & Destino final \\
+\hline
+Todas & codigo\_comuna / Código / Código comuna & Parseo numérico y formateo string de 5 dígitos & codigo\_comuna \\
+A & mmpqc\_2024 + mmpzc\_2024 & No Aplica -> 0; No Recepcionado -> NA; suma con min\_count=2 & areas\_verdes\_m2 \\
+B & iadm41\_2024 & Renombre y conservación en miles de pesos nominales 2024 & ipp\_miles\_pesos \\
+C & Porcentaje de personas en situación de pobreza por ingresos 2022 & Conversión de proporción 0-1 a porcentaje 0-100 y redondeo & pobreza\_ingresos\_pct \\
+D & Población censada & Selección, tipificación Int64 y filtrado por universo & poblacion \\
+Fase 6 & Constantes de referencia & Asignación explícita de años de referencia por variable & anio\_poblacion / anio\_pobreza / anio\_areas\_verdes / anio\_ingresos \\
+Fase 6 & areas\_verdes\_m2 + poblacion & División controlada con población > 0 & areas\_verdes\_m2\_hab \\
+Fase 6 & ipp\_miles\_pesos + poblacion & Conversión a pesos por habitante y control de infinitos & ipp\_pesos\_hab \\
+\hline
+\end{tabular}
+\end{table}

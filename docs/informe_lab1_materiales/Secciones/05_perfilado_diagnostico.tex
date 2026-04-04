@@ -1,0 +1,21 @@
+\chapter{Perfilado y Diagnóstico de Datos}
+
+El perfilado real de las fuentes quedó registrado en \texttt{outputs/perfilado\_fuentes.xlsx}, con una hoja \texttt{resumen} y una hoja \texttt{columnas}. Ese workbook, complementado por \texttt{outputs/conflictos\_fuentes.md}, permite documentar estructura, problemas de calidad y conflictos de integración antes de cualquier carga a staging.
+
+\section{Estructura observada}
+
+Las fuentes A y B presentan 52 filas con 4 y 3 columnas útiles, respectivamente. Las fuentes C y D contienen 351 y 349 filas, con 10 columnas cada una en la lectura inicial. En las cuatro fuentes no se detectaron filas duplicadas completas durante el perfilado, pero sí diferencias importantes de alcance territorial y de estructura de encabezado.
+
+\input{Tablas/tabla_perfilado_resumen.tex}
+
+\section{Problemas de calidad y heterogeneidad}
+
+El diagnóstico registra cuatro grupos de problemas relevantes. Primero, las dos fuentes SINIM requieren parser especial porque el archivo corresponde a SpreadsheetML/XML 2003 y trae encabezados extendidos previos a la tabla útil. Segundo, todas las fuentes exceden el universo final de la Provincia de Santiago, por lo que debieron filtrarse contra la dimensión maestra comunal. Tercero, los nombres de comuna difieren de la base maestra por tildes, mayúsculas y escritura capitalizada. Cuarto, algunas variables exigieron limpieza o reinterpretación semántica antes de integrarse.
+
+En la fuente de áreas verdes se detectaron valores especiales \texttt{No Aplica} y \texttt{No Recepcionado}. En pobreza se identificaron seis filas de nota o blanco y una variable reportada originalmente como proporción 0--1. En población se identificaron dos filas no comunales y una fila agregada \texttt{País}, que no corresponde a la unidad analítica final.
+
+\section{Conflictos de integración}
+
+\input{Tablas/tabla_conflictos_integracion.tex}
+
+El detalle fino de columnas, tipos, nulos y muestras textuales queda respaldado por el workbook de perfilado y no se replica completo en el cuerpo principal del informe para evitar redundancia. Ese detalle se remite a anexos y a los outputs técnicos del repositorio.

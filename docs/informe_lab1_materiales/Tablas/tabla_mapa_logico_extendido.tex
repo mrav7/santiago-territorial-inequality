@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Mapa lógico extendido de artefactos y destinos del ETL.}
+\begin{tabular}{|p{4.3cm}|p{2.5cm}|p{5.2cm}|p{2.4cm}|}
+\hline
+Artefacto & Tipo & Contenido relevante & Fase de uso \\
+\hline
+data/raw/metadata\_fuentes.csv & Contrato operativo de lectura & Define archivo, hoja, skiprows y observaciones por fuente & Fases 2 y 4 \\
+data/raw/dim\_comuna\_base.csv & Universo maestro & Restringe cobertura a 32 comunas y aporta nombre oficial & Fases 3, 5 y 6 \\
+data/staging/poblacion\_staging.csv & Staging D & codigo\_comuna, nombre\_comuna, poblacion & Fase 6 / merge 1 \\
+data/staging/pobreza\_staging.csv & Staging C & codigo\_comuna, nombre\_comuna, pobreza\_ingresos\_pct & Fase 6 / merge 2 \\
+data/staging/areas\_verdes\_staging.csv & Staging A & codigo\_comuna, nombre\_comuna, mmpqc\_2024, mmpzc\_2024, areas\_verdes\_m2 & Fase 6 / merge 3 \\
+data/staging/ingresos\_staging.csv & Staging B & codigo\_comuna, nombre\_comuna, ipp\_miles\_pesos & Fase 6 / merge 4 \\
+data/processed/desigualdad\_comunal\_final.csv & Dataset final & 12 columnas finales y una fila por comuna & Fases 7, 8 y 9 \\
+db/lab1\_desigualdad.sqlite & Persistencia final & dim\_comuna, fact\_desigualdad\_comunal, metadata\_fuentes & Fase 8 \\
+\hline
+\end{tabular}
+\end{table}
