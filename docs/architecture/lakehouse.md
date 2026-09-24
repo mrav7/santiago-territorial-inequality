@@ -11,7 +11,7 @@ La §10 registra el estado real de cada componente. Todo lo que no figure ahí c
 | Tecnologías | Python + pandas + SQLite | Databricks + PySpark + Delta Lake + SQL |
 | Entrada | `data/raw/` (CSV, XLS SpreadsheetML, XLSX) | los mismos archivos, aterrizados en un Volume de Unity Catalog |
 | Producto | `data/processed/desigualdad_comunal_final.csv` y `db/lab1_desigualdad.sqlite` | tablas Delta en `workspace.gold` |
-| Estado | implementado y validado (Fases 1–9) | fundación creada (namespace y landing); pipeline no implementado; ver §10 |
+| Estado | implementado y validado (Fases 1–9) | fundación creada; Bronze de la Fuente C validado; Silver y Gold no implementados; ver §10 |
 | Ejecución | `python -m src.main` | Databricks Free Edition, compute serverless |
 
 El dataset es pequeño: 32 comunas y cuatro fuentes. Spark no se usa por volumen de datos. Se usa para aprender e implementar patrones de Data Engineering transferibles: DataFrames con schemas explícitos, Delta, calidad de datos y orquestación.
@@ -80,7 +80,7 @@ landing_volume = source_files
 
   | Columna | Contenido |
   |---|---|
-  | `_source_dataset` | identificador de la fuente (p. ej. `C`) |
+  | `_source_dataset` | identificador del dataset (p. ej. `pobreza_ingresos`) |
   | `_source_file` | nombre del archivo |
   | `_source_path` | ruta en el Volume |
   | `_source_year` | año de referencia de la fuente |
@@ -134,7 +134,7 @@ Las mismas que en la implementación local:
   - Se usa con conciencia de schemas explícitos, lazy evaluation, transformaciones vs. acciones, joins, shuffles y particiones.
   - No es una traducción línea a línea del código pandas.
 
-Los directorios `databricks/notebooks/` o `databricks/src/` se crearán cuando contengan una implementación real.
+`databricks/notebooks/` contiene el vertical Bronze de la Fuente C (`01_bronze_poverty.py`). `databricks/src/` se creará solo cuando exista lógica reutilizable real.
 
 ## 8. Data Quality por capa
 
@@ -172,16 +172,20 @@ Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED`
 | Pipeline local (Fases 1–9) | VALIDATED |
 | Diseño de namespace y capas (este documento) | IMPLEMENTED |
 | DDL de fundación (`databricks/sql/00_foundation.sql`) | VALIDATED: ejecutado manualmente en SQL Editor (Serverless Starter Warehouse) el 2026-09-23 |
-| Schemas `workspace.bronze` / `silver` / `gold` | VALIDATED: existen, sin tablas (`SHOW SCHEMAS`, `DESCRIBE SCHEMA EXTENDED`, `SHOW TABLES`) |
-| Volume `workspace.bronze.source_files` | VALIDATED: existe, `volume_type = MANAGED`, vacío (`SHOW VOLUMES`, `DESCRIBE VOLUME`, `LIST`) |
-| Aterrizaje de la Fuente C y Bronze Delta | PLANNED |
-| Silver, Data Quality y Gold | PLANNED |
+| Schemas `workspace.bronze` / `silver` / `gold` | VALIDATED: existen (`SHOW SCHEMAS`, `DESCRIBE SCHEMA EXTENDED`) |
+| Volume `workspace.bronze.source_files` | VALIDATED: existe, `volume_type = MANAGED` (`SHOW VOLUMES`, `DESCRIBE VOLUME`) |
+| Aterrizaje de la Fuente C en el Volume | VALIDATED: archivo versionado subido; tamaño y SHA-256 verificados desde el notebook (DQ-B02) |
+| Bronze Fuente C `workspace.bronze.pobreza_ingresos` | VALIDATED: tabla managed Delta, 351 filas, metadata de ingestión, checks Bronze DQ-B01…B14 en PASS (`databricks/notebooks/01_bronze_poverty.py`, `databricks/sql/01_validate_bronze_poverty.sql`) |
+| Rerun Bronze (snapshot overwrite) | VALIDATED: segunda ejecución crea la versión 1, mantiene 351 filas, sin acumulación; no es carga incremental |
+| Lector Excel nativo disponible en Databricks vía Spark (`spark.read.format("excel")`) | VALIDATED en serverless: `listSheets` y lectura de `Estimaciones!A3:J354`; decodificación Python de borde no usada |
+| Silver, Data Quality Silver/Gold y Gold | PLANNED |
 | Equivalencia con el baseline | PLANNED |
 | Orquestación (Databricks Jobs) | PLANNED |
 | Cargas incrementales / `MERGE` | PLANNED |
 | Schema enforcement / evolution | PLANNED |
 | Serving en Power BI | PLANNED |
-| PySpark en ejecución en el workspace | NOT VERIFIED |
-| Delta Lake en ejecución en el workspace | NOT VERIFIED |
-| Environment version / Spark / Python | NOT VERIFIED |
+| PySpark en ejecución en el workspace | VALIDATED para Bronze: DataFrame, acciones, metadata y escritura Delta ejecutadas por el notebook |
+| Delta Lake en ejecución en el workspace | VALIDATED para Bronze: `DESCRIBE DETAIL` format `delta`; `DESCRIBE HISTORY` con versiones 0 y 1. Silver y Gold sin validar |
+| Spark / Python del compute serverless | VALIDATED: Spark 4.2.0, Python 3.12.3 (ejecución del 2026-09-23) |
+| Environment version | NOT VERIFIED (no se registró en la UI) |
 | External locations / storage credentials | NOT VERIFIED (no requeridas) |
