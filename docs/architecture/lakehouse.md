@@ -11,7 +11,7 @@ La §10 registra el estado real de cada componente. Todo lo que no figure ahí c
 | Tecnologías | Python + pandas + SQLite | Databricks + PySpark + Delta Lake + SQL |
 | Entrada | `data/raw/` (CSV, XLS SpreadsheetML, XLSX) | los mismos archivos, aterrizados en un Volume de Unity Catalog |
 | Producto | `data/processed/desigualdad_comunal_final.csv` y `db/lab1_desigualdad.sqlite` | tablas Delta en `workspace.gold` |
-| Estado | implementado y validado (Fases 1–9) | fundación creada; Bronze de la Fuente C validado; Silver de la Fuente C implementado en código, sin ejecución validada; Gold no implementado; ver §10 |
+| Estado | implementado y validado (Fases 1–9) | fundación creada; Bronze y Silver de la Fuente C validados; resto de fuentes y Gold no implementados; ver §10 |
 | Ejecución | `python -m src.main` | Databricks Free Edition, compute serverless |
 
 El dataset es pequeño: 32 comunas y cuatro fuentes. Spark no se usa por volumen de datos. Se usa para aprender e implementar patrones de Data Engineering transferibles: DataFrames con schemas explícitos, Delta, calidad de datos y orquestación.
@@ -61,7 +61,7 @@ gold_schema    = gold
 landing_volume = source_files
 ```
 
-**Convención de nombres:** minúsculas, `snake_case`, nombres descriptivos y namespace `catalog.schema.object`. Nombres previstos (diseño, no objetos existentes):
+**Convención de nombres:** minúsculas, `snake_case`, nombres descriptivos y namespace `catalog.schema.object`. Nombres previstos (las tablas `bronze` y `silver` de `pobreza_ingresos` ya existen, ver §10; las `gold` son diseño, no objetos existentes):
 
 - `workspace.bronze.pobreza_ingresos`
 - `workspace.silver.pobreza_ingresos`
@@ -134,7 +134,7 @@ Las mismas que en la implementación local:
   - Se usa con conciencia de schemas explícitos, lazy evaluation, transformaciones vs. acciones, joins, shuffles y particiones.
   - No es una traducción línea a línea del código pandas.
 
-`databricks/notebooks/` contiene el vertical Bronze de la Fuente C (`01_bronze_poverty.py`) y el Silver de la Fuente C (`02_silver_poverty.py`, aún sin ejecución validada). `databricks/src/` se creará solo cuando exista lógica reutilizable real.
+`databricks/notebooks/` contiene el vertical Bronze de la Fuente C (`01_bronze_poverty.py`) y el Silver de la Fuente C (`02_silver_poverty.py`, ejecutado y validado el 2026-09-24). `databricks/src/` se creará solo cuando exista lógica reutilizable real.
 
 ## 8. Data Quality por capa
 
@@ -177,10 +177,11 @@ Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED`
 | Aterrizaje de la Fuente C en el Volume | VALIDATED: archivo versionado subido; tamaño y SHA-256 verificados desde el notebook (DQ-B02) |
 | Bronze Fuente C `workspace.bronze.pobreza_ingresos` | VALIDATED: tabla managed Delta, 351 filas, metadata de ingestión, checks Bronze DQ-B01…B14 en PASS (`databricks/notebooks/01_bronze_poverty.py`, `databricks/sql/01_validate_bronze_poverty.sql`) |
 | Rerun Bronze (snapshot overwrite) | VALIDATED: segunda ejecución crea la versión 1, mantiene 351 filas, sin acumulación; no es carga incremental |
+| Rerun / idempotencia Silver | NOT VALIDATED: solo existe la ejecución inicial (versión 0) |
 | Lector Excel nativo disponible en Databricks vía Spark (`spark.read.format("excel")`) | VALIDATED en serverless: `listSheets` y lectura de `Estimaciones!A3:J354`; decodificación Python de borde no usada |
-| Silver Fuente C `workspace.silver.pobreza_ingresos` (P04) | IMPLEMENTED, NOT VALIDATED: `databricks/notebooks/02_silver_poverty.py` existe (clasificación `^[0-9]{4,5}$` tras resolver B2, join por `codigo_comuna` con `dim_comuna_base.csv`, proporción × 100, `DECIMAL(7,4)`); no ejecutado en Databricks; el proyecto aún no ha creado la tabla |
-| Data Quality Silver de la Fuente C (P04) | IMPLEMENTED, NOT VALIDATED: checks DQ-S01…S26 en el notebook y `databricks/sql/02_validate_silver_poverty.sql`; sin ejecución |
-| Equivalencia Silver pobreza vs. baseline local (P04) | IMPLEMENTED, NOT VALIDATED: checks EQ-S01…S10 en el notebook; sin ejecución |
+| Silver Fuente C `workspace.silver.pobreza_ingresos` (P04) | VALIDATED: `databricks/notebooks/02_silver_poverty.py` ejecutado con Run all una vez el 2026-09-24 (compute serverless; target inexistente antes de la ejecución). Bronze 351 → 345 filas con código comunal válido (`^[0-9]{4,5}$`: 206 de 4 dígitos, 139 de 5) + 6 no comunales → join por `codigo_comuna` con `dim_comuna_base.csv` → 32 filas (313 códigos fuera del universo; 0 claves maestras faltantes). Tabla managed Delta, no temporal; schema `codigo_comuna INT`, `nombre_comuna STRING`, `pobreza_ingresos_pct DECIMAL(7,4)`, `anio_pobreza INT`; `DESCRIBE HISTORY` solo con la versión 0 (creación inicial) |
+| Data Quality Silver de la Fuente C (P04) | VALIDATED: DQ-S01…S26 en PASS en el notebook; `databricks/sql/02_validate_silver_poverty.sql` ejecutado completo en SQL Editor (Serverless Starter Warehouse, 12 result sets): 32 filas, 32 claves distintas, 0 duplicados, 0 nulls por columna, pct entre 0.8910 y 9.2938 (0 fuera de rango), `anio_pobreza` = 2022 en las 32 filas, cobertura exacta de la dimensión (32 coincidencias, 0 faltantes, 0 extras) |
+| Equivalencia Silver pobreza vs. baseline local (P04) | VALIDATED: EQ-S01…S10 en PASS contra `pobreza_staging.csv` y `desigualdad_comunal_final.csv`; tolerancia `1e-9`, `max_abs_diff` = 0 |
 | Silver del resto de fuentes | PLANNED |
 | Gold y Data Quality Gold | PLANNED |
 | Equivalencia del producto final (Gold) con el baseline | PLANNED |
@@ -188,8 +189,8 @@ Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED`
 | Cargas incrementales / `MERGE` | PLANNED |
 | Schema enforcement / evolution | PLANNED |
 | Serving en Power BI | PLANNED |
-| PySpark en ejecución en el workspace | VALIDATED para Bronze: DataFrame, acciones, metadata y escritura Delta ejecutadas por el notebook |
-| Delta Lake en ejecución en el workspace | VALIDATED para Bronze: `DESCRIBE DETAIL` format `delta`; `DESCRIBE HISTORY` con versiones 0 y 1. Silver y Gold sin validar |
+| PySpark en ejecución en el workspace | VALIDATED para Bronze y Silver de la Fuente C: DataFrames, joins, acciones, metadata y escritura Delta ejecutadas por los notebooks |
+| Delta Lake en ejecución en el workspace | VALIDATED para Bronze (`DESCRIBE DETAIL` format `delta`; `DESCRIBE HISTORY` con versiones 0 y 1) y Silver de la Fuente C (format `delta`; versión 0). Gold sin validar |
 | Spark / Python del compute serverless | VALIDATED: Spark 4.2.0, Python 3.12.3 (ejecución del 2026-09-23) |
 | Environment version | NOT VERIFIED (no se registró en la UI) |
 | External locations / storage credentials | NOT VERIFIED (no requeridas) |
