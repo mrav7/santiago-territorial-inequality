@@ -11,7 +11,7 @@ La §10 registra el estado real de cada componente. Todo lo que no figure ahí c
 | Tecnologías | Python + pandas + SQLite | Databricks + PySpark + Delta Lake + SQL |
 | Entrada | `data/raw/` (CSV, XLS SpreadsheetML, XLSX) | los mismos archivos, aterrizados en un Volume de Unity Catalog |
 | Producto | `data/processed/desigualdad_comunal_final.csv` y `db/lab1_desigualdad.sqlite` | tablas Delta en `workspace.gold` |
-| Estado | implementado y validado (Fases 1–9) | fundación creada; Bronze de la Fuente C validado; Silver y Gold no implementados; ver §10 |
+| Estado | implementado y validado (Fases 1–9) | fundación creada; Bronze de la Fuente C validado; Silver de la Fuente C implementado en código, sin ejecución validada; Gold no implementado; ver §10 |
 | Ejecución | `python -m src.main` | Databricks Free Edition, compute serverless |
 
 El dataset es pequeño: 32 comunas y cuatro fuentes. Spark no se usa por volumen de datos. Se usa para aprender e implementar patrones de Data Engineering transferibles: DataFrames con schemas explícitos, Delta, calidad de datos y orquestación.
@@ -134,7 +134,7 @@ Las mismas que en la implementación local:
   - Se usa con conciencia de schemas explícitos, lazy evaluation, transformaciones vs. acciones, joins, shuffles y particiones.
   - No es una traducción línea a línea del código pandas.
 
-`databricks/notebooks/` contiene el vertical Bronze de la Fuente C (`01_bronze_poverty.py`). `databricks/src/` se creará solo cuando exista lógica reutilizable real.
+`databricks/notebooks/` contiene el vertical Bronze de la Fuente C (`01_bronze_poverty.py`) y el Silver de la Fuente C (`02_silver_poverty.py`, aún sin ejecución validada). `databricks/src/` se creará solo cuando exista lógica reutilizable real.
 
 ## 8. Data Quality por capa
 
@@ -165,7 +165,7 @@ Qué se compara, según corresponda:
 
 ## 10. Estado de implementación
 
-Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED` (verificado con evidencia de ejecución), `PLANNED` (diseño), `NOT VERIFIED` (capacidad de plataforma sin confirmar).
+Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED` (verificado con evidencia de ejecución), `PLANNED` (diseño), `BLOCKED` (etapa detenida por una condición pendiente que impide continuar o validar su gate), `NOT VERIFIED` (capacidad de plataforma sin confirmar).
 
 | Componente | Estado |
 |---|---|
@@ -178,8 +178,12 @@ Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED`
 | Bronze Fuente C `workspace.bronze.pobreza_ingresos` | VALIDATED: tabla managed Delta, 351 filas, metadata de ingestión, checks Bronze DQ-B01…B14 en PASS (`databricks/notebooks/01_bronze_poverty.py`, `databricks/sql/01_validate_bronze_poverty.sql`) |
 | Rerun Bronze (snapshot overwrite) | VALIDATED: segunda ejecución crea la versión 1, mantiene 351 filas, sin acumulación; no es carga incremental |
 | Lector Excel nativo disponible en Databricks vía Spark (`spark.read.format("excel")`) | VALIDATED en serverless: `listSheets` y lectura de `Estimaciones!A3:J354`; decodificación Python de borde no usada |
-| Silver, Data Quality Silver/Gold y Gold | PLANNED |
-| Equivalencia con el baseline | PLANNED |
+| Silver Fuente C `workspace.silver.pobreza_ingresos` (P04) | IMPLEMENTED, NOT VALIDATED: `databricks/notebooks/02_silver_poverty.py` existe (clasificación `^[0-9]{4,5}$` tras resolver B2, join por `codigo_comuna` con `dim_comuna_base.csv`, proporción × 100, `DECIMAL(7,4)`); no ejecutado en Databricks; el proyecto aún no ha creado la tabla |
+| Data Quality Silver de la Fuente C (P04) | IMPLEMENTED, NOT VALIDATED: checks DQ-S01…S26 en el notebook y `databricks/sql/02_validate_silver_poverty.sql`; sin ejecución |
+| Equivalencia Silver pobreza vs. baseline local (P04) | IMPLEMENTED, NOT VALIDATED: checks EQ-S01…S10 en el notebook; sin ejecución |
+| Silver del resto de fuentes | PLANNED |
+| Gold y Data Quality Gold | PLANNED |
+| Equivalencia del producto final (Gold) con el baseline | PLANNED |
 | Orquestación (Databricks Jobs) | PLANNED |
 | Cargas incrementales / `MERGE` | PLANNED |
 | Schema enforcement / evolution | PLANNED |
