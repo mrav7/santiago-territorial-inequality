@@ -11,9 +11,12 @@
 --   pobreza_ingresos_pct within 0–100
 --   anio_pobreza = 2022 for all 32 rows
 --   master coverage: 32 matched, 0 missing, 0 extra (requires the dimension in the Volume)
+--   after a rerun (C04-E): still 32 rows (snapshot overwrite, no accumulation) and
+--   one more Delta version than before the rerun
 --
 -- This SQL complements the notebook checks; it does not replace the pre-write DQ,
--- the file hashes, the 351 → 345 → 32 trace or the key-based baseline equivalence.
+-- the file hashes, the 351 → 345 → 32 trace, the key-based baseline equivalence
+-- or the target compatibility checks (TC-S01…S05).
 
 -- 1. Existence and physical format
 SHOW TABLES IN workspace.silver;
@@ -86,5 +89,8 @@ SELECT codigo_comuna, nombre_comuna, pobreza_ingresos_pct, anio_pobreza
 FROM workspace.silver.pobreza_ingresos
 ORDER BY codigo_comuna;
 
--- 9. Delta history (diagnostic): expected one WRITE/CREATE per notebook run, 32 output rows
+-- 9. Delta history (diagnostic): one new version per successful notebook write (initial
+--    create or snapshot overwrite), 32 output rows each. The operation name is whatever the
+--    runtime records; compare the latest version with the one noted before the rerun, not
+--    with a fixed version number.
 DESCRIBE HISTORY workspace.silver.pobreza_ingresos;

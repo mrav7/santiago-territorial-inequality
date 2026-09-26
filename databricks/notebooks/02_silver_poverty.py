@@ -5,12 +5,15 @@
 # MAGIC `workspace.bronze.pobreza_ingresos` → commune-row classification → `codigo_comuna` → join with the master dimension
 # MAGIC → proportion × 100 → `workspace.silver.pobreza_ingresos` (Delta).
 # MAGIC
-# MAGIC Contract: P04 as corrected by C04-A (year fixture, 4–5 digit code rule) and resumed by C04-C.
+# MAGIC Contract: P04 as corrected by C04-A (year fixture, 4–5 digit code rule), resumed by C04-C and made rerunnable by C04-E.
 # MAGIC
 # MAGIC - Final grain: one row per commune of the Provincia de Santiago (32), resolved by `codigo_comuna` against `dim_comuna_base.csv`.
 # MAGIC - Silver columns: `codigo_comuna INT`, `nombre_comuna STRING`, `pobreza_ingresos_pct DECIMAL(7,4)`, `anio_pobreza INT`.
-# MAGIC - All Data Quality (DQ-S01…S22) and baseline equivalence (EQ-S01…S10) checks run **before** the write. A failed check raises and stops the run.
+# MAGIC - Pre-write: Data Quality DQ-S01…S22, baseline equivalence EQ-S01…S10 and, if the target already exists, target compatibility TC-S01…S04.
+# MAGIC - Post-write: DQ-S23…S26 and, on a rerun, TC-S05 (new Delta version). A failed check raises and stops the run.
 # MAGIC - Snapshot overwrite of a managed Delta table. This is not incremental processing and not `MERGE`.
+# MAGIC - Rerun: the same notebook runs unchanged whether the target exists or not. An existing target is overwritten only if it is
+# MAGIC   compatible (Delta, exact schema, 32 master keys, same content as the validated candidate); otherwise the run stops before the write.
 # MAGIC
 # MAGIC Run on serverless notebook compute. Nothing is installed.
 
@@ -62,7 +65,6 @@ EXPECTED_BRONZE_COLUMNS = [
     "_source_year",
     "_ingested_at_utc",
 ]
-EXPECTED_BRONZE_VERSIONS = [0, 1]
 POVERTY_SOURCE_COLUMN = "porcentaje_de_personas_en_situacion_de_pobreza_por_ingresos_2022"
 SOURCE_YEAR = 2022
 
@@ -83,10 +85,6 @@ EXPECTED_SILVER_SCHEMA = [
 # The local pipeline rounds to 4 decimals; values are compared after that rounding.
 EQUIVALENCE_TOLERANCE = 1e-9
 
-# P04 §27: the first run must not find an existing Silver table. Set to True only for a
-# documented rerun after a real correction (P04 §47).
-ALLOW_EXISTING_TARGET = False
-
 dq_results = []
 
 
@@ -98,10 +96,14 @@ def check(check_id, description, passed, detail=""):
     if not passed:
         raise AssertionError(f"{check_id} failed: {description} :: {detail}")
 
+
+def latest_version(table_name):
+    return spark.sql(f"DESCRIBE HISTORY {table_name}").agg(F.max("version")).first()[0]
+
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 2. Runtime and target pre-check
+# MAGIC ## 2. Runtime and target state
 
 # COMMAND ----------
 
@@ -112,13 +114,9 @@ spark_action_count = spark.range(1).count()
 print("spark.range(1).count() =", spark_action_count)
 assert spark_action_count == 1, "Spark action returned an unexpected result"
 
+# An existing target is a normal state (rerun). It is validated in section 11, after the candidate passed DQ and EQ.
 target_existed_before = spark.catalog.tableExists(TARGET_TABLE)
 print("Silver target existed before this run:", target_existed_before)
-if target_existed_before and not ALLOW_EXISTING_TARGET:
-    raise RuntimeError(
-        f"BLOCKED: {TARGET_TABLE} already exists. Investigate who created it before any write "
-        "(P04 §27). Do not drop it."
-    )
 
 # COMMAND ----------
 
@@ -135,6 +133,7 @@ bronze_df = spark.table(BRONZE_TABLE)
 bronze_count = bronze_df.count()
 check("DQ-S02", "Bronze row count", bronze_count == EXPECTED_BRONZE_ROWS, bronze_count)
 
+# History is evidence only: a legitimate Bronze rerun adds versions without changing the current snapshot (C04-E).
 bronze_history = (
     spark.sql(f"DESCRIBE HISTORY {BRONZE_TABLE}")
     .select("version", "operation", F.col("operationMetrics")["numOutputRows"].alias("numOutputRows"))
@@ -149,25 +148,27 @@ bronze_meta = bronze_df.agg(
     F.collect_set("_source_year").alias("years"),
     F.countDistinct("_ingested_at_utc").alias("snapshots"),
 ).first()
-poverty_type = bronze_df.schema[POVERTY_SOURCE_COLUMN].dataType.simpleString()
+poverty_type = (
+    bronze_df.schema[POVERTY_SOURCE_COLUMN].dataType.simpleString() if POVERTY_SOURCE_COLUMN in bronze_df.columns else None
+)
 print("Bronze metadata:", bronze_meta.asDict())
 print("Bronze poverty column type:", poverty_type)
 
-bronze_contract_ok = (
-    bronze_df.columns == EXPECTED_BRONZE_COLUMNS
-    and bronze_meta["datasets"] == ["pobreza_ingresos"]
-    and bronze_meta["files"] == ["estimaciones_tasa_pobreza_ingresos_comunas_2022.xlsx"]
-    and bronze_meta["years"] == [SOURCE_YEAR]
-    and bronze_meta["snapshots"] == 1
-    and bronze_versions == EXPECTED_BRONZE_VERSIONS
+# Contract of the current Bronze snapshot; the row count is DQ-S02.
+bronze_contract = {
+    "columns_ok": bronze_df.columns == EXPECTED_BRONZE_COLUMNS,
+    "dataset_ok": bronze_meta["datasets"] == ["pobreza_ingresos"],
+    "source_file_ok": bronze_meta["files"] == ["estimaciones_tasa_pobreza_ingresos_comunas_2022.xlsx"],
+    "source_year_ok": bronze_meta["years"] == [SOURCE_YEAR],
+    "single_snapshot_ok": bronze_meta["snapshots"] == 1,
     # Exact decimal arithmetic is what makes the × 100 + rounding reproducible (R04 §8).
-    and poverty_type.startswith("decimal")
-)
+    "poverty_type_ok": poverty_type is not None and poverty_type.startswith("decimal"),
+}
 check(
     "DQ-S03",
-    "Bronze required contract (columns, metadata, single snapshot, P03 history, decimal poverty)",
-    bronze_contract_ok,
-    f"columns={len(bronze_df.columns)} versions={bronze_versions} poverty_type={poverty_type}",
+    "Bronze required contract of the current snapshot (columns, metadata, single snapshot, decimal poverty)",
+    all(bronze_contract.values()),
+    f"{bronze_contract} poverty_type={poverty_type} history_versions={bronze_versions} (diagnostic only)",
 )
 
 # COMMAND ----------
@@ -526,9 +527,65 @@ check(
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 11. Delta write (managed table, snapshot overwrite)
+# MAGIC ## 11. Target compatibility (pre-write)
 # MAGIC
-# MAGIC Reached only if every DQ and EQ check above passed. No `LOCATION`, no partitioning, no `mergeSchema`/`overwriteSchema`, no `MERGE`.
+# MAGIC Runs only if the Silver target already exists. The source file and the fixtures are pinned by hash, so a compatible target is the
+# MAGIC same functional snapshot: Delta, exact Silver schema, the 32 master keys, and the same rows as the validated candidate (compared by
+# MAGIC `exceptAll` in both directions, never by row order). Any difference stops the run before the write; the table is never dropped.
+
+# COMMAND ----------
+
+target_exists = spark.catalog.tableExists(TARGET_TABLE)
+if target_exists != target_existed_before:
+    raise RuntimeError(f"BLOCKED: {TARGET_TABLE} existence changed during the run ({target_existed_before} -> {target_exists}).")
+
+version_before = None
+if target_exists:
+    target_format = spark.sql(f"DESCRIBE DETAIL {TARGET_TABLE}").first()["format"]
+    check("TC-S01", "existing target is Delta", target_format == "delta", target_format)
+
+    existing_df = spark.table(TARGET_TABLE)
+    existing_schema = [(field.name, field.dataType.simpleString()) for field in existing_df.schema.fields]
+    check("TC-S02", "existing target schema = Silver contract", existing_schema == EXPECTED_SILVER_SCHEMA, existing_schema)
+
+    existing_stats = existing_df.agg(
+        F.count("*").alias("rows"),
+        F.countDistinct("codigo_comuna").alias("distinct_keys"),
+        F.sum(F.col("codigo_comuna").isNull().cast("int")).alias("null_keys"),
+    ).first()
+    existing_outside_master = existing_df.join(dim_df, on="codigo_comuna", how="left_anti").count()
+    master_outside_existing = dim_df.join(existing_df, on="codigo_comuna", how="left_anti").count()
+    check(
+        "TC-S03",
+        "existing target keys: 32 rows, 32 distinct non-null keys = master",
+        existing_stats["rows"] == EXPECTED_MASTER_KEYS
+        and existing_stats["distinct_keys"] == EXPECTED_MASTER_KEYS
+        and existing_stats["null_keys"] == 0
+        and existing_outside_master == 0
+        and master_outside_existing == 0,
+        f"{existing_stats.asDict()} target_only={existing_outside_master} master_only={master_outside_existing}",
+    )
+
+    existing_only = existing_df.exceptAll(silver_df).count()
+    candidate_only = silver_df.exceptAll(existing_df).count()
+    check(
+        "TC-S04",
+        "existing target rows equal the validated candidate",
+        existing_only == 0 and candidate_only == 0,
+        f"target_only={existing_only} candidate_only={candidate_only}",
+    )
+
+    version_before = latest_version(TARGET_TABLE)
+    print("Compatible existing target; Delta version before the write:", version_before)
+else:
+    print("Target does not exist: initial write.")
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ## 12. Delta write (managed table, snapshot overwrite)
+# MAGIC
+# MAGIC Reached only if every DQ, EQ and (on a rerun) TC check above passed. No `LOCATION`, no partitioning, no `mergeSchema`/`overwriteSchema`, no `MERGE`.
 
 # COMMAND ----------
 
@@ -543,7 +600,7 @@ print("Write finished:", TARGET_TABLE)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 12. Post-write Delta validation
+# MAGIC ## 13. Post-write Delta validation
 
 # COMMAND ----------
 
@@ -577,10 +634,16 @@ spark.sql(f"DESCRIBE TABLE {TARGET_TABLE}").show(truncate=False)
     .show(truncate=False)
 )
 
+version_after = latest_version(TARGET_TABLE)
+print("Delta version before / after the write:", version_before, "/", version_after)
+if target_existed_before:
+    # Relative, not absolute: the snapshot overwrite must add a version, whatever the history length.
+    check("TC-S05", "rerun created a new Delta version", version_after > version_before, f"before={version_before} after={version_after}")
+
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 13. Evidence summary
+# MAGIC ## 14. Evidence summary
 
 # COMMAND ----------
 
@@ -594,6 +657,7 @@ print("Silver candidate rows             ", silver_stats["rows"])
 print("Silver Delta rows                 ", persisted_count)
 print("equivalence tolerance / max diff  ", EQUIVALENCE_TOLERANCE, "/", max_abs_diff)
 print("target existed before this run    ", target_existed_before)
+print("Delta version before / after      ", version_before, "/", version_after)
 print()
 for check_id, description, status, _ in dq_results:
     print(f"  {status}  {check_id}  {description}")
