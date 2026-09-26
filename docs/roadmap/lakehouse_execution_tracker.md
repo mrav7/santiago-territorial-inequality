@@ -3,9 +3,9 @@
 **Proyecto:** Santiago Territorial Inequality ETL · Databricks Lakehouse  
 **Versión del tracker:** 1.0  
 **Fecha de corte:** 2026-09-25  
-**Estado:** LISTO PARA ADOPCIÓN  
+**Estado:** ACTIVO\
 **Repositorio vigente:** `mrav7/santiago-territorial-inequality`  
-**HEAD remoto revisado:** `e9a8c4cda7d4b7f79bd291b48c9789ce86cb36ec`  
+**Base histórica de creación:** `e9a8c4cda7d4b7f79bd291b48c9789ce86cb36ec`\
 **Fuente normativa principal:** `PLAN_CANONICO_SANTIAGO_ETL_DATABRICKS_v1.0.md`  
 **Metodología operativa:** `REGLA_TRABAJO_CHATGPT_CODEX_PROMPTS_REPORTS.md`
 
@@ -1009,6 +1009,7 @@ Acción: este tracker registra el estado operativo sin modificar retrospectivame
 | 2026-09-25 | 1.0 | C04-E | Correctivo renombrado `C04-D` → `C04-E` (`R04-E`, `E04-E_RUNTIME.md`); `C04-D`/`R04-D` históricos no se reutilizan. Sin cambio técnico | A01-F01 |
 | 2026-09-25 | 1.0 | C04-E | `READY` → `GATE_PASSED`: rerun Silver pobreza validado en runtime Databricks (target preexistente, TC/DQ/EQ PASS, versión Delta 0 → 1, 32 → 32 filas) | `R04-E` + `E04-E_RUNTIME.md` (A02) |
 | 2026-09-25 | 1.0 | P05 | `PLANNED` → `READY` (dependencia C04-E satisfecha) | C04-E `GATE_PASSED` |
+| 2026-09-25 | 1.0 | C04-E | Cierre aprobado, commiteado y publicado; tracker queda operativo para P05 | `28f7630` + `1d93988` |
 
 Agregar nuevas filas por cada transición relevante. No borrar entradas históricas para “limpiar” el relato.
 
@@ -1018,7 +1019,7 @@ Agregar nuevas filas por cada transición relevante. No borrar entradas históri
 
 | Etapa | Estado operativo | Branch / HEAD | Prompt | Reporte | Evidencia runtime | Dictamen | Decisión humana | Próximo paso |
 |---|---|---|---|---|---|---|---|---|
-| C04-E | GATE_PASSED | `main` / base `1425763` (cambios C04-E sin commit) | `C04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `R04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `E04-E_RUNTIME.md` | APROBADO | commit pendiente (humano) | preparar P05 |
+| C04-E | GATE_PASSED | `main` / impl. `28f7630` + cierre `1d93988` | `C04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `R04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `E04-E_RUNTIME.md` | APROBADO | committed + pushed | preparar P05 |
 | P05 | READY | — | pendiente | pendiente | `E05_RUNTIME.md` pendiente | — | — | redactar P05 desde el HEAD real |
 | P06 | PLANNED | — | pendiente | pendiente | `E06_RUNTIME.md` pendiente | — | — | depende de P05 |
 | P07 | PLANNED | — | pendiente | pendiente | `E07_RUNTIME.md` pendiente | — | — | depende de P06 |
@@ -1052,10 +1053,18 @@ No compensar una fase rota agregando una tecnología posterior.
 
 ## 17. Próximo paso
 
-Secuencia C04-E completada (tracker adoptado en `docs/roadmap/`, `R04-E`, acciones `M04E-*`, `E04-E_RUNTIME.md`, `C04-E = GATE_PASSED`). Pendiente:
+C04-E está cerrado, commiteado y publicado en `main`.
 
-1. Revisión humana del diff y commit de C04-E + cierre documental (A02).
-2. Redactar el prompt canónico P05 desde el HEAD real.
+Base remota confirmada para preparar P05:
+
+`1d939882108653110f62d6b26c01ebc1dacab78b`
+
+Siguiente paso:
+
+1. Inspeccionar el estado real desde ese HEAD.
+2. Redactar el prompt canónico P05.
+3. Materializar P05 antes de ejecutar el agente.
+4. Ejecutar P05 en una branch focalizada.
 
 ---
 
