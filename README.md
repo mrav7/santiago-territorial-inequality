@@ -51,7 +51,8 @@ La numeracion P00–P12 de las etapas Lakehouse es independiente de las Fases 1�
 | P01 | Auditoria del entorno Databricks | completada; capacidades del workspace documentadas en la arquitectura |
 | P02 | Fundacion Lakehouse (schemas `bronze`/`silver`/`gold`, Volume de landing) | validada |
 | P03 | Bronze de pobreza (Fuente C): `workspace.bronze.pobreza_ingresos`, Delta managed, 351 filas, DQ-B01–DQ-B14 en PASS; rerun por snapshot overwrite (no incremental) | validada en Databricks |
-| P04 | Silver de pobreza (Fuente C): `workspace.silver.pobreza_ingresos`, Delta managed, 32 filas, una por `codigo_comuna`, `anio_pobreza` = 2022; DQ-S01–DQ-S26 y equivalencia con el baseline local EQ-S01–EQ-S10 en PASS (tolerancia `1e-9`, `max_abs_diff` = 0); ejecucion inicial unica (version 0), sin rerun validado | validada en Databricks (2026-09-24) |
+| P04 | Silver de pobreza (Fuente C): `workspace.silver.pobreza_ingresos`, Delta managed, 32 filas, una por `codigo_comuna`, `anio_pobreza` = 2022; DQ-S01–DQ-S26 y equivalencia con el baseline local EQ-S01–EQ-S10 en PASS (tolerancia `1e-9`, `max_abs_diff` = 0); ejecucion inicial (version 0) | validada en Databricks (2026-09-24) |
+| C04-E | Rerun de Silver pobreza sobre el target existente, sin editar flags: compatibilidad del target TC-S01–TC-S05, DQ-S01–DQ-S26 y EQ-S01–EQ-S10 en PASS; 32 → 32 filas; nueva version Delta (0 → 1 en la ejecucion observada). Snapshot overwrite: no es carga incremental ni `MERGE` | validada en Databricks; evidencia en `docs/evidence/runtime/E04-E_RUNTIME.md` |
 | P05–P12 | resto de fuentes, Gold, hardening/SQL serving, orquestacion, cargas incrementales / `MERGE`, schema evolution, Power BI y cierre tecnico | planificadas; no implementadas |
 
 El codigo Lakehouse versionado esta en `databricks/`. El dataset es pequeno: Spark se usa para aprender e implementar patrones de Data Engineering, no por volumen de datos.

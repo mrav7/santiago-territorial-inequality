@@ -177,7 +177,7 @@ Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED`
 | Aterrizaje de la Fuente C en el Volume | VALIDATED: archivo versionado subido; tamaño y SHA-256 verificados desde el notebook (DQ-B02) |
 | Bronze Fuente C `workspace.bronze.pobreza_ingresos` | VALIDATED: tabla managed Delta, 351 filas, metadata de ingestión, checks Bronze DQ-B01…B14 en PASS (`databricks/notebooks/01_bronze_poverty.py`, `databricks/sql/01_validate_bronze_poverty.sql`) |
 | Rerun Bronze (snapshot overwrite) | VALIDATED: segunda ejecución crea la versión 1, mantiene 351 filas, sin acumulación; no es carga incremental |
-| Rerun / idempotencia Silver | NOT VALIDATED: solo existe la ejecución inicial (versión 0) |
+| Rerun Silver pobreza (snapshot overwrite, C04-E) | VALIDATED: `02_silver_poverty.py` reejecutado sin editar flags con el target preexistente; compatibilidad del target TC-S01…S04 (pre-write) y TC-S05 (post-write) en PASS, DQ-S01…S26 y EQ-S01…S10 en PASS; 32 → 32 filas, sin acumulación; versión Delta 0 → 1 en la ejecución observada (`docs/evidence/runtime/E04-E_RUNTIME.md`). No es carga incremental ni idempotencia incremental (`MERGE` en P09) |
 | Lector Excel nativo disponible en Databricks vía Spark (`spark.read.format("excel")`) | VALIDATED en serverless: `listSheets` y lectura de `Estimaciones!A3:J354`; decodificación Python de borde no usada |
 | Silver Fuente C `workspace.silver.pobreza_ingresos` (P04) | VALIDATED: `databricks/notebooks/02_silver_poverty.py` ejecutado con Run all una vez el 2026-09-24 (compute serverless; target inexistente antes de la ejecución). Bronze 351 → 345 filas con código comunal válido (`^[0-9]{4,5}$`: 206 de 4 dígitos, 139 de 5) + 6 no comunales → join por `codigo_comuna` con `dim_comuna_base.csv` → 32 filas (313 códigos fuera del universo; 0 claves maestras faltantes). Tabla managed Delta, no temporal; schema `codigo_comuna INT`, `nombre_comuna STRING`, `pobreza_ingresos_pct DECIMAL(7,4)`, `anio_pobreza INT`; `DESCRIBE HISTORY` solo con la versión 0 (creación inicial) |
 | Data Quality Silver de la Fuente C (P04) | VALIDATED: DQ-S01…S26 en PASS en el notebook; `databricks/sql/02_validate_silver_poverty.sql` ejecutado completo en SQL Editor (Serverless Starter Warehouse, 12 result sets): 32 filas, 32 claves distintas, 0 duplicados, 0 nulls por columna, pct entre 0.8910 y 9.2938 (0 fuera de rango), `anio_pobreza` = 2022 en las 32 filas, cobertura exacta de la dimensión (32 coincidencias, 0 faltantes, 0 extras) |
@@ -190,7 +190,7 @@ Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED`
 | Schema enforcement / evolution | PLANNED |
 | Serving en Power BI | PLANNED |
 | PySpark en ejecución en el workspace | VALIDATED para Bronze y Silver de la Fuente C: DataFrames, joins, acciones, metadata y escritura Delta ejecutadas por los notebooks |
-| Delta Lake en ejecución en el workspace | VALIDATED para Bronze (`DESCRIBE DETAIL` format `delta`; `DESCRIBE HISTORY` con versiones 0 y 1) y Silver de la Fuente C (format `delta`; versión 0). Gold sin validar |
+| Delta Lake en ejecución en el workspace | VALIDATED para Bronze (`DESCRIBE DETAIL` format `delta`; `DESCRIBE HISTORY` con versiones 0 y 1) y Silver de la Fuente C (format `delta`; versiones 0 y 1). Gold sin validar |
 | Spark / Python del compute serverless | VALIDATED: Spark 4.2.0, Python 3.12.3 (ejecución del 2026-09-23) |
 | Environment version | NOT VERIFIED (no se registró en la UI) |
 | External locations / storage credentials | NOT VERIFIED (no requeridas) |

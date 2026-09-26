@@ -89,10 +89,11 @@ Cuando norma y evidencia divergen:
 | P02 — Lakehouse Foundation | GATE_PASSED | `workspace.bronze`, `workspace.silver`, `workspace.gold` y managed Volume validados |
 | P03 — Bronze pobreza | GATE_PASSED | 351 filas, Delta managed, DQ Bronze y rerun snapshot overwrite |
 | P04 — Silver pobreza + DQ + equivalencia | GATE_PASSED | 32 comunas, DQ-S01…DQ-S26 y EQ-S01…EQ-S10 PASS, `max_abs_diff = 0` |
-| C04-D — estabilización de rerun Silver | READY | Correctivo previo a replicar el patrón |
-| P05–P12 | PLANNED | Trabajo restante del roadmap canónico |
+| C04-E — estabilización de rerun Silver | GATE_PASSED | Rerun Silver pobreza sobre target preexistente: TC-S01…S05, DQ-S01…S26 y EQ-S01…S10 PASS; 32 → 32 filas; nueva versión Delta; snapshot overwrite, no `MERGE` |
+| P05 — Remaining Sources Bronze / Silver | READY | Dependencia C04-E satisfecha; prompt aún no redactado |
+| P06–P12 | PLANNED | Trabajo restante del roadmap canónico |
 
-P04 permanece cerrado: C04-D no reescribe retrospectivamente su gate. El correctivo aborda un requisito operacional adicional detectado antes de replicar el patrón.
+P04 permanece cerrado: C04-E no reescribe retrospectivamente su gate. El correctivo aborda un requisito operacional adicional detectado antes de replicar el patrón.
 
 ---
 
@@ -160,7 +161,7 @@ El `Rxx` no se modifica retrospectivamente para simular evidencia obtenida despu
 Convención propuesta para evidencia persistente y sanitizada:
 
 ```text
-docs/evidence/runtime/E04-D_RUNTIME.md
+docs/evidence/runtime/E04-E_RUNTIME.md
 docs/evidence/runtime/E05_RUNTIME.md
 docs/evidence/runtime/E06_RUNTIME.md
 ...
@@ -226,8 +227,8 @@ Si falta evidencia pero no existe un defecto demostrado, usar `AUDITAR DE NUEVO`
 
 | Orden | Prompt | Estado | Resultado principal | Gate |
 |---|---|---|---|---|
-| 1 | C04-D — Stabilize Silver Rerun Contract | READY | Silver pobreza reejecutable sin editar flags y sin lock al historial exacto Bronze | Patrón estable para replicar |
-| 2 | P05 — Remaining Sources Bronze / Silver | PLANNED | A, B y D en Bronze/Silver con DQ, equivalencia y rerun batch | Cuatro fuentes Silver válidas |
+| 1 | C04-E — Stabilize Silver Rerun Contract | GATE_PASSED | Silver pobreza reejecutable sin editar flags y sin lock al historial exacto Bronze | Patrón estable para replicar |
+| 2 | P05 — Remaining Sources Bronze / Silver | READY | A, B y D en Bronze/Silver con DQ, equivalencia y rerun batch | Cuatro fuentes Silver válidas |
 | 3 | P06 — Gold Model + SQL + Baseline Equivalence | PLANNED | Gold dimensión/hecho + equivalencia contra CSV y SQLite | Nivel 1 / MVP |
 | 4 | P07 — Lakehouse Hardening + Databricks SQL | PLANNED | Mantenibilidad, tests útiles y serving SQL | Base mantenible |
 | 5 | P08 — Databricks Workflow | PLANNED | Orquestación reproducible | Nivel 2 |
@@ -242,20 +243,21 @@ Los prompts completos P05–P12 se redactan justo antes de su ejecución usando 
 
 # 8. Etapas detalladas
 
-## 8.1 C04-D — Stabilize Silver Rerun Contract
+## 8.1 C04-E — Stabilize Silver Rerun Contract
 
 **Naturaleza:** correctivo focalizado.  
+**Estado:** `GATE_PASSED`. Evidencia: `R04-E` + `docs/evidence/runtime/E04-E_RUNTIME.md`; cierre documental en A02.  
 **Dependencia:** P04 cerrado y tabla Silver existente.  
 **Branch sugerida:** `fix/p04-silver-rerun-contract`.  
-**ID propuesto:** `C04-D`; verificar antes de materializar que el identificador esté libre en el registro interno.
+**ID:** `C04-E` (reporte `R04-E`, evidencia `E04-E_RUNTIME.md`). Este correctivo se propuso originalmente como `C04-D`, pero `C04-D` / `R04-D` ya designan el cierre documental/runtime de P04 (A01-F01); ese identificador histórico no se reutiliza.
 
-### Defecto confirmado D04D-01
+### Defecto confirmado D04E-01
 
 El notebook versionado contiene una precondición que bloquea cuando la tabla Silver ya existe. El estado real documentado confirma que `workspace.silver.pobreza_ingresos` existe después de P04.
 
 Por tanto, el notebook actual no puede ejecutar un rerun batch normal sin editar configuración/código.
 
-### Fragilidad D04D-02
+### Fragilidad D04E-02
 
 El contrato de entrada Silver exige un historial Bronze exactamente igual a `[0, 1]`. Una nueva snapshot Bronze válida puede cambiar el historial sin invalidar el estado lógico actual, haciendo fallar Silver por una condición histórica incidental.
 
@@ -293,20 +295,20 @@ Antes de modificar, el prompt debe registrar evidencia suficiente del defecto. C
 - demostrar que la configuración actual bloquea un rerun normal;
 - registrar la condición rígida del historial Bronze.
 
-No es necesario crear versiones Bronze artificiales solo para provocar D04D-02 si la evidencia estática y el contrato actual ya demuestran la fragilidad.
+No es necesario crear versiones Bronze artificiales solo para provocar D04E-02 si la evidencia estática y el contrato actual ya demuestran la fragilidad.
 
 ### Acciones manuales
 
-- `M04D-01`: sincronizar/publicar el notebook corregido en Databricks.
-- `M04D-02`: ejecutar `02_silver_poverty.py` con la tabla Silver ya existente.
-- `M04D-03`: ejecutar `02_validate_silver_poverty.sql`.
-- `M04D-04`: registrar `DESCRIBE HISTORY`, conteos, DQ y EQ en `E04-D_RUNTIME.md`.
-- `M04D-05`: entregar evidencia para revisión.
-- `M04D-06`: autorizar commit/push/merge solo después del dictamen.
+- `M04E-01`: sincronizar/publicar el notebook corregido en Databricks.
+- `M04E-02`: ejecutar `02_silver_poverty.py` con la tabla Silver ya existente.
+- `M04E-03`: ejecutar `02_validate_silver_poverty.sql`.
+- `M04E-04`: registrar `DESCRIBE HISTORY`, conteos, DQ y EQ en `E04-E_RUNTIME.md`.
+- `M04E-05`: entregar evidencia para revisión.
+- `M04E-06`: autorizar commit/push/merge solo después del dictamen.
 
 ### Gate
 
-`C04-D = GATE_PASSED` cuando **un rerun controlado sobre el target Silver preexistente**:
+`C04-E = GATE_PASSED` cuando **un rerun controlado sobre el target Silver preexistente**:
 
 - termina sin editar flags manualmente;
 - conserva 32 filas y 32 keys;
@@ -323,7 +325,7 @@ No llamar a esto idempotencia incremental.
 
 ## 8.2 P05 — Remaining Sources Bronze / Silver
 
-**Dependencia:** C04-D `GATE_PASSED`.  
+**Dependencia:** C04-E `GATE_PASSED`.  
 **Branch sugerida:** `feat/remaining-sources-bronze-silver`.
 
 ### Objetivo único
@@ -850,7 +852,7 @@ Las capacidades avanzadas relevantes quedan clasificadas con evidencia y el proy
 
 | Etapa | Intervención humana principal | Intensidad |
 |---|---|---|
-| C04-D | Rerun Silver + SQL + evidencia | Media |
+| C04-E | Rerun Silver + SQL + evidencia | Media |
 | P05 | Verificar/subir fuentes + Bronze/Silver + SQL | Alta |
 | P06 | Gold + equivalencia CSV/SQLite | Media |
 | P07 | SQL Warehouse / `EXPLAIN` / regresiones | Media |
@@ -927,7 +929,9 @@ No se reabre un prompt de implementación solo para cambiar el estado del tracke
 
 ### R1 — replicar fragilidad de P04
 
-Mitigación: C04-D antes de P05 y contrato de rerun explícito en P05.
+Mitigación: C04-E antes de P05 y contrato de rerun explícito en P05.
+
+Estado: resuelto para Silver pobreza por C04-E (`GATE_PASSED`): `ALLOW_EXISTING_TARGET` y el lock `EXPECTED_BRONZE_VERSIONS = [0, 1]` fueron reemplazados por checks de compatibilidad del target (TC-S01…S05) y por el contrato del snapshot Bronze actual. Sigue vigente para P05: cada nueva fuente debe aplicar el mismo contrato de rerun.
 
 ### R2 — parser SINIM
 
@@ -985,7 +989,7 @@ Acción: actualizar en una futura versión del Plan Canónico; no reescribir v1.
 
 Acción pendiente: formalizar si estas instrucciones permanecen como artefactos locales/internos y reflejarlo en una futura actualización normativa.
 
-No bloquea C04-D/P05.
+No bloquea C04-E/P05.
 
 ### D-003 — estado P00–P04
 
@@ -1002,6 +1006,9 @@ Acción: este tracker registra el estado operativo sin modificar retrospectivame
 |---|---:|---|---|---|
 | 2026-09-25 | 1.0 | General | Creación del tracker operativo revisado | Estado remoto + Plan Canónico + metodología |
 | 2026-09-25 | 1.0 | C04-D | Marcado `READY` como siguiente etapa | P04 cerrado + defectos/fragilidades documentados |
+| 2026-09-25 | 1.0 | C04-E | Correctivo renombrado `C04-D` → `C04-E` (`R04-E`, `E04-E_RUNTIME.md`); `C04-D`/`R04-D` históricos no se reutilizan. Sin cambio técnico | A01-F01 |
+| 2026-09-25 | 1.0 | C04-E | `READY` → `GATE_PASSED`: rerun Silver pobreza validado en runtime Databricks (target preexistente, TC/DQ/EQ PASS, versión Delta 0 → 1, 32 → 32 filas) | `R04-E` + `E04-E_RUNTIME.md` (A02) |
+| 2026-09-25 | 1.0 | P05 | `PLANNED` → `READY` (dependencia C04-E satisfecha) | C04-E `GATE_PASSED` |
 
 Agregar nuevas filas por cada transición relevante. No borrar entradas históricas para “limpiar” el relato.
 
@@ -1011,8 +1018,8 @@ Agregar nuevas filas por cada transición relevante. No borrar entradas históri
 
 | Etapa | Estado operativo | Branch / HEAD | Prompt | Reporte | Evidencia runtime | Dictamen | Decisión humana | Próximo paso |
 |---|---|---|---|---|---|---|---|---|
-| C04-D | READY | por crear / `e9a8c4c...` base esperada | pendiente | pendiente | `E04-D_RUNTIME.md` pendiente | pendiente | pendiente | redactar/materializar C04-D |
-| P05 | PLANNED | — | pendiente | pendiente | `E05_RUNTIME.md` pendiente | — | — | depende de C04-D |
+| C04-E | GATE_PASSED | `main` / base `1425763` (cambios C04-E sin commit) | `C04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `R04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `E04-E_RUNTIME.md` | APROBADO | commit pendiente (humano) | preparar P05 |
+| P05 | READY | — | pendiente | pendiente | `E05_RUNTIME.md` pendiente | — | — | redactar P05 desde el HEAD real |
 | P06 | PLANNED | — | pendiente | pendiente | `E06_RUNTIME.md` pendiente | — | — | depende de P05 |
 | P07 | PLANNED | — | pendiente | pendiente | `E07_RUNTIME.md` pendiente | — | — | depende de P06 |
 | P08 | PLANNED | — | pendiente | pendiente | `E08_RUNTIME.md` pendiente | — | — | depende de P07 |
@@ -1045,16 +1052,10 @@ No compensar una fase rota agregando una tecnología posterior.
 
 ## 17. Próximo paso
 
-1. Adoptar este tracker en `docs/roadmap/lakehouse_execution_tracker.md`.
-2. Verificar que `C04-D` no colisione con otro identificador interno.
-3. Redactar el prompt canónico completo C04-D desde el HEAD real.
-4. Materializar el prompt antes de ejecutar Codex.
-5. Implementar el correctivo en branch focalizada.
-6. Emitir `R04-D`.
-7. Ejecutar las acciones `M04D-*` en Databricks.
-8. Crear/actualizar `E04-D_RUNTIME.md`.
-9. Revisar evidencia.
-10. Solo con `C04-D = GATE_PASSED`, redactar P05.
+Secuencia C04-E completada (tracker adoptado en `docs/roadmap/`, `R04-E`, acciones `M04E-*`, `E04-E_RUNTIME.md`, `C04-E = GATE_PASSED`). Pendiente:
+
+1. Revisión humana del diff y commit de C04-E + cierre documental (A02).
+2. Redactar el prompt canónico P05 desde el HEAD real.
 
 ---
 
