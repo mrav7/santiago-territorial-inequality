@@ -53,7 +53,9 @@ La numeracion P00–P12 de las etapas Lakehouse es independiente de las Fases 1�
 | P03 | Bronze de pobreza (Fuente C): `workspace.bronze.pobreza_ingresos`, Delta managed, 351 filas, DQ-B01–DQ-B14 en PASS; rerun por snapshot overwrite (no incremental) | validada en Databricks |
 | P04 | Silver de pobreza (Fuente C): `workspace.silver.pobreza_ingresos`, Delta managed, 32 filas, una por `codigo_comuna`, `anio_pobreza` = 2022; DQ-S01–DQ-S26 y equivalencia con el baseline local EQ-S01–EQ-S10 en PASS (tolerancia `1e-9`, `max_abs_diff` = 0); ejecucion inicial (version 0) | validada en Databricks (2026-09-24) |
 | C04-E | Rerun de Silver pobreza sobre el target existente, sin editar flags: compatibilidad del target TC-S01–TC-S05, DQ-S01–DQ-S26 y EQ-S01–EQ-S10 en PASS; 32 → 32 filas; nueva version Delta (0 → 1 en la ejecucion observada). Snapshot overwrite: no es carga incremental ni `MERGE` | validada en Databricks; evidencia en `docs/evidence/runtime/E04-E_RUNTIME.md` |
-| P05–P12 | resto de fuentes, Gold, hardening/SQL serving, orquestacion, cargas incrementales / `MERGE`, schema evolution, Power BI y cierre tecnico | planificadas; no implementadas |
+| Dimension maestra Silver | `workspace.silver.dim_comuna`: tabla Delta managed de 32 comunas, equivalencia exacta con el CSV maestro y rerun batch compatible (32 → 32 filas, nueva version Delta) | validada en Databricks; [evidencia runtime](docs/evidence/runtime/silver_commune_dimension_runtime.md) |
+| Fuentes restantes | SINIM A/B y Censo D en Bronze/Silver, con sus validaciones; la dimension maestra ya esta disponible para estos verticales | en curso; verticales restantes no implementados |
+| Gold y etapas posteriores | modelo Gold, serving SQL, orquestacion, incrementalidad, schema evolution y Power BI | planificados; no implementados |
 
 El codigo Lakehouse versionado esta en `databricks/`. El dataset es pequeno: Spark se usa para aprender e implementar patrones de Data Engineering, no por volumen de datos.
 
@@ -154,8 +156,8 @@ santiago-territorial-inequality/
 │   ├── staging/
 │   └── processed/
 ├── databricks/                 # implementacion Lakehouse
-│   ├── notebooks/              # 01_bronze_poverty.py, 02_silver_poverty.py
-│   └── sql/                    # 00_foundation.sql, 01_validate_bronze_poverty.sql, 02_validate_silver_poverty.sql
+│   ├── notebooks/              # pobreza Bronze/Silver y dimension maestra Silver
+│   └── sql/                    # fundacion y validadores de las tablas implementadas
 ├── db/
 ├── docs/
 │   ├── architecture/           # lakehouse.md

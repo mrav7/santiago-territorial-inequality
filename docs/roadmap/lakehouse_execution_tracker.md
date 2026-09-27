@@ -1,8 +1,8 @@
 # Lakehouse Execution Tracker — Santiago Territorial Inequality ETL
 
 **Proyecto:** Santiago Territorial Inequality ETL · Databricks Lakehouse  
-**Versión del tracker:** 1.0  
-**Fecha de corte:** 2026-09-25  
+**Versión del tracker:** 1.1
+**Fecha de corte:** 2026-09-27
 **Estado:** ACTIVO\
 **Repositorio vigente:** `mrav7/santiago-territorial-inequality`  
 **Base histórica de creación:** `e9a8c4cda7d4b7f79bd291b48c9789ce86cb36ec`\
@@ -90,8 +90,13 @@ Cuando norma y evidencia divergen:
 | P03 — Bronze pobreza | GATE_PASSED | 351 filas, Delta managed, DQ Bronze y rerun snapshot overwrite |
 | P04 — Silver pobreza + DQ + equivalencia | GATE_PASSED | 32 comunas, DQ-S01…DQ-S26 y EQ-S01…EQ-S10 PASS, `max_abs_diff = 0` |
 | C04-E — estabilización de rerun Silver | GATE_PASSED | Rerun Silver pobreza sobre target preexistente: TC-S01…S05, DQ-S01…S26 y EQ-S01…S10 PASS; 32 → 32 filas; nueva versión Delta; snapshot overwrite, no `MERGE` |
-| P05 — Remaining Sources Bronze / Silver | READY | Dependencia C04-E satisfecha; prompt aún no redactado |
-| P06–P12 | PLANNED | Trabajo restante del roadmap canónico |
+| P05 — Remaining Sources Bronze / Silver | IN_PROGRESS | Dimensión maestra Silver validada; faltan los verticales SINIM y Censo y el cierre transversal |
+| P05-A — dimensión maestra Silver | GATE_PASSED | `workspace.silver.dim_comuna` managed Delta: 32 comunas, equivalencia exacta, rerun batch y SQL independiente validados |
+| P05-B — parser SINIM y Bronze A/B | READY | Siguiente unidad; aún no implementada |
+| P05-C — Silver SINIM A/B | PLANNED | Depende de P05-B |
+| P05-D — vertical Censo D | PLANNED | Pendiente |
+| P05-E — cierre transversal | PLANNED | Pendiente de los verticales restantes |
+| P06–P12 | PLANNED | P06 no inicia hasta que P05 alcance `GATE_PASSED`; resto del roadmap pendiente |
 
 P04 permanece cerrado: C04-E no reescribe retrospectivamente su gate. El correctivo aborda un requisito operacional adicional detectado antes de replicar el patrón.
 
@@ -228,8 +233,8 @@ Si falta evidencia pero no existe un defecto demostrado, usar `AUDITAR DE NUEVO`
 | Orden | Prompt | Estado | Resultado principal | Gate |
 |---|---|---|---|---|
 | 1 | C04-E — Stabilize Silver Rerun Contract | GATE_PASSED | Silver pobreza reejecutable sin editar flags y sin lock al historial exacto Bronze | Patrón estable para replicar |
-| 2 | P05 — Remaining Sources Bronze / Silver | READY | A, B y D en Bronze/Silver con DQ, equivalencia y rerun batch | Cuatro fuentes Silver válidas |
-| 3 | P06 — Gold Model + SQL + Baseline Equivalence | PLANNED | Gold dimensión/hecho + equivalencia contra CSV y SQLite | Nivel 1 / MVP |
+| 2 | P05 — Remaining Sources Bronze / Silver | IN_PROGRESS | Master Silver validado; P05-B (parser SINIM + Bronze A/B) es el siguiente trabajo; P05-C/D/E pendientes | Cuatro fuentes Silver válidas |
+| 3 | P06 — Gold Model + SQL + Baseline Equivalence | PLANNED | Gold dimensión/hecho + equivalencia contra CSV y SQLite; bloqueado hasta P05 `GATE_PASSED` | Nivel 1 / MVP |
 | 4 | P07 — Lakehouse Hardening + Databricks SQL | PLANNED | Mantenibilidad, tests útiles y serving SQL | Base mantenible |
 | 5 | P08 — Databricks Workflow | PLANNED | Orquestación reproducible | Nivel 2 |
 | 6 | P09 — Incremental Merge + Idempotency | PLANNED | `MERGE`, insert/update y rerun lógico demostrado | Upserts e idempotencia |
@@ -349,17 +354,19 @@ Resultado esperado:
 
 ### Checkpoints internos
 
-**P05-A — landing + Bronze SINIM A/B.** Resolver explícitamente SpreadsheetML/XML 2003. No asumir XLS binario ni añadir un conector Spark solo por apariencia.
+**P05-A — dimensión maestra comunal Silver (`GATE_PASSED`).** `workspace.silver.dim_comuna` es managed Delta, tiene 32 comunas, equivalencia exacta con el CSV maestro y rerun batch validado. Evidencia: `docs/evidence/runtime/silver_commune_dimension_runtime.md`. El log completo conservado corresponde al rerun; la creación inicial consta en Delta History versión 0.
 
-**P05-B — Silver SINIM A/B.** Replicar reglas del baseline por `codigo_comuna`, año 2024, DQ y equivalencia.
+**P05-B — parser SINIM + Bronze A/B (`READY`).** Resolver explícitamente SpreadsheetML/XML 2003. No asumir XLS binario ni añadir un conector Spark solo por apariencia.
 
-**P05-C — Bronze/Silver Censo D.** Preservar Bronze y excluir en Silver filas/agregados fuera del grano comunal.
+**P05-C — Silver SINIM A/B (`PLANNED`; depende de P05-B).** Replicar reglas del baseline por `codigo_comuna`, año 2024, DQ y equivalencia.
 
-**P05-D — cierre transversal.** Verificar que las cuatro fuentes Silver entregan exactamente las entidades/variables necesarias para Gold.
+**P05-D — vertical Censo D (`PLANNED`).** Preservar Bronze y excluir en Silver filas/agregados fuera del grano comunal.
+
+**P05-E — cierre transversal (`PLANNED`).** Verificar que las cuatro fuentes Silver entregan exactamente las entidades/variables necesarias para Gold.
 
 ### Condiciones para dividir P05
 
-P05 se divide formalmente en nuevos prompts si ocurre al menos una de estas condiciones:
+La división en cinco unidades está autorizada. Una subdivisión adicional requiere una razón concreta, por ejemplo:
 
 - A/B requieren una dependencia o parser nuevo que exige una decisión específica;
 - la estrategia de ingestión SINIM difiere de forma material del patrón autorizado;
@@ -367,7 +374,7 @@ P05 se divide formalmente en nuevos prompts si ocurre al menos una de estas cond
 - el write scope o diff deja de ser razonable para una revisión focalizada;
 - una fuente queda `BLOCKED` y continuar con las otras no viola dependencias ni oculta el bloqueo.
 
-La división requiere autorización; Codex no crea sub-prompts por su cuenta.
+Una división adicional requiere autorización; Codex no crea sub-prompts por su cuenta.
 
 ### Contrato de rerun batch
 
@@ -402,6 +409,8 @@ Este contrato demuestra reejecución batch, no `MERGE` ni idempotencia increment
 - `M05-07`: ejecutar SQL de validación por fuente.
 - `M05-08`: registrar evidencia consolidada en `E05_RUNTIME.md`.
 - `M05-09`: autorizar commit/push/merge tras aprobación.
+
+La verificación del maestro comunal indicada en `M05-02` ya quedó documentada en la evidencia de la dimensión Silver. Las acciones sobre A/B/D siguen pendientes y se concretarán en sus unidades respectivas.
 
 ### Evidencia mínima por fuente
 
@@ -1010,6 +1019,8 @@ Acción: este tracker registra el estado operativo sin modificar retrospectivame
 | 2026-09-25 | 1.0 | C04-E | `READY` → `GATE_PASSED`: rerun Silver pobreza validado en runtime Databricks (target preexistente, TC/DQ/EQ PASS, versión Delta 0 → 1, 32 → 32 filas) | `R04-E` + `E04-E_RUNTIME.md` (A02) |
 | 2026-09-25 | 1.0 | P05 | `PLANNED` → `READY` (dependencia C04-E satisfecha) | C04-E `GATE_PASSED` |
 | 2026-09-25 | 1.0 | C04-E | Cierre aprobado, commiteado y publicado; tracker queda operativo para P05 | `28f7630` + `1d93988` |
+| 2026-09-27 | 1.1 | P05 | `READY` → `IN_PROGRESS`; se actualizan checkpoints A–E según la decisión humana, sin alterar filas históricas | `3b8f82d` + `docs/evidence/runtime/silver_commune_dimension_runtime.md` |
+| 2026-09-27 | 1.1 | P05-A | `GATE_PASSED` por decisión humana: dimensión maestra managed Delta y rerun batch validados; P05-B queda `READY` | `3b8f82d` + `docs/evidence/runtime/silver_commune_dimension_runtime.md` |
 
 Agregar nuevas filas por cada transición relevante. No borrar entradas históricas para “limpiar” el relato.
 
@@ -1019,9 +1030,14 @@ Agregar nuevas filas por cada transición relevante. No borrar entradas históri
 
 | Etapa | Estado operativo | Branch / HEAD | Prompt | Reporte | Evidencia runtime | Dictamen | Decisión humana | Próximo paso |
 |---|---|---|---|---|---|---|---|---|
-| C04-E | GATE_PASSED | `main` / impl. `28f7630` + cierre `1d93988` | `C04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `R04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `E04-E_RUNTIME.md` | APROBADO | committed + pushed | preparar P05 |
-| P05 | READY | — | pendiente | pendiente | `E05_RUNTIME.md` pendiente | — | — | redactar P05 desde el HEAD real |
-| P06 | PLANNED | — | pendiente | pendiente | `E06_RUNTIME.md` pendiente | — | — | depende de P05 |
+| C04-E | GATE_PASSED | `main` / impl. `28f7630` + cierre `1d93988` | `C04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `R04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `E04-E_RUNTIME.md` | APROBADO | committed + pushed | cumplido; P05 en curso |
+| P05 | IN_PROGRESS | `main` / base `3b8f82d` | dividido en P05-A…P05-E | cierre transversal pendiente | consolidación P05 pendiente | — | — | ejecutar P05-B después de su prompt |
+| P05-A | GATE_PASSED | `main` / impl. `3b8f82d` | `P05-A_SILVER_MASTER_DIMENSION.md` | `R05-A_SILVER_MASTER_DIMENSION.md` + `R05-A_DOCUMENTATION_CLOSURE.md` | `silver_commune_dimension_runtime.md` | APROBADO | `GATE_PASSED` | preparar P05-B |
+| P05-B | READY | — | pendiente | pendiente | pendiente | — | — | parser SINIM + Bronze A/B |
+| P05-C | PLANNED | — | pendiente | pendiente | pendiente | — | — | depende de P05-B |
+| P05-D | PLANNED | — | pendiente | pendiente | pendiente | — | — | vertical Censo D |
+| P05-E | PLANNED | — | pendiente | pendiente | pendiente | — | — | cierre transversal tras los verticales |
+| P06 | PLANNED | — | pendiente | pendiente | `E06_RUNTIME.md` pendiente | — | — | bloqueado hasta P05 `GATE_PASSED` |
 | P07 | PLANNED | — | pendiente | pendiente | `E07_RUNTIME.md` pendiente | — | — | depende de P06 |
 | P08 | PLANNED | — | pendiente | pendiente | `E08_RUNTIME.md` pendiente | — | — | depende de P07 |
 | P09 | PLANNED | — | pendiente | pendiente | `E09_RUNTIME.md` pendiente | — | — | depende de P08 |
@@ -1053,18 +1069,9 @@ No compensar una fase rota agregando una tecnología posterior.
 
 ## 17. Próximo paso
 
-C04-E está cerrado, commiteado y publicado en `main`.
+La dimensión maestra Silver está cerrada por decisión humana (`P05-A = GATE_PASSED`); P05 continúa `IN_PROGRESS`. La base de implementación observada es `3b8f82d0b3d912e1e864d7d30c47a3a25df1b41b` en `main`.
 
-Base remota confirmada para preparar P05:
-
-`1d939882108653110f62d6b26c01ebc1dacab78b`
-
-Siguiente paso:
-
-1. Inspeccionar el estado real desde ese HEAD.
-2. Redactar el prompt canónico P05.
-3. Materializar P05 antes de ejecutar el agente.
-4. Ejecutar P05 en una branch focalizada.
+Siguiente unidad: P05-B, parser SINIM y Bronze A/B. Antes de ejecutarla, preparar su prompt desde el estado real y verificar el gate anterior. P05-C depende de P05-B; P05-D y P05-E siguen pendientes. P06 espera el gate completo de P05.
 
 ---
 

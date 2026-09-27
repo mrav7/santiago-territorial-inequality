@@ -11,7 +11,7 @@ La §10 registra el estado real de cada componente. Todo lo que no figure ahí c
 | Tecnologías | Python + pandas + SQLite | Databricks + PySpark + Delta Lake + SQL |
 | Entrada | `data/raw/` (CSV, XLS SpreadsheetML, XLSX) | los mismos archivos, aterrizados en un Volume de Unity Catalog |
 | Producto | `data/processed/desigualdad_comunal_final.csv` y `db/lab1_desigualdad.sqlite` | tablas Delta en `workspace.gold` |
-| Estado | implementado y validado (Fases 1–9) | fundación creada; Bronze y Silver de la Fuente C validados; resto de fuentes y Gold no implementados; ver §10 |
+| Estado | implementado y validado (Fases 1–9) | fundación, Bronze y Silver de la Fuente C, y dimensión maestra Silver validados; fuentes A/B/D y Gold pendientes; ver §10 |
 | Ejecución | `python -m src.main` | Databricks Free Edition, compute serverless |
 
 El dataset es pequeño: 32 comunas y cuatro fuentes. Spark no se usa por volumen de datos. Se usa para aprender e implementar patrones de Data Engineering transferibles: DataFrames con schemas explícitos, Delta, calidad de datos y orquestación.
@@ -61,10 +61,11 @@ gold_schema    = gold
 landing_volume = source_files
 ```
 
-**Convención de nombres:** minúsculas, `snake_case`, nombres descriptivos y namespace `catalog.schema.object`. Nombres previstos (las tablas `bronze` y `silver` de `pobreza_ingresos` ya existen, ver §10; las `gold` son diseño, no objetos existentes):
+**Convención de nombres:** minúsculas, `snake_case`, nombres descriptivos y namespace `catalog.schema.object`. La dimensión maestra Silver y las tablas `bronze`/`silver` de `pobreza_ingresos` ya existen (ver §10); las `gold` son diseño, no objetos existentes:
 
 - `workspace.bronze.pobreza_ingresos`
 - `workspace.silver.pobreza_ingresos`
+- `workspace.silver.dim_comuna`
 - `workspace.gold.dim_comuna`
 - `workspace.gold.fact_desigualdad_comunal`
 - `workspace.gold.metadata_fuentes`
@@ -119,7 +120,7 @@ Las mismas que en la implementación local:
 ## 6. Cómputo y almacenamiento
 
 - **Cómputo:** serverless. Es la única modalidad disponible en Databricks Free Edition. El DDL y las consultas SQL usan el único SQL Warehouse existente (Serverless Starter Warehouse, 2X-Small).
-- **Almacenamiento:** objetos *managed* de Unity Catalog (schemas, Volume y, más adelante, tablas).
+- **Almacenamiento:** objetos *managed* de Unity Catalog (schemas, Volume, tablas validadas y futuras).
   - No se diseña sobre external locations, storage credentials, external tables ni storage cloud propio.
   - No hacen falta para el proyecto y su disponibilidad no está verificada.
   - El cloud/provider del workspace tampoco está verificado. Una solución managed evita depender de él.
@@ -134,7 +135,7 @@ Las mismas que en la implementación local:
   - Se usa con conciencia de schemas explícitos, lazy evaluation, transformaciones vs. acciones, joins, shuffles y particiones.
   - No es una traducción línea a línea del código pandas.
 
-`databricks/notebooks/` contiene el vertical Bronze de la Fuente C (`01_bronze_poverty.py`) y el Silver de la Fuente C (`02_silver_poverty.py`, ejecutado y validado el 2026-09-24). `databricks/src/` se creará solo cuando exista lógica reutilizable real.
+`databricks/notebooks/` contiene el vertical Bronze de la Fuente C (`01_bronze_poverty.py`), su Silver (`02_silver_poverty.py`) y la dimensión maestra Silver (`03_silver_commune_dimension.py`). Sus validadores están en `databricks/sql/`. `databricks/src/` se creará solo cuando exista lógica reutilizable real.
 
 ## 8. Data Quality por capa
 
@@ -151,7 +152,8 @@ Las validaciones se implementan con cada capa. Por ahora no se construye un fram
 El pipeline local es la referencia funcional. La equivalencia se evalúa de forma progresiva:
 
 1. **Primera fuente (pobreza, Fuente C):** Silver Lakehouse vs. `data/staging/pobreza_staging.csv`, o el resultado local equivalente.
-2. **Producto final:** Gold Lakehouse vs. `data/processed/desigualdad_comunal_final.csv` y `db/lab1_desigualdad.sqlite`.
+2. **Dimensión maestra comunal:** Silver Lakehouse vs. `data/raw/dim_comuna_base.csv`, por `codigo_comuna` después de un cast controlado; 32 claves y atributos exactos, validados en runtime.
+3. **Producto final:** Gold Lakehouse vs. `data/processed/desigualdad_comunal_final.csv` y `db/lab1_desigualdad.sqlite`.
 
 Qué se compara, según corresponda:
 
@@ -182,15 +184,16 @@ Estados: `IMPLEMENTED` (existe en el repositorio o en el workspace), `VALIDATED`
 | Silver Fuente C `workspace.silver.pobreza_ingresos` (P04) | VALIDATED: `databricks/notebooks/02_silver_poverty.py` ejecutado con Run all una vez el 2026-09-24 (compute serverless; target inexistente antes de la ejecución). Bronze 351 → 345 filas con código comunal válido (`^[0-9]{4,5}$`: 206 de 4 dígitos, 139 de 5) + 6 no comunales → join por `codigo_comuna` con `dim_comuna_base.csv` → 32 filas (313 códigos fuera del universo; 0 claves maestras faltantes). Tabla managed Delta, no temporal; schema `codigo_comuna INT`, `nombre_comuna STRING`, `pobreza_ingresos_pct DECIMAL(7,4)`, `anio_pobreza INT`; `DESCRIBE HISTORY` solo con la versión 0 (creación inicial) |
 | Data Quality Silver de la Fuente C (P04) | VALIDATED: DQ-S01…S26 en PASS en el notebook; `databricks/sql/02_validate_silver_poverty.sql` ejecutado completo en SQL Editor (Serverless Starter Warehouse, 12 result sets): 32 filas, 32 claves distintas, 0 duplicados, 0 nulls por columna, pct entre 0.8910 y 9.2938 (0 fuera de rango), `anio_pobreza` = 2022 en las 32 filas, cobertura exacta de la dimensión (32 coincidencias, 0 faltantes, 0 extras) |
 | Equivalencia Silver pobreza vs. baseline local (P04) | VALIDATED: EQ-S01…S10 en PASS contra `pobreza_staging.csv` y `desigualdad_comunal_final.csv`; tolerancia `1e-9`, `max_abs_diff` = 0 |
-| Silver del resto de fuentes | PLANNED |
+| Dimensión maestra `workspace.silver.dim_comuna` | VALIDATED: tabla Delta managed (`format = delta`, `table_type = MANAGED`) desde el archivo versionado `dim_comuna_base.csv`, con identidad de fuente verificada (1779 bytes y SHA-256), schema `codigo_comuna INT`, `nombre_comuna STRING`, `provincia STRING`, `region STRING`, `fuente_referencia STRING`; una fila por cada una de las 32 comunas, sin surrogate key. Equivalencia exacta por código: 32 coincidencias, 0 claves exclusivas y 0 diferencias de atributos. El rerun sobre target compatible mantuvo 32 → 32 filas y el mismo contenido lógico, con versión Delta 0 → 1; el validador SQL independiente produjo 15 result sets. El log completo conservado es del rerun; la creación inicial consta en Delta History versión 0. [Evidencia runtime](../evidence/runtime/silver_commune_dimension_runtime.md). |
+| Silver de las fuentes A/B/D restantes | PLANNED; la dimensión maestra no implica que estos verticales estén implementados |
 | Gold y Data Quality Gold | PLANNED |
 | Equivalencia del producto final (Gold) con el baseline | PLANNED |
 | Orquestación (Databricks Jobs) | PLANNED |
 | Cargas incrementales / `MERGE` | PLANNED |
 | Schema enforcement / evolution | PLANNED |
 | Serving en Power BI | PLANNED |
-| PySpark en ejecución en el workspace | VALIDATED para Bronze y Silver de la Fuente C: DataFrames, joins, acciones, metadata y escritura Delta ejecutadas por los notebooks |
-| Delta Lake en ejecución en el workspace | VALIDATED para Bronze (`DESCRIBE DETAIL` format `delta`; `DESCRIBE HISTORY` con versiones 0 y 1) y Silver de la Fuente C (format `delta`; versiones 0 y 1). Gold sin validar |
+| PySpark en ejecución en el workspace | VALIDATED para Bronze y Silver de la Fuente C y para la dimensión maestra Silver: DataFrames, joins, acciones, checks y escritura Delta ejecutados por los notebooks |
+| Delta Lake en ejecución en el workspace | VALIDATED para Bronze, Silver de la Fuente C y dimensión maestra Silver (`DESCRIBE DETAIL`/`DESCRIBE HISTORY`; versiones 0 y 1 observadas en cada vertical indicado). Gold sin validar |
 | Spark / Python del compute serverless | VALIDATED: Spark 4.2.0, Python 3.12.3 (ejecución del 2026-09-23) |
 | Environment version | NOT VERIFIED (no se registró en la UI) |
 | External locations / storage credentials | NOT VERIFIED (no requeridas) |
