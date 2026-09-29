@@ -2,7 +2,7 @@
 
 **Proyecto:** Santiago Territorial Inequality ETL · Databricks Lakehouse  
 **Versión del tracker:** 1.1
-**Fecha de corte:** 2026-09-27
+**Fecha de corte:** 2026-09-29
 **Estado:** ACTIVO\
 **Repositorio vigente:** `mrav7/santiago-territorial-inequality`  
 **Base histórica de creación:** `e9a8c4cda7d4b7f79bd291b48c9789ce86cb36ec`\
@@ -92,7 +92,7 @@ Cuando norma y evidencia divergen:
 | C04-E — estabilización de rerun Silver | GATE_PASSED | Rerun Silver pobreza sobre target preexistente: TC-S01…S05, DQ-S01…S26 y EQ-S01…S10 PASS; 32 → 32 filas; nueva versión Delta; snapshot overwrite, no `MERGE` |
 | P05 — Remaining Sources Bronze / Silver | IN_PROGRESS | Dimensión maestra Silver validada; faltan los verticales SINIM y Censo y el cierre transversal |
 | P05-A — dimensión maestra Silver | GATE_PASSED | `workspace.silver.dim_comuna` managed Delta: 32 comunas, equivalencia exacta, rerun batch y SQL independiente validados |
-| P05-B — parser SINIM y Bronze A/B | READY | Siguiente unidad; aún no implementada |
+| P05-B — parser SINIM y Bronze A/B | WAITING_MANUAL | Parser validado localmente (24 tests, 52 filas A/B); notebook/DQ/SQL implementados; faltan Databricks inicial, rerun y SQL |
 | P05-C — Silver SINIM A/B | PLANNED | Depende de P05-B |
 | P05-D — vertical Censo D | PLANNED | Pendiente |
 | P05-E — cierre transversal | PLANNED | Pendiente de los verticales restantes |
@@ -233,7 +233,7 @@ Si falta evidencia pero no existe un defecto demostrado, usar `AUDITAR DE NUEVO`
 | Orden | Prompt | Estado | Resultado principal | Gate |
 |---|---|---|---|---|
 | 1 | C04-E — Stabilize Silver Rerun Contract | GATE_PASSED | Silver pobreza reejecutable sin editar flags y sin lock al historial exacto Bronze | Patrón estable para replicar |
-| 2 | P05 — Remaining Sources Bronze / Silver | IN_PROGRESS | Master Silver validado; P05-B (parser SINIM + Bronze A/B) es el siguiente trabajo; P05-C/D/E pendientes | Cuatro fuentes Silver válidas |
+| 2 | P05 — Remaining Sources Bronze / Silver | IN_PROGRESS | Master Silver validado; P05-B implementado localmente y pendiente runtime; P05-C/D/E pendientes | Cuatro fuentes Silver válidas |
 | 3 | P06 — Gold Model + SQL + Baseline Equivalence | PLANNED | Gold dimensión/hecho + equivalencia contra CSV y SQLite; bloqueado hasta P05 `GATE_PASSED` | Nivel 1 / MVP |
 | 4 | P07 — Lakehouse Hardening + Databricks SQL | PLANNED | Mantenibilidad, tests útiles y serving SQL | Base mantenible |
 | 5 | P08 — Databricks Workflow | PLANNED | Orquestación reproducible | Nivel 2 |
@@ -356,7 +356,7 @@ Resultado esperado:
 
 **P05-A — dimensión maestra comunal Silver (`GATE_PASSED`).** `workspace.silver.dim_comuna` es managed Delta, tiene 32 comunas, equivalencia exacta con el CSV maestro y rerun batch validado. Evidencia: `docs/evidence/runtime/silver_commune_dimension_runtime.md`. El log completo conservado corresponde al rerun; la creación inicial consta en Delta History versión 0.
 
-**P05-B — parser SINIM + Bronze A/B (`READY`).** Resolver explícitamente SpreadsheetML/XML 2003. No asumir XLS binario ni añadir un conector Spark solo por apariencia.
+**P05-B — parser SINIM + Bronze A/B (`WAITING_MANUAL`).** Implementación local en `databricks/src/ingestion/spreadsheetml.py`, `04_bronze_sinim.py` y su SQL independiente; 24 tests PASS con 52 filas por fuente. DQ y snapshot overwrite están codificados, no validados aún en Databricks. Falta landing verificado, ejecución inicial, rerun y SQL (M05B-01…07). `python -m src.main` no pudo iniciar las fases por falta de `matplotlib`; regresión ejecutada pendiente. Evidencia local: `R05-B_SINIM_SPREADSHEETML_BRONZE.md`; el runtime `E05-B_RUNTIME.md` se redactará con resultados reales.
 
 **P05-C — Silver SINIM A/B (`PLANNED`; depende de P05-B).** Replicar reglas del baseline por `codigo_comuna`, año 2024, DQ y equivalencia.
 
@@ -1021,6 +1021,7 @@ Acción: este tracker registra el estado operativo sin modificar retrospectivame
 | 2026-09-25 | 1.0 | C04-E | Cierre aprobado, commiteado y publicado; tracker queda operativo para P05 | `28f7630` + `1d93988` |
 | 2026-09-27 | 1.1 | P05 | `READY` → `IN_PROGRESS`; se actualizan checkpoints A–E según la decisión humana, sin alterar filas históricas | `3b8f82d` + `docs/evidence/runtime/silver_commune_dimension_runtime.md` |
 | 2026-09-27 | 1.1 | P05-A | `GATE_PASSED` por decisión humana: dimensión maestra managed Delta y rerun batch validados; P05-B queda `READY` | `3b8f82d` + `docs/evidence/runtime/silver_commune_dimension_runtime.md` |
+| 2026-09-29 | 1.1 | P05-B | `READY` → `WAITING_MANUAL`: parser y código Bronze/SQL implementados; 24 tests locales PASS. Databricks inicial/rerun/SQL NO EJECUTADOS; pipeline local no inicia por dependencia ausente. Gate pendiente de revisión y decisión humana | `R05-B_SINIM_SPREADSHEETML_BRONZE.md` + código/tests en working tree sobre `6f6a0ec` |
 
 Agregar nuevas filas por cada transición relevante. No borrar entradas históricas para “limpiar” el relato.
 
@@ -1031,9 +1032,9 @@ Agregar nuevas filas por cada transición relevante. No borrar entradas históri
 | Etapa | Estado operativo | Branch / HEAD | Prompt | Reporte | Evidencia runtime | Dictamen | Decisión humana | Próximo paso |
 |---|---|---|---|---|---|---|---|---|
 | C04-E | GATE_PASSED | `main` / impl. `28f7630` + cierre `1d93988` | `C04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `R04-E_STABILIZE_SILVER_RERUN_CONTRACT.md` | `E04-E_RUNTIME.md` | APROBADO | committed + pushed | cumplido; P05 en curso |
-| P05 | IN_PROGRESS | `main` / base `3b8f82d` | dividido en P05-A…P05-E | cierre transversal pendiente | consolidación P05 pendiente | — | — | ejecutar P05-B después de su prompt |
-| P05-A | GATE_PASSED | `main` / impl. `3b8f82d` | `P05-A_SILVER_MASTER_DIMENSION.md` | `R05-A_SILVER_MASTER_DIMENSION.md` + `R05-A_DOCUMENTATION_CLOSURE.md` | `silver_commune_dimension_runtime.md` | APROBADO | `GATE_PASSED` | preparar P05-B |
-| P05-B | READY | — | pendiente | pendiente | pendiente | — | — | parser SINIM + Bronze A/B |
+| P05 | IN_PROGRESS | `main` / base `3b8f82d` | dividido en P05-A…P05-E | cierre transversal pendiente | consolidación P05 pendiente | — | — | validar P05-B en Databricks y SQL |
+| P05-A | GATE_PASSED | `main` / impl. `3b8f82d` | `P05-A_SILVER_MASTER_DIMENSION.md` | `R05-A_SILVER_MASTER_DIMENSION.md` + `R05-A_DOCUMENTATION_CLOSURE.md` | `silver_commune_dimension_runtime.md` | APROBADO | `GATE_PASSED` | validar runtime P05-B |
+| P05-B | WAITING_MANUAL | `main` / base `6f6a0ec` (working tree) | `P05-B_SINIM_SPREADSHEETML_BRONZE.md` | `R05-B_SINIM_SPREADSHEETML_BRONZE.md` | `E05-B_RUNTIME.md` pendiente | APTO PARA REVISIÓN HUMANA (local) | gate no decidido | M05B-01…07 y regresión local con dependencias |
 | P05-C | PLANNED | — | pendiente | pendiente | pendiente | — | — | depende de P05-B |
 | P05-D | PLANNED | — | pendiente | pendiente | pendiente | — | — | vertical Censo D |
 | P05-E | PLANNED | — | pendiente | pendiente | pendiente | — | — | cierre transversal tras los verticales |
@@ -1069,9 +1070,9 @@ No compensar una fase rota agregando una tecnología posterior.
 
 ## 17. Próximo paso
 
-La dimensión maestra Silver está cerrada por decisión humana (`P05-A = GATE_PASSED`); P05 continúa `IN_PROGRESS`. La base de implementación observada es `3b8f82d0b3d912e1e864d7d30c47a3a25df1b41b` en `main`.
+La dimensión maestra Silver está cerrada por decisión humana (`P05-A = GATE_PASSED`); P05 continúa `IN_PROGRESS`. La base de implementación de la dimensión maestra es `3b8f82d0b3d912e1e864d7d30c47a3a25df1b41b` en `main`.
 
-Siguiente unidad: P05-B, parser SINIM y Bronze A/B. Antes de ejecutarla, preparar su prompt desde el estado real y verificar el gate anterior. P05-C depende de P05-B; P05-D y P05-E siguen pendientes. P06 espera el gate completo de P05.
+P05-B quedó implementado localmente y en `WAITING_MANUAL`, sobre `main` / base `6f6a0ecfa96e836edb094cfc5a45d0476977bbf1`. Próximo paso: verificar landing A/B, subir notebook y módulo como Workspace files conservando rutas hermanas, ejecutar inicial + rerun y SQL independiente, y conservar `E05-B_RUNTIME.md` con evidencia real (M05B-01…07 del reporte). Completar también la regresión local en un entorno con las dependencias de `requirements.txt`. No cerrar el gate por las pruebas locales. P05-C depende del gate P05-B; P05-D/E y P06 siguen pendientes.
 
 ---
 

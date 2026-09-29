@@ -54,8 +54,11 @@ La numeracion P00–P12 de las etapas Lakehouse es independiente de las Fases 1�
 | P04 | Silver de pobreza (Fuente C): `workspace.silver.pobreza_ingresos`, Delta managed, 32 filas, una por `codigo_comuna`, `anio_pobreza` = 2022; DQ-S01–DQ-S26 y equivalencia con el baseline local EQ-S01–EQ-S10 en PASS (tolerancia `1e-9`, `max_abs_diff` = 0); ejecucion inicial (version 0) | validada en Databricks (2026-09-24) |
 | C04-E | Rerun de Silver pobreza sobre el target existente, sin editar flags: compatibilidad del target TC-S01–TC-S05, DQ-S01–DQ-S26 y EQ-S01–EQ-S10 en PASS; 32 → 32 filas; nueva version Delta (0 → 1 en la ejecucion observada). Snapshot overwrite: no es carga incremental ni `MERGE` | validada en Databricks; evidencia en `docs/evidence/runtime/E04-E_RUNTIME.md` |
 | Dimension maestra Silver | `workspace.silver.dim_comuna`: tabla Delta managed de 32 comunas, equivalencia exacta con el CSV maestro y rerun batch compatible (32 → 32 filas, nueva version Delta) | validada en Databricks; [evidencia runtime](docs/evidence/runtime/silver_commune_dimension_runtime.md) |
-| Fuentes restantes | SINIM A/B y Censo D en Bronze/Silver, con sus validaciones; la dimension maestra ya esta disponible para estos verticales | en curso; verticales restantes no implementados |
+| P05-B · Bronze SINIM A/B | parser SpreadsheetML reusable, notebook `04_bronze_sinim.py`, DQ, snapshot overwrite y SQL independiente | implementada en codigo local; parser probado con 52 filas por fuente; Databricks, rerun y SQL pendientes (`WAITING_MANUAL`) |
+| Fuentes restantes | Silver SINIM A/B, vertical Censo D y cierre transversal | planificados; no implementados |
 | Gold y etapas posteriores | modelo Gold, serving SQL, orquestacion, incrementalidad, schema evolution y Power BI | planificados; no implementados |
+
+Las pruebas puras del parser SINIM se ejecutan con `python -m unittest discover -s tests/lakehouse -v`. Para ejecutar Bronze SINIM en Workspace, conservar `databricks/notebooks/` y su carpeta hermana `databricks/src/ingestion/`; subir el parser como archivo Python ordinario. El notebook comprueba la ruta de import y registra el hash del modulo.
 
 El codigo Lakehouse versionado esta en `databricks/`. El dataset es pequeno: Spark se usa para aprender e implementar patrones de Data Engineering, no por volumen de datos.
 
@@ -156,8 +159,9 @@ santiago-territorial-inequality/
 │   ├── staging/
 │   └── processed/
 ├── databricks/                 # implementacion Lakehouse
-│   ├── notebooks/              # pobreza Bronze/Silver y dimension maestra Silver
-│   └── sql/                    # fundacion y validadores de las tablas implementadas
+│   ├── notebooks/              # pobreza, dimension Silver y Bronze SINIM
+│   ├── src/ingestion/          # parser SpreadsheetML reusable
+│   └── sql/                    # fundacion y validadores
 ├── db/
 ├── docs/
 │   ├── architecture/           # lakehouse.md
